@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/hnatiukr/unwrap-or/main/logo.svg" height=120>
+    <img src="logo.svg" height=120>
 </p>
 
 <h1 align="center">Unwrap OR</h1>
