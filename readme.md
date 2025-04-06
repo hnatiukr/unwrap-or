@@ -1,10 +1,34 @@
-# unwrap-or
+<p align="center">
+    <img src="https://raw.githubusercontent.com/hnatiukr/unwrap-or/main/logo.svg" height=120>
+</p>
 
-A TypeScript implementation of Rust's `Option` and `Result` types. This package provides a functional approach to handling potentially absent values without null or undefined.
+<h1 align="center">Unwrap OR</h1>
+
+<p align="center">
+A TypeScript implementation of Rust's Option and Result types.
+</p>
+
+<p align="center">
+  <sub>
+      <1kB | no deps | tree-shakeable | side-effect free
+  </sub>
+</p>
+
+<p align="center">
+  <a href="https://github.com/hnatiukr/unwrap-or/actions/workflows/workflow.yml">
+      <img src="https://img.shields.io/github/actions/workflow/status/hnatiukr/unwrap-or/workflow.yml?color=blue&style=for-the-badge" alt="Workflow CI">
+  </a>
+   <a href="https://www.npmjs.com/package/unwrap-or">
+       <img src="https://img.shields.io/github/v/release/hnatiukr/unwrap-or?color=blue&style=for-the-badge" alt="Release version">
+   </a>
+  <a href="https://github.com/hnatiukr/unwrap-or">
+      <img src="https://img.shields.io/github/license/hnatiukr/unwrap-or?color=blue&style=for-the-badge" alt="License">
+  </a>
+</p>
 
 ## Motivation
 
-It is a playground library that closely mirrors Rust's [Option](https://doc.rust-lang.org/std/option/enum.Option.html) and [Result](https://doc.rust-lang.org/std/result/enum.Result.html) API. While created primarily for fun and learning, it's robust enough for real-world applications. It allows for safer, more expressive handling of optional values through a monadic interface.
+It is a playground library that closely mirrors **Rust**'s [Option](https://doc.rust-lang.org/std/option/enum.Option.html) and [Result](https://doc.rust-lang.org/std/result/enum.Result.html) API. While created primarily for fun and learning, it's robust enough for real-world applications. It allows for safer, more expressive handling of optional values through a monadic interface.
 
 Use it to:
 
@@ -14,6 +38,31 @@ Use it to:
 - handle errors gracefully
 
 The name `unwrap-or` is a playful reference to both the `unwrap_or` method found in the `Option`/`Result` types, and a hint at the package's contents - _"-OR"_ standing for **O**ption and **R**esult types. It also cleverly references the logical `OR` operation, reflecting how these monadic types encapsulate one of two possible states - either `Some` or `None` for `Option`; either `Ok` or `Err` for `Result`.
+
+## Installation
+
+Via npm:
+
+```sh
+# npm
+npm install unwrap-or
+```
+
+You can also use your favorite package manager:
+
+```sh
+# pnpm
+pnpm add unwrap-or
+
+# bun
+bun add unwrap-or
+
+# yarn
+yarn add unwrap-or
+
+# deno
+deno add jsr:@lambda/unwrap-or
+```
 
 ## Option
 
