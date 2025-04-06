@@ -21,12 +21,12 @@ A TypeScript implementation of Rust's Option and Result types.
    <a href="https://www.npmjs.com/package/unwrap-or">
        <img src="https://img.shields.io/github/v/release/hnatiukr/unwrap-or?color=blue&style=for-the-badge" alt="Release version">
    </a>
-  <a href="https://github.com/hnatiukr/unwrap-or">
-      <img src="https://img.shields.io/github/license/hnatiukr/unwrap-or?color=blue&style=for-the-badge" alt="License">
+  <a href="https://github.com/hnatiukr/unwrap-or/blob/main/LICENSE">
+      <img src="https://img.shields.io/github/license/hnatiukr/unwrap-or?color=blue&style=for-the-badge" alt="License MIT">
   </a>
 </p>
 
-## Motivation
+## Confession
 
 It is a playground library that closely mirrors **Rust**'s [Option](https://doc.rust-lang.org/std/option/enum.Option.html) and [Result](https://doc.rust-lang.org/std/result/enum.Result.html) API. While created primarily for fun and learning, it's robust enough for real-world applications. It allows for safer, more expressive handling of optional values through a monadic interface.
 
@@ -61,7 +61,7 @@ bun add unwrap-or
 yarn add unwrap-or
 
 # deno
-deno add jsr:@lambda/unwrap-or
+deno add jsr:@lab/unwrap-or
 ```
 
 ## Option
