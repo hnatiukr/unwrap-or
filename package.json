@@ -1,0 +1,14 @@
+{
+  "name": "unwrap-or",
+  "version": "0.1.0",
+  "license": "MIT",
+  "type": "module",
+  "man": "mod.ts",
+  "files": [
+    "mod.ts",
+    "readme.md",
+    "package.json",
+    "option/index.ts",
+    "option/option.ts"
+  ]
+}
