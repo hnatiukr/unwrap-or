@@ -26,7 +26,7 @@ A TypeScript implementation of Rust's Option and Result types.
   </a>
 </p>
 
-## Confession
+## Approach
 
 It is a playground library that closely mirrors **Rust**'s [Option](https://doc.rust-lang.org/std/option/enum.Option.html) and [Result](https://doc.rust-lang.org/std/result/enum.Result.html) API. While created primarily for fun and learning, it's robust enough for real-world applications. It allows for safer, more expressive handling of optional values through a monadic interface.
 
