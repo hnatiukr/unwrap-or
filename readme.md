@@ -16,13 +16,13 @@ A TypeScript implementation of Rust's Option and Result types.
 
 <p align="center">
   <a href="https://github.com/hnatiukr/unwrap-or/actions/workflows/workflow.yml">
-      <img src="https://img.shields.io/github/actions/workflow/status/hnatiukr/unwrap-or/workflow.yml?color=blue&style=for-the-badge" alt="Workflow CI">
+      <img src="https://img.shields.io/github/actions/workflow/status/hnatiukr/unwrap-or/workflow.yml?color=orange&style=for-the-badge" alt="Workflow CI">
   </a>
    <a href="https://www.npmjs.com/package/unwrap-or">
-       <img src="https://img.shields.io/github/v/release/hnatiukr/unwrap-or?color=blue&style=for-the-badge" alt="Release version">
+       <img src="https://img.shields.io/github/v/release/hnatiukr/unwrap-or?color=orange&style=for-the-badge" alt="Release version">
    </a>
   <a href="https://github.com/hnatiukr/unwrap-or/blob/main/LICENSE">
-      <img src="https://img.shields.io/github/license/hnatiukr/unwrap-or?color=blue&style=for-the-badge" alt="License MIT">
+      <img src="https://img.shields.io/github/license/hnatiukr/unwrap-or?color=orange&style=for-the-badge" alt="License MIT">
   </a>
 </p>
 
