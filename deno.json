@@ -5,11 +5,16 @@
   "tasks": {
     "check": "deno fmt && deno lint && deno test"
   },
-  "exports": "./mod.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./match": "./src/match/index.ts",
+    "./option": "./src/option/index.ts",
+    "./result": "./src/result/index.ts"
+  },
   "imports": {
     "@std/assert": "jsr:@std/assert@^1.0.12"
   },
   "publish": {
-    "exclude": ["**/*.test.*", "*.lock", ".github", "package.json"]
+    "include": ["src", "deno.json", "LICENSE", "README.md"]
   }
 }
