@@ -74,7 +74,7 @@ deno add jsr:@lab/unwrap-or
 
 ## Documentation
 
-- [Option](#Option)
+- [Option](#option)
   - [.and](#and)
   - [.and_then](#and_then)
   - [.expect](#expect)
@@ -87,8 +87,11 @@ deno add jsr:@lab/unwrap-or
   - [.map](#map)
   - [.map_or](#map_or)
   - [.map_or_else](#map_or_else)
+  - [ok_or](#ok_or)
+  - [ok_or_else](#ok_or_else)
   - [.or](#or)
   - [.or_else](#or_else)
+  - [transpose](#transpose)
   - [.unwrap](#unwrap)
   - [.unwrap_or](#unwrap_or)
   - [.unwrap_or_else](#unwrap_or_else)
@@ -99,10 +102,17 @@ deno add jsr:@lab/unwrap-or
 
 ### and
 
+public ```ts
+and<U>(optb: Option<U>): Option<T> | Option<U>
+
+````
+
 Returns `None` if the option is `None`, otherwise returns `optb`.
 
 Arguments passed to and are eagerly evaluated; if you are passing the result of
 a function call, it is recommended to use `and_then`, which is lazily evaluated.
+
+**Example**
 
 ```ts
 let x: Option<number>;
@@ -123,9 +133,13 @@ assertEquals(x.and(y), y);
 x = None;
 y = None;
 assertEquals(x.and(y), x);
-```
+````
 
 ### and_then
+
+```rust
+pub fn and_then<U>(f: (value: T) => Option<U>): Option<T> | Option<U>
+```
 
 Returns `None` if the option is `None`, otherwise calls function `f` with the
 wrapped value and returns the result.
@@ -169,6 +183,10 @@ assertEquals(
 
 ### expect
 
+```rust
+pub fn expect(msg: string): T
+```
+
 Returns the contained `Some` value. Throws an error if the value is a `None`
 with a custom message provided by `msg`.
 
@@ -187,6 +205,10 @@ assertThrows(() => x.expect("should rerurn string value"), Error);
 
 ### filter
 
+```rust
+pub fn filter(predicate: (value: T) => boolean): Option<T>
+```
+
 Returns `None` if the option is `None`, otherwise calls predicate with the
 wrapped value and returns:
 
@@ -204,6 +226,10 @@ assertEquals(Some(4).filter(is_even), Some(4));
 ```
 
 ### inspect
+
+```rust
+pub fn inspect(f: (value: T) => void): Option<T>
+```
 
 Calls a function with a reference to the contained value if `Some`.
 
@@ -226,6 +252,10 @@ assertEquals(x, 2);
 
 ### is_none
 
+```rust
+pub fn is_none(): boolean
+```
+
 Returns `true` if the option is a `None` value.
 
 ```ts
@@ -239,6 +269,10 @@ assertEquals(x.is_none(), true);
 ```
 
 ### is_none_or
+
+```rust
+pub fn is_none_or(f: (value: T) => boolean): boolean
+```
 
 Returns `true` if the option is a `None` or the value inside of it matches a
 predicate.
@@ -267,6 +301,10 @@ assertEquals(
 
 ### is_some
 
+```rust
+pub fn is_some(): boolean
+```
+
 Returns `true` if the option is a `Some` value.
 
 ```ts
@@ -280,6 +318,10 @@ assertEquals(x.is_some(), false);
 ```
 
 ### is_some_and
+
+```rust
+pub fn is_some_and(f: (value: T) => boolean): boolean
+```
 
 Checks if the `Option` is `Some` and the value satisfies a predicate
 
@@ -307,6 +349,10 @@ assertEquals(
 
 ### map
 
+```rust
+pub fn map<U>(f: (value: T) => U): Option<U>
+```
+
 Maps an `Option<T>` to `Option<U>` by applying a function `f` to a contained
 value (if `Some`) or returns `None` (if `None`).
 
@@ -327,6 +373,10 @@ assertEquals(
 ```
 
 ### map_or
+
+```rust
+pub fn map_or<U>(default_value: U, f: (value: T) => U): U
+```
 
 Returns the provided default result (if none), or applies a function `f` to the
 contained value (if any).
@@ -351,6 +401,10 @@ assertEquals(
 ```
 
 ### map_or_else
+
+```rust
+pub fn map_or_else<U>(default_f: () => U, f: (value: T) => U): U
+```
 
 Computes a default function result (if none), or applies a different function to
 the contained value (if any).
@@ -380,6 +434,10 @@ assertEquals(
 
 ### or
 
+```rust
+pub fn or(optb: Option<T>): Option<T>
+```
+
 Returns the option if it contains a value, otherwise returns `optb`.
 
 Arguments passed to or are eagerly evaluated; if you are passing the result of a
@@ -407,6 +465,10 @@ assertEquals(x.or(y), x);
 ```
 
 ### or_else
+
+```rust
+pub fn or_else(f: () => Option<T>): Option<T>
+```
 
 Returns the option if it contains a value, otherwise calls `f` and returns the
 result.
@@ -439,6 +501,10 @@ assertEquals(
 
 ### unwrap
 
+```rust
+pub fn unwrap(): T
+```
+
 Returns the contained `Some` value. Panics if it is `None`.
 
 Because this function may throw a TypeError, its use is generally discouraged.
@@ -459,6 +525,10 @@ assertThrows(() => x.unwrap(), TypeError);
 
 ### unwrap_or
 
+```rust
+pub fn unwrap_or(default_value: T): T
+```
+
 Returns the contained `Some` value or a provided default value.
 
 Arguments passed to `unwrap_or` are eagerly evaluated; if you are passing the
@@ -476,6 +546,10 @@ assertEquals(x.unwrap_or(1), 1);
 ```
 
 ### unwrap_or_else
+
+```rust
+pub fn unwrap_or_else(f: () => T): T
+```
 
 Returns the contained Some value or computes it from a closure.
 
@@ -499,6 +573,10 @@ assertEquals(
 ```
 
 ### xor
+
+```rust
+pub fn xor(optb: Option<T>): Option<T>
+```
 
 Returns `Some` if exactly one of itself, `optb` is `Some`, otherwise returns
 `None`.

@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "license": "MIT",
   "tasks": {
-    "check": "deno fmt && deno lint && deno test"
+    "check": "deno fmt && deno lint && deno test",
+    "doc": "documentation build src/option/option.ts --shallow --parse-extension ts -f html -o docs"
   },
   "exports": {
     ".": "./src/index.ts",

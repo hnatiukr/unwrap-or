@@ -167,6 +167,8 @@ Deno.test("Option :: or", () => {
 
   x = None;
   y = Some(100);
+  // @ts-expect-error: The 'option' is statically known to be 'None', so TypeScript can't see the 'or' as valid.
+  // This code path is unreachable, but included for exhaustiveness or future-proofing.
   assertEquals(x.or(y), y);
 
   x = Some(2);
@@ -175,6 +177,8 @@ Deno.test("Option :: or", () => {
 
   x = None;
   y = None;
+  // @ts-expect-error: The 'option' is statically known to be 'None', so TypeScript can't see the 'or' as valid.
+  // This code path is unreachable, but included for exhaustiveness or future-proofing.
   assertEquals(x.or(y), x);
 });
 
@@ -188,10 +192,14 @@ Deno.test("Option :: or_else", () => {
 
   x = None;
   y = Some("vikings");
+  // @ts-expect-error: The 'option' is statically known to be 'None', so TypeScript can't see the 'or_else' as valid.
+  // This code path is unreachable, but included for exhaustiveness or future-proofing.
   assertEquals(x.or_else(() => y), y);
 
   x = None;
   y = None;
+  // @ts-expect-error: The 'option' is statically known to be 'None', so TypeScript can't see the 'or_else' as valid.
+  // This code path is unreachable, but included for exhaustiveness or future-proofing.
   assertEquals(x.or_else(() => y), x);
 });
 
@@ -234,6 +242,8 @@ Deno.test("Option :: unwrap_or", () => {
   assertEquals(x.unwrap_or(1), 42);
 
   x = None;
+  // @ts-expect-error: The 'option' is statically known to be 'None', so TypeScript can't see the 'or' as valid.
+  // This code path is unreachable, but included for exhaustiveness or future-proofing.
   assertEquals(x.unwrap_or(1), 1);
 });
 
@@ -245,6 +255,8 @@ Deno.test("Option :: unwrap_or", () => {
   assertEquals(x.unwrap_or_else(() => 2 * k), 4);
 
   x = None;
+  // @ts-expect-error: The 'option' is statically known to be 'None', so TypeScript can't see the 'or_else' as valid.
+  // This code path is unreachable, but included for exhaustiveness or future-proofing.
   assertEquals(x.unwrap_or_else(() => 2 * k), 20);
 });
 
@@ -258,6 +270,8 @@ Deno.test("Option :: xor", () => {
 
   x = None;
   y = Some(100);
+  // @ts-expect-error: The 'option' is statically known to be 'None', so TypeScript can't see the 'or' as valid.
+  // This code path is unreachable, but included for exhaustiveness or future-proofing.
   assertEquals(x.xor(y), y);
 
   x = Some(2);
@@ -266,5 +280,7 @@ Deno.test("Option :: xor", () => {
 
   x = None;
   y = None;
+  // @ts-expect-error: The 'option' is statically known to be 'None', so TypeScript can't see the 'or' as valid.
+  // This code path is unreachable, but included for exhaustiveness or future-proofing.
   assertEquals(x.xor(y), y);
 });

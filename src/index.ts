@@ -1,4 +1,4 @@
-export { match } from "./match/index.ts";
+// export { match } from "./match/index.ts";
 
 export { None, Some } from "./option/index.ts";
 export type { Option } from "./option/index.ts";
