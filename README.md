@@ -193,15 +193,16 @@ wrapped value and returns:
 - `Some(t)` if predicate returns `true` (where `t` is the wrapped value)
 - `None` if predicate returns `false`
 
-  ```ts
-  ```
+```ts
+function is_even(n: number): boolean {
+  return n % 2 == 0;
+}
 
-function is_even(n: number): boolean { return n % 2 == 0; }
+assertEquals(None.filter(is_even), None);
+assertEquals(Some(3).filter(is_even), None);
+assertEquals(Some(4).filter(is_even), Some(4));
+```
 
-assertEquals(None.filter(is_even), None); assertEquals(Some(3).filter(is_even),
-None); assertEquals(Some(4).filter(is_even), Some(4));
-
-````
 ### inspect
 
 Calls a function with a reference to the contained value if `Some`.
@@ -209,20 +210,19 @@ Calls a function with a reference to the contained value if `Some`.
 Returns the original option.
 
 ```ts
-
 function get<T>(arr: T[], idx: number): Option<T> {
-const item = arr.at(idx);
-return item !== undefined ? Some(item) : None;
+  const item = arr.at(idx);
+  return item !== undefined ? Some(item) : None;
 }
 
 const list = [1, 2, 3, 4, 5];
 
 const x = get(list, 1)
-.inspect((v) => console.log("got: " + v))
-.expect("list should be long enough");
+  .inspect((v) => console.log("got: " + v))
+  .expect("list should be long enough");
 
 assertEquals(x, 2);
-````
+```
 
 ### is_none
 
