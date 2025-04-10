@@ -1,16 +1,7 @@
 const sid = Symbol.for("@@option/some");
 const nid = Symbol.for("@@option/none");
 
-/**
- * Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
- *
- * @version 1.1.1
- *
- * @example
- *
- * let option: Option<number> = randInt > 50 ? Some(randInt) : None
- */
-export class Option_API<T> {
+export class OptionConstructor<T> {
   [key: symbol]: T;
 
   public constructor(_id: typeof sid | typeof nid, value: T) {
@@ -22,7 +13,7 @@ export class Option_API<T> {
    *
    * Arguments passed to and are eagerly evaluated; if you are passing the result of a function call, it is recommended to use `and_then`, which is lazily evaluated.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -56,7 +47,7 @@ export class Option_API<T> {
    *
    * Some languages call this operation `flatmap`.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -88,7 +79,7 @@ export class Option_API<T> {
    *
    * Recommend that expect messages are used to describe the reason you expect the `Option` should be `Some`.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -114,7 +105,7 @@ export class Option_API<T> {
    * - `Some(t)` if predicate returns `true` (where `t` is the wrapped value)
    * - `None` if predicate returns `false`
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -139,7 +130,7 @@ export class Option_API<T> {
    *
    * Returns the original option.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -165,7 +156,7 @@ export class Option_API<T> {
   /**
    * Returns `true` if the option is a `None` value.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -184,7 +175,7 @@ export class Option_API<T> {
   /**
    * Returns `true` if the option is a `None` or the value inside of it matches a predicate.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -206,7 +197,7 @@ export class Option_API<T> {
   /**
    * Returns `true` if the option is a `Some` value.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -225,7 +216,7 @@ export class Option_API<T> {
   /**
    * Checks if the `Option` is `Some` and the value satisfies a predicate
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -247,7 +238,7 @@ export class Option_API<T> {
   /**
    * Maps an `Option<T>` to `Option<U>` by applying a function `f` to a contained value (if `Some`) or returns `None` (if `None`).
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -268,7 +259,7 @@ export class Option_API<T> {
    *
    * If you are passing the result of a function call, it is recommended to use `map_or_else`, which is lazily evaluated.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -287,7 +278,7 @@ export class Option_API<T> {
   /**
    * Computes a default function result (if none), or applies a different function to the contained value (if any).
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -313,7 +304,7 @@ export class Option_API<T> {
    *
    * Arguments passed to or are eagerly evaluated; if you are passing the result of a function call, it is recommended to use `or_else`, which is lazily evaluated.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -343,7 +334,7 @@ export class Option_API<T> {
   /**
    * Returns the option if it contains a value, otherwise calls `f` and returns the result.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -369,7 +360,7 @@ export class Option_API<T> {
   /**
    * Returns a string representation of the `Option`, useful for implicit string coercion.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -436,7 +427,7 @@ export class Option_API<T> {
    *
    * Instead, prefer to use try/catch, promise or pattern matching and handle the `None` case explicitly, or call `unwrap_or` or `unwrap_or_else`.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -461,7 +452,7 @@ export class Option_API<T> {
    *
    * Arguments passed to `unwrap_or` are eagerly evaluated; if you are passing the result of a function call, it is recommended to use `unwrap_or_else`, which is lazily evaluated.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -482,7 +473,7 @@ export class Option_API<T> {
    *
    * Useful for expensive default computations.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -502,7 +493,7 @@ export class Option_API<T> {
   /**
    * Returns `Some` if exactly one of itself, `optb` is `Some`, otherwise returns `None`.
    *
-   * @version 1.1.1
+   * @version 1.0.0
    *
    * @example
    *
@@ -537,26 +528,27 @@ export class Option_API<T> {
 /**
  * Some value of type T.
  *
- * @version 1.1.1
+ * @version 1.0.0
  *
  * @example
  *
  * let x: Option<number> = Some(42)
  */
-export interface Some<T> extends Option_API<T> {}
-export const Some = <T>(value: T) => new Option_API(sid, value) as Some<T>;
+export interface Some<T> extends OptionConstructor<T> {}
+export const Some = <T>(value: T) =>
+  new OptionConstructor(sid, value) as Some<T>;
 
 /**
  * No value.
  *
- * @version 1.1.1
+ * @version 1.0.0
  *
  * @example
  *
  * let x: Option<number> = None
  */
-export interface None extends Option_API<never> {}
-export const None: None = new Option_API(
+export interface None extends OptionConstructor<never> {}
+export const None: None = new OptionConstructor(
   nid,
   undefined as never,
 ) as None;
@@ -564,7 +556,7 @@ export const None: None = new Option_API(
 /**
  * Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
  *
- * @version 1.1.1
+ * @version 1.0.0
  *
  * @example
  *

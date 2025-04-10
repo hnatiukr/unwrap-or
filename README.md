@@ -102,10 +102,9 @@ deno add jsr:@lab/unwrap-or
 
 ### and
 
-public ```ts
-and<U>(optb: Option<U>): Option<T> | Option<U>
-
-````
+```rust
+pub fn and<U>(optb: Option<U>): Option<T> | Option<U>
+```
 
 Returns `None` if the option is `None`, otherwise returns `optb`.
 
@@ -133,7 +132,7 @@ assertEquals(x.and(y), y);
 x = None;
 y = None;
 assertEquals(x.and(y), x);
-````
+```
 
 ### and_then
 
