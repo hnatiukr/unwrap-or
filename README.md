@@ -10,7 +10,7 @@ A TypeScript implementation of Rust's Option and Result types.
 
 <p align="center">
   <sub>
-      <1kB | no deps | tree-shakeable | side-effect free
+      no deps | tree-shakeable | side-effect free
   </sub>
 </p>
 
