@@ -428,6 +428,8 @@ export interface Option<T> {
   xor(optb: Option<T>): Option<T>;
 }
 
+declare const sid: unique symbol;
+
 /**
  * Some value of type T.
  *
@@ -438,9 +440,11 @@ export interface Option<T> {
  * let x = Some(42)
  */
 type Some<T> = {
-  [symbol]: T;
+  [sid]: T;
 };
 declare function Some<T>(value: T): Some<T>;
+
+declare const nid: unique symbol;
 
 /**
  * No value.
@@ -452,6 +456,6 @@ declare function Some<T>(value: T): Some<T>;
  * let x = None
  */
 type None = {
-  [symbol]: undefined;
+  [nid]: undefined;
 };
 declare const None: None;
