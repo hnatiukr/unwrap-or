@@ -26,12 +26,7 @@ A TypeScript implementation of Rust's Option and Result types.
   </a>
 </p>
 
-It is a playground library that closely mirrors **Rust**'s
-[Option](https://doc.rust-lang.org/std/option/enum.Option.html) and
-[Result](https://doc.rust-lang.org/std/result/enum.Result.html) API. While
-created primarily for fun and learning, it's robust enough for real-world
-applications. It allows for safer, more expressive handling of optional values
-through a monadic interface.
+It is a playground library that closely mirrors **Rust**'s [Option](https://doc.rust-lang.org/std/option/enum.Option.html) and [Result](https://doc.rust-lang.org/std/result/enum.Result.html) API. While created primarily for fun and learning, it's robust enough for real-world applications. It allows for safer, more expressive handling of optional values through a monadic interface. Snake_case is used for the plausibility of the original.
 
 Use it to:
 
@@ -40,12 +35,7 @@ Use it to:
 - chain transformations on values that might not exist
 - handle errors gracefully
 
-The name `unwrap-or` is a playful reference to both the `unwrap_or` method found
-in the `Option`/`Result` types, and a hint at the package's contents - _"-OR"_
-standing for **O**ption and **R**esult types. It also cleverly references the
-logical `OR` operation, reflecting how these monadic types encapsulate one of
-two possible states - either `Some` or `None` for `Option`; either `Ok` or `Err`
-for `Result`.
+The name `unwrap-or` is a playful reference to both the `unwrap_or` method found in the `Option`/`Result` types, and a hint at the package's contents - _"-OR"_ standing for **O**ption and **R**esult types. It also cleverly references the logical `OR` operation, reflecting how these monadic types encapsulate one of two possible states - either `Some` or `None` for `Option`; either `Ok` or `Err` for `Result`.
 
 ## Installation
 
@@ -108,8 +98,7 @@ pub fn and<U>(optb: Option<U>): Option<T> | Option<U>
 
 Returns `None` if the option is `None`, otherwise returns `optb`.
 
-Arguments passed to and are eagerly evaluated; if you are passing the result of
-a function call, it is recommended to use `and_then`, which is lazily evaluated.
+Arguments passed to and are eagerly evaluated; if you are passing the result of a function call, it is recommended to use `and_then`, which is lazily evaluated.
 
 **Example**
 
@@ -140,8 +129,7 @@ assertEquals(x.and(y), x);
 pub fn and_then<U>(f: (value: T) => Option<U>): Option<T> | Option<U>
 ```
 
-Returns `None` if the option is `None`, otherwise calls function `f` with the
-wrapped value and returns the result.
+Returns `None` if the option is `None`, otherwise calls function `f` with the wrapped value and returns the result.
 
 Often used to chain fallible operations that may return `None`.
 
@@ -186,11 +174,9 @@ assertEquals(
 pub fn expect(msg: string): T
 ```
 
-Returns the contained `Some` value. Throws an error if the value is a `None`
-with a custom message provided by `msg`.
+Returns the contained `Some` value. Throws an error if the value is a `None` with a custom message provided by `msg`.
 
-Recommend that expect messages are used to describe the reason you expect the
-`Option` should be `Some`.
+Recommend that expect messages are used to describe the reason you expect the `Option` should be `Some`.
 
 ```ts
 let x: Option<string>;
@@ -208,8 +194,7 @@ assertThrows(() => x.expect("should rerurn string value"), Error);
 pub fn filter(predicate: (value: T) => boolean): Option<T>
 ```
 
-Returns `None` if the option is `None`, otherwise calls predicate with the
-wrapped value and returns:
+Returns `None` if the option is `None`, otherwise calls predicate with the wrapped value and returns:
 
 - `Some(t)` if predicate returns `true` (where `t` is the wrapped value)
 - `None` if predicate returns `false`
@@ -273,8 +258,7 @@ assertEquals(x.is_none(), true);
 pub fn is_none_or(f: (value: T) => boolean): boolean
 ```
 
-Returns `true` if the option is a `None` or the value inside of it matches a
-predicate.
+Returns `true` if the option is a `None` or the value inside of it matches a predicate.
 
 ```ts
 let x: Option<number>;
@@ -322,7 +306,7 @@ assertEquals(x.is_some(), false);
 pub fn is_some_and(f: (value: T) => boolean): boolean
 ```
 
-Checks if the `Option` is `Some` and the value satisfies a predicate
+Checks if the `Option` is `Some` and the value satisfies a predicate.
 
 ```ts
 let x: Option<number>;
@@ -352,8 +336,7 @@ assertEquals(
 pub fn map<U>(f: (value: T) => U): Option<U>
 ```
 
-Maps an `Option<T>` to `Option<U>` by applying a function `f` to a contained
-value (if `Some`) or returns `None` (if `None`).
+Maps an `Option<T>` to `Option<U>` by applying a function `f` to a contained value (if `Some`) or returns `None` (if `None`).
 
 ```ts
 let x: Option<string>;
@@ -377,11 +360,9 @@ assertEquals(
 pub fn map_or<U>(default_value: U, f: (value: T) => U): U
 ```
 
-Returns the provided default result (if none), or applies a function `f` to the
-contained value (if any).
+Returns the provided default result (if none), or applies a function `f` to the contained value (if any).
 
-If you are passing the result of a function call, it is recommended to use
-`map_or_else`, which is lazily evaluated.
+If you are passing the result of a function call, it is recommended to use `map_or_else`, which is lazily evaluated.
 
 ```ts
 let x: Option<string>;
@@ -405,8 +386,7 @@ assertEquals(
 pub fn map_or_else<U>(default_f: () => U, f: (value: T) => U): U
 ```
 
-Computes a default function result (if none), or applies a different function to
-the contained value (if any).
+Computes a default function result (if none), or applies a different function to the contained value (if any).
 
 ```ts
 const k = 21;
@@ -439,8 +419,7 @@ pub fn or(optb: Option<T>): Option<T>
 
 Returns the option if it contains a value, otherwise returns `optb`.
 
-Arguments passed to or are eagerly evaluated; if you are passing the result of a
-function call, it is recommended to use `or_else`, which is lazily evaluated.
+Arguments passed to or are eagerly evaluated; if you are passing the result of a function call, it is recommended to use `or_else`, which is lazily evaluated.
 
 ```ts
 let x: Option<number>;
@@ -469,8 +448,7 @@ assertEquals(x.or(y), x);
 pub fn or_else(f: () => Option<T>): Option<T>
 ```
 
-Returns the option if it contains a value, otherwise calls `f` and returns the
-result.
+Returns the option if it contains a value, otherwise calls `f` and returns the result.
 
 ```ts
 let x: Option<string>;
@@ -506,11 +484,9 @@ pub fn unwrap(): T
 
 Returns the contained `Some` value. Panics if it is `None`.
 
-Because this function may throw a TypeError, its use is generally discouraged.
-Errors are meant for unrecoverable errors, and do abort the entire program.
+Because this function may throw a TypeError, its use is generally discouraged. Errors are meant for unrecoverable errors, and do abort the entire program.
 
-Instead, prefer to use try/catch, promise or pattern matching and handle the
-`None` case explicitly, or call `unwrap_or` or `unwrap_or_else`.
+Instead, prefer to use try/catch, promise or pattern matching and handle the `None` case explicitly, or call `unwrap_or` or `unwrap_or_else`.
 
 ```ts
 let x: Option<string>;
@@ -530,9 +506,7 @@ pub fn unwrap_or(default_value: T): T
 
 Returns the contained `Some` value or a provided default value.
 
-Arguments passed to `unwrap_or` are eagerly evaluated; if you are passing the
-result of a function call, it is recommended to use `unwrap_or_else`, which is
-lazily evaluated.
+Arguments passed to `unwrap_or` are eagerly evaluated; if you are passing the result of a function call, it is recommended to use `unwrap_or_else`, which is lazily evaluated.
 
 ```ts
 let x: Option<number>;
@@ -577,8 +551,7 @@ assertEquals(
 pub fn xor(optb: Option<T>): Option<T>
 ```
 
-Returns `Some` if exactly one of itself, `optb` is `Some`, otherwise returns
-`None`.
+Returns `Some` if exactly one of itself, `optb` is `Some`, otherwise returns `None`.
 
 ```ts
 let x: Option<number>;
