@@ -108,19 +108,19 @@ let y: Option<string>;
 
 x = Some(2);
 y = None;
-assertEquals(x.and(y), y);
+assert_eq!(x.and(y), y);
 
 x = None;
 y = Some("foo");
-assertEquals(x.and(y), x);
+assert_eq!(x.and(y), x);
 
 x = Some(2);
 y = Some("foo");
-assertEquals(x.and(y), y);
+assert_eq!(x.and(y), y);
 
 x = None;
 y = None;
-assertEquals(x.and(y), x);
+assert_eq!(x.and(y), x);
 ```
 
 ### and_then
@@ -141,28 +141,28 @@ let y: Option<string>;
 
 x = Some("some value");
 y = None;
-assertEquals(
+assert_eq!(
   x.and_then(() => y),
   y,
 );
 
 x = None;
 y = Some("then value");
-assertEquals(
+assert_eq!(
   x.and_then(() => y),
   x,
 );
 
 x = Some("some value");
 y = Some("then value");
-assertEquals(
+assert_eq!(
   x.and_then(() => y),
   y,
 );
 
 x = None;
 y = None;
-assertEquals(
+assert_eq!(
   x.and_then(() => y),
   x,
 );
@@ -182,10 +182,10 @@ Recommend that expect messages are used to describe the reason you expect the `O
 let x: Option<string>;
 
 x = Some("value");
-assertEquals(x.expect("should rerurn string value"), "value");
+assert_eq!(x.expect("should rerurn string value"), "value");
 
 x = None;
-assertThrows(() => x.expect("should rerurn string value"), Error);
+assert_err!(() => x.expect("should rerurn string value"), Error);
 ```
 
 ### filter
@@ -204,9 +204,9 @@ function is_even(n: number): boolean {
   return n % 2 == 0;
 }
 
-assertEquals(None.filter(is_even), None);
-assertEquals(Some(3).filter(is_even), None);
-assertEquals(Some(4).filter(is_even), Some(4));
+assert_eq!(None.filter(is_even), None);
+assert_eq!(Some(3).filter(is_even), None);
+assert_eq!(Some(4).filter(is_even), Some(4));
 ```
 
 ### inspect
@@ -228,10 +228,10 @@ function get<T>(arr: T[], idx: number): Option<T> {
 const list = [1, 2, 3, 4, 5];
 
 const x = get(list, 1)
-  .inspect((v) => console.log("got: " + v))
+  .inspect((_v) => console.log)
   .expect("list should be long enough");
 
-assertEquals(x, 2);
+assert_eq!(x, 2);
 ```
 
 ### is_none
@@ -246,10 +246,10 @@ Returns `true` if the option is a `None` value.
 let x: Option<number>;
 
 x = Some(2);
-assertEquals(x.is_none(), false);
+assert_eq!(x.is_none(), false);
 
 x = None;
-assertEquals(x.is_none(), true);
+assert_eq!(x.is_none(), true);
 ```
 
 ### is_none_or
@@ -264,19 +264,19 @@ Returns `true` if the option is a `None` or the value inside of it matches a pre
 let x: Option<number>;
 
 x = Some(2);
-assertEquals(
+assert_eq!(
   x.is_none_or((v) => v > 1),
   true,
 );
 
 x = Some(0);
-assertEquals(
+assert_eq!(
   x.is_none_or((v) => v > 1),
   false,
 );
 
 x = None;
-assertEquals(
+assert_eq!(
   x.is_none_or((v) => v > 1),
   true,
 );
@@ -294,10 +294,10 @@ Returns `true` if the option is a `Some` value.
 let x: Option<number>;
 
 x = Some(2);
-assertEquals(x.is_some(), true);
+assert_eq!(x.is_some(), true);
 
 x = None;
-assertEquals(x.is_some(), false);
+assert_eq!(x.is_some(), false);
 ```
 
 ### is_some_and
@@ -312,19 +312,19 @@ Checks if the `Option` is `Some` and the value satisfies a predicate.
 let x: Option<number>;
 
 x = Some(2);
-assertEquals(
+assert_eq!(
   x.is_some_and((v) => v > 1),
   true,
 );
 
 x = Some(0);
-assertEquals(
+assert_eq!(
   x.is_some_and((v) => v > 1),
-  true,
+  false,
 );
 
 x = None;
-assertEquals(
+assert_eq!(
   x.is_some_and((v) => v > 1),
   false,
 );
@@ -342,14 +342,14 @@ Maps an `Option<T>` to `Option<U>` by applying a function `f` to a contained val
 let x: Option<string>;
 
 x = Some("Hello, World!");
-assertEquals(
+assert_eq!(
   x.map((s) => s.length),
   Some(13),
 );
 
 x = None;
-assertEquals(
-  x.map((s) => s.length),
+assert_eq!(
+  x.map((s) => s.length), // option is known to be None
   None,
 );
 ```
@@ -368,14 +368,14 @@ If you are passing the result of a function call, it is recommended to use `map_
 let x: Option<string>;
 
 x = Some("foo");
-assertEquals(
+assert_eq!(
   x.map_or(42, (v) => v.length),
   3,
 );
 
 x = None;
-assertEquals(
-  x.map_or(42, (v) => v.length),
+assert_eq!(
+  x.map_or(42, (v) => v.length), // option is known to be None
   42,
 );
 ```
@@ -393,7 +393,7 @@ const k = 21;
 let x: Option<string>;
 
 x = Some("foo");
-assertEquals(
+assert_eq!(
   x.map_or_else(
     () => 2 * k,
     (v) => v.length,
@@ -402,10 +402,10 @@ assertEquals(
 );
 
 x = None;
-assertEquals(
+assert_eq!(
   x.map_or_else(
     () => 2 * k,
-    (v) => v.length,
+    (v) => v.length, // option is known to be None
   ),
   42,
 );
@@ -427,19 +427,19 @@ let y: Option<number>;
 
 x = Some(2);
 y = None;
-assertEquals(x.or(y), x);
+assert_eq!(x.or(y), x);
 
 x = None;
 y = Some(100);
-assertEquals(x.or(y), y);
+assert_eq!(x.or(y), y);
 
 x = Some(2);
 y = Some(100);
-assertEquals(x.or(y), x);
+assert_eq!(x.or(y), x);
 
 x = None;
 y = None;
-assertEquals(x.or(y), x);
+assert_eq!(x.or(y), x);
 ```
 
 ### or_else
@@ -456,21 +456,21 @@ let y: Option<string>;
 
 x = Some("barbarians");
 y = Some("vikings");
-assertEquals(
+assert_eq!(
   x.or_else(() => y),
   x,
 );
 
 x = None;
 y = Some("vikings");
-assertEquals(
+assert_eq!(
   x.or_else(() => y),
   y,
 );
 
 x = None;
 y = None;
-assertEquals(
+assert_eq!(
   x.or_else(() => y),
   x,
 );
@@ -492,10 +492,10 @@ Instead, prefer to use try/catch, promise or pattern matching and handle the `No
 let x: Option<string>;
 
 x = Some("air");
-assertEquals(x.unwrap(), "air");
+assert_eq!(x.unwrap(), "air");
 
 x = None;
-assertThrows(() => x.unwrap(), TypeError);
+assert_err!(() => x.unwrap(), TypeError);
 ```
 
 ### unwrap_or
@@ -512,10 +512,10 @@ Arguments passed to `unwrap_or` are eagerly evaluated; if you are passing the re
 let x: Option<number>;
 
 x = Some(42);
-assertEquals(x.unwrap_or(1), 42);
+assert_eq!(x.unwrap_or(1), 42);
 
 x = None;
-assertEquals(x.unwrap_or(1), 1);
+assert_eq!(x.unwrap_or(1), 1);
 ```
 
 ### unwrap_or_else
@@ -533,13 +533,13 @@ const k = 10;
 let x: Option<number>;
 
 x = Some(4);
-assertEquals(
+assert_eq!(
   x.unwrap_or_else(() => 2 * k),
   4,
 );
 
 x = None;
-assertEquals(
+assert_eq!(
   x.unwrap_or_else(() => 2 * k),
   20,
 );
@@ -559,19 +559,19 @@ let y: Option<number>;
 
 x = Some(2);
 y = None;
-assertEquals(x.xor(y), x);
+assert_eq!(x.xor(y), x);
 
 x = None;
 y = Some(100);
-assertEquals(x.xor(y), y);
+assert_eq!(x.xor(y), y);
 
 x = Some(2);
 y = Some(100);
-assertEquals(x.xor(y), None);
+assert_eq!(x.xor(y), None);
 
 x = None;
 y = None;
-assertEquals(x.xor(y), y);
+assert_eq!(x.xor(y), y);
 ```
 
 ## Result
