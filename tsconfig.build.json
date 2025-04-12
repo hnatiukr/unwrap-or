@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+
+    "strict": true,
+    "outDir": "lib",
+    "rootDir": "src",
+    "declaration": true,
+    "declarationDir": "lib"
+  },
+
+  "include": ["src"],
+  "exclude": ["node_modules"],
+
+  "tsc-alias": {
+    "verbose": false,
+    "resolveFullPaths": true
+  }
+}
