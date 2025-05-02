@@ -145,15 +145,6 @@ export class SomeConstructor<T> implements OptionConstructor<T> {
  * let x: Option<number> = Some(42)
  */
 export interface Some<T> extends SomeConstructor<T> {}
-/**
- * Some value of type T.
- *
- * @since 0.1.1-alpha
- *
- * @example
- *
- * let x: Option<number> = Some(42)
- */
-export function Some<T>(value: T) {
+export function Some<T>(value: T): Some<T> {
   return new SomeConstructor(value) as Some<T>;
 }
