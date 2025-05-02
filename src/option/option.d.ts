@@ -1,37 +1,40 @@
 /**
  * @module Option
- * @version 0.1.0-alpha
+ * @version 0.1.1-alpha
  * @author Roman Hnatiuk <hnatiukr@pm.me>
  * @see https://github.com/hnatiukr/unwrap-or
  * @license MIT
- *
- * It is a playground library that closely mirrors Rust's Option and Result API.
- * While created primarily for fun and learning, it's robust enough for real-world applications.
- * It allows for safer, more expressive handling of optional values through a monadic interface.
- *
- * Use it to:
- *
- * - eliminate null checks
- * - make optional logic explicit
- * - chain transformations on values that might not exist
- * - handle errors gracefully
  */
+
+import type { Some } from "./some";
+import type { None } from "./none";
 
 /**
  * Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
  *
- * @since 1.0.0
+ * @since 0.1.1-alpha
+ *
+ * @example
+ *
+ * let option: Option<number> = randInt > 50 ? Some(randInt) : None
+ */
+export type Option<T> = Some<T> | None;
+
+/**
+ * Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
+ *
+ * @since 0.1.1-alpha
  *
  * @param T
  * @type {(Some<T>|None)}
  */
-export interface Option<T> {
+export interface OptionConstructor<T> {
   /**
    * Returns `None` if the option is `None`, otherwise returns `optb`.
    *
    * Arguments passed to and are eagerly evaluated if you are passing the result of a function call, it is recommended to use `and_then`, which is lazily evaluated.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -54,7 +57,9 @@ export interface Option<T> {
    * y = None
    * assertEquals(x.and(y), x)
    */
-  and<U>(optb: Option<U>): Option<T> | Option<U>;
+  and<U>(
+    optb: OptionConstructor<U>,
+  ): OptionConstructor<T> | OptionConstructor<U>;
 
   /**
    * Returns `None` if the option is `None`, otherwise calls function `f` with the wrapped value and returns the result.
@@ -63,7 +68,7 @@ export interface Option<T> {
    *
    * Some languages call this operation `flatmap`.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -86,14 +91,16 @@ export interface Option<T> {
    * y = None
    * assertEquals(x.and_then(() => y), x)
    */
-  and_then<U>(f: (value: T) => Option<U>): Option<T> | Option<U>;
+  and_then<U>(
+    f: (value: T) => OptionConstructor<U>,
+  ): OptionConstructor<T> | OptionConstructor<U>;
 
   /**
    * Returns the contained `Some` value. Throws an error if the value is a `None` with a custom message provided by `msg`.
    *
    * Recommend that expect messages are used to describe the reason you expect the `Option` should be `Some`.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -113,7 +120,7 @@ export interface Option<T> {
    * - `Some(t)` if predicate returns `true` (where `t` is the wrapped value)
    * - `None` if predicate returns `false`
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -125,14 +132,14 @@ export interface Option<T> {
    * assertEquals(Some(3).filter(is_even), None)
    * assertEquals(Some(4).filter(is_even), Some(4))
    */
-  filter(predicate: (value: T) => boolean): Option<T>;
+  filter(predicate: (value: T) => boolean): OptionConstructor<T>;
 
   /**
    * Calls a function with a reference to the contained value if `Some`.
    *
    * Returns the original option.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -149,12 +156,12 @@ export interface Option<T> {
    *
    * assertEquals(x, 2)
    */
-  inspect(f: (value: T) => void): Option<T>;
+  inspect(f: (value: T) => void): OptionConstructor<T>;
 
   /**
    * Returns `true` if the option is a `None` value.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -171,7 +178,7 @@ export interface Option<T> {
   /**
    * Returns `true` if the option is a `None` or the value inside of it matches a predicate.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -191,7 +198,7 @@ export interface Option<T> {
   /**
    * Returns `true` if the option is a `Some` value.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -208,7 +215,7 @@ export interface Option<T> {
   /**
    * Checks if the `Option` is `Some` and the value satisfies a predicate
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -228,7 +235,7 @@ export interface Option<T> {
   /**
    * Maps an `Option<T>` to `Option<U>` by applying a function `f` to a contained value (if `Some`) or returns `None` (if `None`).
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -240,14 +247,14 @@ export interface Option<T> {
    * x = None
    * assertEquals(x.map((s) => s.length), None)
    */
-  map<U>(f: (value: T) => U): Option<U>;
+  map<U>(f: (value: T) => U): OptionConstructor<U>;
 
   /**
    * Returns the provided default result (if none), or applies a function `f` to the contained value (if any).
    *
    * If you are passing the result of a function call, it is recommended to use `map_or_else`, which is lazily evaluated.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -264,7 +271,7 @@ export interface Option<T> {
   /**
    * Computes a default function result (if none), or applies a different function to the contained value (if any).
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -288,7 +295,7 @@ export interface Option<T> {
    *
    * Arguments passed to or are eagerly evaluated if you are passing the result of a function call, it is recommended to use `or_else`, which is lazily evaluated.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -311,12 +318,12 @@ export interface Option<T> {
    * y = None
    * assertEquals(x.or(y), x)
    */
-  or(optb: Option<T>): Option<T>;
+  or(optb: OptionConstructor<T>): OptionConstructor<T>;
 
   /**
    * Returns the option if it contains a value, otherwise calls `f` and returns the result.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -335,7 +342,7 @@ export interface Option<T> {
    * y = None
    * assertEquals(x.or_else(() => y), x)
    */
-  or_else(f: () => Option<T>): Option<T>;
+  or_else(f: () => OptionConstructor<T>): OptionConstructor<T>;
 
   // TODO: transpose(): Result<Option<T>, E>
 
@@ -346,7 +353,7 @@ export interface Option<T> {
    *
    * Instead, prefer to use try/catch, promise or pattern matching and handle the `None` case explicitly, or call `unwrap_or` or `unwrap_or_else`.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -365,7 +372,7 @@ export interface Option<T> {
    *
    * Arguments passed to `unwrap_or` are eagerly evaluated if you are passing the result of a function call, it is recommended to use `unwrap_or_else`, which is lazily evaluated.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -384,7 +391,7 @@ export interface Option<T> {
    *
    * Useful for expensive default computations.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -402,7 +409,7 @@ export interface Option<T> {
   /**
    * Returns `Some` if exactly one of itself, `optb` is `Some`, otherwise returns `None`.
    *
-   * @since 1.0.0
+   * @since 0.1.1-alpha
    *
    * @example
    *
@@ -425,37 +432,5 @@ export interface Option<T> {
    * y = None
    * assertEquals(x.xor(y), y)
    */
-  xor(optb: Option<T>): Option<T>;
+  xor(optb: OptionConstructor<T>): OptionConstructor<T>;
 }
-
-declare const sid: unique symbol;
-
-/**
- * Some value of type T.
- *
- * @since 1.0.0
- *
- * @example
- *
- * let x = Some(42)
- */
-type Some<T> = {
-  [sid]: T;
-};
-declare function Some<T>(value: T): Some<T>;
-
-declare const nid: unique symbol;
-
-/**
- * No value.
- *
- * @since 1.0.0
- *
- * @example
- *
- * let x = None
- */
-type None = {
-  [nid]: undefined;
-};
-declare const None: None;
