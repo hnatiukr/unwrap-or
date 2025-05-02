@@ -25,19 +25,8 @@
     "url": "git+https://github.com/hnatiukr/unwrap-or.git"
   },
   "homepage": "https://github.com/hnatiukr/unwrap-or/",
-  "scripts": {
-    "test": "vitest run",
-    "fmt": "prettier --write .",
-    "check:fmt": "prettier --check .",
-    "check:types": "tsc",
-    "check:all": "pnpm run check:fmt && pnpm run check:types",
-    "prebuild": "rimraf lib",
-    "build:dts": "copyfiles --up 1 --all \"./src/**/*.d.ts\" lib",
-    "build:js": "tsc --build tsconfig.build.json",
-    "postbuild:js": "tsc-alias -p tsconfig.build.json",
-    "build": "pnpm run build:dts && pnpm run build:js"
-  },
   "type": "module",
+  "main": "index.js",
   "module": "index.js",
   "types": "index.d.ts",
   "files": [
@@ -53,7 +42,6 @@
   "devDependencies": {
     "copyfiles": "2.4.1",
     "prettier": "3.5.3",
-    "rimraf": "6.0.1",
     "tsc-alias": "1.8.15",
     "typescript": "5.8.3",
     "vitest": "3.1.1"
