@@ -114,13 +114,4 @@ export class NoneConstructor implements OptionConstructor<never> {
  * let x: Option<number> = None
  */
 export interface None extends NoneConstructor {}
-/**
- * No value.
- *
- * @since 0.1.1-alpha
- *
- * @example
- *
- * let x: Option<number> = None
- */
 export const None: None = new NoneConstructor() as None;
