@@ -59,7 +59,7 @@ bun add unwrap-or
 yarn add unwrap-or
 
 # deno
-deno add jsr:@lab/unwrap-or
+deno add npm:unwrap-or
 ```
 
 ## Documentation
@@ -577,6 +577,12 @@ assert_eq!(x.xor(y), y);
 ## Result
 
 coming soon...
+
+## See also
+
+- [fnts](https://github.com/drizzer14/fnts) - minimal functional programming utilities for TypeScript & JavaScript inspired by the `fantasy-land` specification and `Haskell` programming language.
+
+- [ts-expression](https://github.com/hnatiukr/ts-expression) - pair constructor, binary representation, a minimal implementation of `Lisp`'s symbolic expressions (`s-expressions`) for TypeScript.
 
 ## License
 
