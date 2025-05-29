@@ -77,18 +77,24 @@ deno add npm:unwrap-or
   - [.map](#map)
   - [.map_or](#map_or)
   - [.map_or_else](#map_or_else)
-  - [ok_or](#ok_or)
-  - [ok_or_else](#ok_or_else)
+    <!-- - [ok_or](#ok_or) -->
+    <!-- - [ok_or_else](#ok_or_else) -->
   - [.or](#or)
   - [.or_else](#or_else)
-  - [transpose](#transpose)
+  <!-- - [transpose](#transpose) -->
   - [.unwrap](#unwrap)
   - [.unwrap_or](#unwrap_or)
   - [.unwrap_or_else](#unwrap_or_else)
   - [.xor](#xor)
-- [Result](#Result)
+  <!-- - [Result](#Result) -->
 
 ## Option
+
+Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
+
+```ts
+import { type Option, Some, None } from "unwrap-or/option";
+```
 
 ### and
 
