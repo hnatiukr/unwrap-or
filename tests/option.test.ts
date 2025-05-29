@@ -74,9 +74,16 @@ test("Option :: filter", () => {
     return n % 2 == 0;
   }
 
-  assert_eq!(None.filter(is_even), None);
-  assert_eq!(Some(3).filter(is_even), None);
-  assert_eq!(Some(4).filter(is_even), Some(4));
+  let x: Option<number>;
+
+  x = None;
+  assert_eq!(x.filter(is_even), None);
+
+  x = Some(3);
+  assert_eq!(x.filter(is_even), None);
+
+  x = Some(4);
+  assert_eq!(x.filter(is_even), Some(4));
 });
 
 test("Option :: inspect", () => {
@@ -169,7 +176,6 @@ test("Option :: map", () => {
 
   x = None;
   assert_eq!(
-    // @ts-expect-error: option is known to be None; safe to ignore.
     x.map((s) => s.length),
     None,
   );
@@ -186,7 +192,6 @@ test("Option :: map_or", () => {
 
   x = None;
   assert_eq!(
-    // @ts-expect-error: option is known to be None; safe to ignore.
     x.map_or(42, (v) => v.length),
     42,
   );
@@ -209,7 +214,6 @@ test("Option :: map_or_else", () => {
   assert_eq!(
     x.map_or_else(
       () => 2 * k,
-      // @ts-expect-error: option is known to be None; safe to ignore.
       (v) => v.length,
     ),
     42,
