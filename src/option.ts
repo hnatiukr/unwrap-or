@@ -6,8 +6,8 @@
  * @license MIT
  */
 
-import type { Some } from "./some";
-import type { None } from "./none";
+const sid = Symbol.for("@@option/some");
+const nid = Symbol.for("@@option/none");
 
 /**
  * Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
@@ -18,17 +18,33 @@ import type { None } from "./none";
  *
  * let option: Option<number> = randInt > 50 ? Some(randInt) : None
  */
-export type Option<T> = Some<T> | None;
 
 /**
  * Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
  *
  * @since 0.1.1-alpha
- *
- * @param T
- * @type {(Some<T>|None)}
  */
-export interface OptionConstructor<T> {
+export class Option<T> {
+  protected _take(): T {
+    if (this.is_none()) {
+      throw new TypeError("Prevent taking value from `None`.");
+    }
+
+    return (this as any)[sid] as T;
+  }
+
+  public constructor(_id: typeof nid);
+  public constructor(_id: typeof sid, value: T);
+  public constructor(_id: typeof sid | typeof nid, value?: T) {
+    if (_id === sid) {
+      (this as any)[_id] = value;
+    } else if (_id === nid) {
+      (this as any)[_id] = undefined;
+    } else {
+      throw new TypeError("Unknown constructor id");
+    }
+  }
+
   /**
    * Returns `None` if the option is `None`, otherwise returns `optb`.
    *
@@ -57,9 +73,13 @@ export interface OptionConstructor<T> {
    * y = None
    * assertEquals(x.and(y), x)
    */
-  and<U>(
-    optb: OptionConstructor<U>,
-  ): OptionConstructor<T> | OptionConstructor<U>;
+  public and<U>(optb: Option<U>): Option<T | U> {
+    if (this.is_some()) {
+      return optb;
+    }
+
+    return new Option<T>(nid);
+  }
 
   /**
    * Returns `None` if the option is `None`, otherwise calls function `f` with the wrapped value and returns the result.
@@ -91,9 +111,13 @@ export interface OptionConstructor<T> {
    * y = None
    * assertEquals(x.and_then(() => y), x)
    */
-  and_then<U>(
-    f: (value: T) => OptionConstructor<U>,
-  ): OptionConstructor<T> | OptionConstructor<U>;
+  public and_then<U>(f: (value: T) => Option<U>): Option<T | U> {
+    if (this.is_some()) {
+      return f(this._take());
+    }
+
+    return new Option<T>(nid);
+  }
 
   /**
    * Returns the contained `Some` value. Throws an error if the value is a `None` with a custom message provided by `msg`.
@@ -112,7 +136,13 @@ export interface OptionConstructor<T> {
    * x = None
    * assertThrows(() => x.expect("should rerurn string value"), Error)
    */
-  expect(msg: string): T;
+  public expect(msg: string): T {
+    if (this.is_some()) {
+      return this._take();
+    }
+
+    throw new Error(msg);
+  }
 
   /**
    * Returns `None` if the option is `None`, otherwise calls predicate with the wrapped value and returns:
@@ -132,7 +162,13 @@ export interface OptionConstructor<T> {
    * assertEquals(Some(3).filter(is_even), None)
    * assertEquals(Some(4).filter(is_even), Some(4))
    */
-  filter(predicate: (value: T) => boolean): OptionConstructor<T>;
+  public filter(predicate: (value: T) => boolean): Option<T> {
+    if (this.is_some() && predicate(this._take())) {
+      return new Option<T>(sid, this._take());
+    }
+
+    return new Option<T>(nid);
+  }
 
   /**
    * Calls a function with a reference to the contained value if `Some`.
@@ -156,7 +192,13 @@ export interface OptionConstructor<T> {
    *
    * assertEquals(x, 2)
    */
-  inspect(f: (value: T) => void): OptionConstructor<T>;
+  public inspect(f: (value: T) => void): Option<T> {
+    if (this.is_some()) {
+      f(this._take());
+    }
+
+    return this;
+  }
 
   /**
    * Returns `true` if the option is a `None` value.
@@ -173,7 +215,9 @@ export interface OptionConstructor<T> {
    * x = None
    * assertEquals(x.is_none(), true)
    */
-  is_none(): boolean;
+  public is_none(): boolean {
+    return nid in this;
+  }
 
   /**
    * Returns `true` if the option is a `None` or the value inside of it matches a predicate.
@@ -193,7 +237,13 @@ export interface OptionConstructor<T> {
    * x = None
    * assertEquals(x.is_none_or((v) => v > 1), true)
    */
-  is_none_or(f: (value: T) => boolean): boolean;
+  public is_none_or(f: (value: T) => boolean): boolean {
+    if (this.is_some()) {
+      return f(this._take());
+    }
+
+    return true;
+  }
 
   /**
    * Returns `true` if the option is a `Some` value.
@@ -210,7 +260,9 @@ export interface OptionConstructor<T> {
    * x = None
    * assertEquals(x.is_some(), false)
    */
-  is_some(): boolean;
+  public is_some(): boolean {
+    return sid in this;
+  }
 
   /**
    * Checks if the `Option` is `Some` and the value satisfies a predicate
@@ -230,7 +282,13 @@ export interface OptionConstructor<T> {
    * x = None
    * assertEquals(x.is_some_and((v) => v > 1), false)
    */
-  is_some_and(f: (value: T) => boolean): boolean;
+  public is_some_and(f: (value: T) => boolean): boolean {
+    if (this.is_some()) {
+      return f(this._take());
+    }
+
+    return false;
+  }
 
   /**
    * Maps an `Option<T>` to `Option<U>` by applying a function `f` to a contained value (if `Some`) or returns `None` (if `None`).
@@ -247,7 +305,13 @@ export interface OptionConstructor<T> {
    * x = None
    * assertEquals(x.map((s) => s.length), None)
    */
-  map<U>(f: (value: T) => U): OptionConstructor<U>;
+  public map<U>(f: (value: T) => U): Option<T | U> {
+    if (this.is_some()) {
+      return new Option<U>(sid, f(this._take()));
+    }
+
+    return new Option<T>(nid);
+  }
 
   /**
    * Returns the provided default result (if none), or applies a function `f` to the contained value (if any).
@@ -266,7 +330,13 @@ export interface OptionConstructor<T> {
    * x = None
    * assertEquals(x.map_or(42, (v) => v.length), 42)
    */
-  map_or<U>(default_value: U, f: (value: T) => U): U;
+  public map_or<U>(default_value: U, f: (value: T) => U): U {
+    if (this.is_some()) {
+      return f(this._take());
+    }
+
+    return default_value;
+  }
 
   /**
    * Computes a default function result (if none), or applies a different function to the contained value (if any).
@@ -284,7 +354,13 @@ export interface OptionConstructor<T> {
    * x = None
    * assertEquals(x.map_or_else(() => 2 * k, (v) => v.length), 42)
    */
-  map_or_else<U>(default_f: () => U, f: (value: T) => U): U;
+  public map_or_else<U>(default_f: () => U, f: (value: T) => U): U {
+    if (this.is_some()) {
+      return f(this._take());
+    }
+
+    return default_f();
+  }
 
   // TODO: ok_or<E>(err: E): Result<T, E>
 
@@ -318,7 +394,13 @@ export interface OptionConstructor<T> {
    * y = None
    * assertEquals(x.or(y), x)
    */
-  or(optb: OptionConstructor<T>): OptionConstructor<T>;
+  public or(optb: Option<T>): Option<T> {
+    if (this.is_some()) {
+      return new Option<T>(sid, this._take());
+    }
+
+    return optb;
+  }
 
   /**
    * Returns the option if it contains a value, otherwise calls `f` and returns the result.
@@ -342,7 +424,42 @@ export interface OptionConstructor<T> {
    * y = None
    * assertEquals(x.or_else(() => y), x)
    */
-  or_else(f: () => OptionConstructor<T>): OptionConstructor<T>;
+  public or_else(f: () => Option<T>): Option<T> {
+    if (this.is_some()) {
+      return new Option<T>(sid, this._take());
+    }
+
+    return f();
+  }
+
+  public toString(): string {
+    if (this.is_some()) {
+      const value = this._take();
+
+      let str = "";
+
+      if (Array.isArray(value)) {
+        const elements = value
+          .map((item) =>
+            typeof item === "string" ? `"${item}"` : String(item),
+          )
+          .join(", ");
+        str = `[${elements}]`;
+      } else if (typeof value === "string") {
+        str = `"${value}"`;
+      } else {
+        str = String(value);
+      }
+
+      return `Some(${str})`;
+    }
+
+    return "None";
+  }
+
+  public [Symbol.for("nodejs.util.inspect.custom")](): string {
+    return this.toString();
+  }
 
   // TODO: transpose(): Result<Option<T>, E>
 
@@ -365,7 +482,13 @@ export interface OptionConstructor<T> {
    * x = None
    * assertThrows(() => x.unwrap(), TypeError)
    */
-  unwrap(): T;
+  public unwrap(): T {
+    if (this.is_some()) {
+      return this._take();
+    }
+
+    throw new TypeError("Called `Option.unwrap()` on a `None` value");
+  }
 
   /**
    * Returns the contained `Some` value or a provided default value.
@@ -384,7 +507,13 @@ export interface OptionConstructor<T> {
    * x = None
    * assertEquals(x.unwrap_or(1), 1)
    */
-  unwrap_or(default_value: T): T;
+  public unwrap_or(default_value: T): T {
+    if (this.is_some()) {
+      return this._take();
+    }
+
+    return default_value;
+  }
 
   /**
    * Returns the contained Some value or computes it from a closure.
@@ -404,7 +533,13 @@ export interface OptionConstructor<T> {
    * x = None
    * assertEquals(x.unwrap_or_else(() => 2 * k), 20)
    */
-  unwrap_or_else(f: () => T): T;
+  public unwrap_or_else(f: () => T): T {
+    if (this.is_some()) {
+      return this._take();
+    }
+
+    return f();
+  }
 
   /**
    * Returns `Some` if exactly one of itself, `optb` is `Some`, otherwise returns `None`.
@@ -432,5 +567,37 @@ export interface OptionConstructor<T> {
    * y = None
    * assertEquals(x.xor(y), y)
    */
-  xor(optb: OptionConstructor<T>): OptionConstructor<T>;
+  public xor(optb: Option<T>): Option<T> {
+    if (this.is_some()) {
+      return optb.is_none()
+        ? new Option<T>(sid, this._take())
+        : new Option<T>(nid);
+    }
+
+    return optb.is_some() ? optb : new Option<T>(nid);
+  }
 }
+
+/**
+ * Some value of type T.
+ *
+ * @since 0.1.1-alpha
+ *
+ * @example
+ *
+ * let x: Option<number> = Some(42)
+ */
+export function Some<T>(value: T): Option<T> {
+  return new Option<T>(sid, value);
+}
+
+/**
+ * No value.
+ *
+ * @since 0.1.1-alpha
+ *
+ * @example
+ *
+ * let x: Option<number> = None
+ */
+export const None: Option<any> = new Option<any>(nid);
