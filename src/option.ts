@@ -6,23 +6,24 @@
  * @license MIT
  */
 
+/**
+ * Unique id for Some
+ *
+ * @private
+ */
 const sid = Symbol.for("@@option/some");
+
+/**
+ * Unique id for None
+ *
+ * @private
+ */
 const nid = Symbol.for("@@option/none");
 
 /**
  * Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
  *
- * @since 0.2.0-alpha
- *
- * @example
- *
- * let option: Option<number> = randInt > 50 ? Some(randInt) : None
- */
-
-/**
- * Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
- *
- * @since 0.2.0-alpha
+ * @interface Option
  */
 export class Option<T> {
   protected _take(): T {
@@ -59,19 +60,19 @@ export class Option<T> {
    *
    * x = Some(2)
    * y = None
-   * assertEquals(x.and(y), y)
+   * assert_eq!(x.and(y), y)
    *
    * x = None
    * y = Some("foo")
-   * assertEquals(x.and(y), x)
+   * assert_eq!(x.and(y), x)
    *
    * x = Some(2)
    * y = Some("foo")
-   * assertEquals(x.and(y), y)
+   * assert_eq!(x.and(y), y)
    *
    * x = None
    * y = None
-   * assertEquals(x.and(y), x)
+   * assert_eq!(x.and(y), x)
    */
   public and<U>(optb: Option<U>): Option<T | U> {
     if (this.is_some()) {
@@ -97,19 +98,19 @@ export class Option<T> {
    *
    * x = Some("some value")
    * y = None
-   * assertEquals(x.and_then(() => y), y)
+   * assert_eq!(x.and_then(() => y), y)
    *
    * x = None
    * y = Some("then value")
-   * assertEquals(x.and_then(() => y), x)
+   * assert_eq!(x.and_then(() => y), x)
    *
    * x = Some("some value")
    * y = Some("then value")
-   * assertEquals(x.and_then(() => y), y)
+   * assert_eq!(x.and_then(() => y), y)
    *
    * x = None
    * y = None
-   * assertEquals(x.and_then(() => y), x)
+   * assert_eq!(x.and_then(() => y), x)
    */
   public and_then<U>(f: (value: T) => Option<U>): Option<T | U> {
     if (this.is_some()) {
@@ -131,7 +132,7 @@ export class Option<T> {
    * let x: Option<string>
    *
    * x = Some("value")
-   * assertEquals(x.expect("should rerurn string value"), "value")
+   * assert_eq!(x.expect("should rerurn string value"), "value")
    *
    * x = None
    * assertThrows(() => x.expect("should rerurn string value"), Error)
@@ -158,9 +159,9 @@ export class Option<T> {
    *   return n % 2 == 0
    * }
    *
-   * assertEquals(None.filter(is_even), None)
-   * assertEquals(Some(3).filter(is_even), None)
-   * assertEquals(Some(4).filter(is_even), Some(4))
+   * assert_eq!(None.filter(is_even), None)
+   * assert_eq!(Some(3).filter(is_even), None)
+   * assert_eq!(Some(4).filter(is_even), Some(4))
    */
   public filter(predicate: (value: T) => boolean): Option<T> {
     if (this.is_some() && predicate(this._take())) {
@@ -190,7 +191,7 @@ export class Option<T> {
    *   .inspect((v) => console.log("got: " + v))
    *   .expect("list should be long enough")
    *
-   * assertEquals(x, 2)
+   * assert_eq!(x, 2)
    */
   public inspect(f: (value: T) => void): Option<T> {
     if (this.is_some()) {
@@ -210,10 +211,10 @@ export class Option<T> {
    * let x: Option<number>
    *
    * x = Some(2)
-   * assertEquals(x.is_none(), false)
+   * assert_eq!(x.is_none(), false)
    *
    * x = None
-   * assertEquals(x.is_none(), true)
+   * assert_eq!(x.is_none(), true)
    */
   public is_none(): boolean {
     return nid in this;
@@ -229,13 +230,13 @@ export class Option<T> {
    * let x: Option<number>
    *
    * x = Some(2)
-   * assertEquals(x.is_none_or((v) => v > 1), true)
+   * assert_eq!(x.is_none_or((v) => v > 1), true)
    *
    * x = Some(0)
-   * assertEquals(x.is_none_or((v) => v > 1), false)
+   * assert_eq!(x.is_none_or((v) => v > 1), false)
    *
    * x = None
-   * assertEquals(x.is_none_or((v) => v > 1), true)
+   * assert_eq!(x.is_none_or((v) => v > 1), true)
    */
   public is_none_or(f: (value: T) => boolean): boolean {
     if (this.is_some()) {
@@ -255,10 +256,10 @@ export class Option<T> {
    * let x: Option<number>
    *
    * x = Some(2)
-   * assertEquals(x.is_some(), true)
+   * assert_eq!(x.is_some(), true)
    *
    * x = None
-   * assertEquals(x.is_some(), false)
+   * assert_eq!(x.is_some(), false)
    */
   public is_some(): boolean {
     return sid in this;
@@ -274,13 +275,13 @@ export class Option<T> {
    * let x: Option<number>
    *
    * x = Some(2)
-   * assertEquals(x.is_some_and((v) => v > 1), true)
+   * assert_eq!(x.is_some_and((v) => v > 1), true)
    *
    * x = Some(0)
-   * assertEquals(x.is_some_and((v) => v > 1), false)
+   * assert_eq!(x.is_some_and((v) => v > 1), false)
    *
    * x = None
-   * assertEquals(x.is_some_and((v) => v > 1), false)
+   * assert_eq!(x.is_some_and((v) => v > 1), false)
    */
   public is_some_and(f: (value: T) => boolean): boolean {
     if (this.is_some()) {
@@ -300,10 +301,10 @@ export class Option<T> {
    * let x: Option<string>
    *
    * x = Some("Hello, World!")
-   * assertEquals(x.map((s) => s.length), Some(13))
+   * assert_eq!(x.map((s) => s.length), Some(13))
    *
    * x = None
-   * assertEquals(x.map((s) => s.length), None)
+   * assert_eq!(x.map((s) => s.length), None)
    */
   public map<U>(f: (value: T) => U): Option<T | U> {
     if (this.is_some()) {
@@ -325,10 +326,10 @@ export class Option<T> {
    * let x: Option<string>
    *
    * x = Some("foo")
-   * assertEquals(x.map_or(42, (v) => v.length), 3)
+   * assert_eq!(x.map_or(42, (v) => v.length), 3)
    *
    * x = None
-   * assertEquals(x.map_or(42, (v) => v.length), 42)
+   * assert_eq!(x.map_or(42, (v) => v.length), 42)
    */
   public map_or<U>(default_value: U, f: (value: T) => U): U {
     if (this.is_some()) {
@@ -349,10 +350,10 @@ export class Option<T> {
    * let x: Option<string>
    *
    * x = Some("foo")
-   * assertEquals(x.map_or_else(() => 2 * k, (v) => v.length), 3)
+   * assert_eq!(x.map_or_else(() => 2 * k, (v) => v.length), 3)
    *
    * x = None
-   * assertEquals(x.map_or_else(() => 2 * k, (v) => v.length), 42)
+   * assert_eq!(x.map_or_else(() => 2 * k, (v) => v.length), 42)
    */
   public map_or_else<U>(default_f: () => U, f: (value: T) => U): U {
     if (this.is_some()) {
@@ -380,19 +381,19 @@ export class Option<T> {
    *
    * x = Some(2)
    * y = None
-   * assertEquals(x.or(y), x)
+   * assert_eq!(x.or(y), x)
    *
    * x = None
    * y = Some(100)
-   * assertEquals(x.or(y), y)
+   * assert_eq!(x.or(y), y)
    *
    * x = Some(2)
    * y = Some(100)
-   * assertEquals(x.or(y), x)
+   * assert_eq!(x.or(y), x)
    *
    * x = None
    * y = None
-   * assertEquals(x.or(y), x)
+   * assert_eq!(x.or(y), x)
    */
   public or(optb: Option<T>): Option<T> {
     if (this.is_some()) {
@@ -414,15 +415,15 @@ export class Option<T> {
    *
    * x = Some("barbarians")
    * y = Some("vikings")
-   * assertEquals(x.or_else(() => y), x)
+   * assert_eq!(x.or_else(() => y), x)
    *
    * x = None
    * y = Some("vikings")
-   * assertEquals(x.or_else(() => y), y)
+   * assert_eq!(x.or_else(() => y), y)
    *
    * x = None
    * y = None
-   * assertEquals(x.or_else(() => y), x)
+   * assert_eq!(x.or_else(() => y), x)
    */
   public or_else(f: () => Option<T>): Option<T> {
     if (this.is_some()) {
@@ -477,7 +478,7 @@ export class Option<T> {
    * let x: Option<string>
    *
    * x = Some("air")
-   * assertEquals(x.unwrap(), "air")
+   * assert_eq!(x.unwrap(), "air")
    *
    * x = None
    * assertThrows(() => x.unwrap(), TypeError)
@@ -502,10 +503,10 @@ export class Option<T> {
    * let x: Option<number>
    *
    * x = Some(42)
-   * assertEquals(x.unwrap_or(1), 42)
+   * assert_eq!(x.unwrap_or(1), 42)
    *
    * x = None
-   * assertEquals(x.unwrap_or(1), 1)
+   * assert_eq!(x.unwrap_or(1), 1)
    */
   public unwrap_or(default_value: T): T {
     if (this.is_some()) {
@@ -528,10 +529,10 @@ export class Option<T> {
    * let x: Option<number>
    *
    * x = Some(4)
-   * assertEquals(x.unwrap_or_else(() => 2 * k), 4)
+   * assert_eq!(x.unwrap_or_else(() => 2 * k), 4)
    *
    * x = None
-   * assertEquals(x.unwrap_or_else(() => 2 * k), 20)
+   * assert_eq!(x.unwrap_or_else(() => 2 * k), 20)
    */
   public unwrap_or_else(f: () => T): T {
     if (this.is_some()) {
@@ -553,19 +554,19 @@ export class Option<T> {
    *
    * x = Some(2)
    * y = None
-   * assertEquals(x.xor(y), x)
+   * assert_eq!(x.xor(y), x)
    *
    * x = None
    * y = Some(100)
-   * assertEquals(x.xor(y), y)
+   * assert_eq!(x.xor(y), y)
    *
    * x = Some(2)
    * y = Some(100)
-   * assertEquals(x.xor(y), None)
+   * assert_eq!(x.xor(y), None)
    *
    * x = None
    * y = None
-   * assertEquals(x.xor(y), y)
+   * assert_eq!(x.xor(y), y)
    */
   public xor(optb: Option<T>): Option<T> {
     if (this.is_some()) {
