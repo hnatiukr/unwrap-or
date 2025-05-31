@@ -51,7 +51,7 @@ export class Option<T> {
    *
    * Arguments passed to and are eagerly evaluated if you are passing the result of a function call, it is recommended to use `and_then`, which is lazily evaluated.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -89,7 +89,7 @@ export class Option<T> {
    *
    * Some languages call this operation `flatmap`.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -125,7 +125,7 @@ export class Option<T> {
    *
    * Recommend that expect messages are used to describe the reason you expect the `Option` should be `Some`.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -151,7 +151,7 @@ export class Option<T> {
    * - `Some(t)` if predicate returns `true` (where `t` is the wrapped value)
    * - `None` if predicate returns `false`
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -176,7 +176,7 @@ export class Option<T> {
    *
    * Returns the original option.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -204,7 +204,7 @@ export class Option<T> {
   /**
    * Returns `true` if the option is a `None` value.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -223,7 +223,7 @@ export class Option<T> {
   /**
    * Returns `true` if the option is a `None` or the value inside of it matches a predicate.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -249,7 +249,7 @@ export class Option<T> {
   /**
    * Returns `true` if the option is a `Some` value.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -268,7 +268,7 @@ export class Option<T> {
   /**
    * Checks if the `Option` is `Some` and the value satisfies a predicate
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -294,7 +294,7 @@ export class Option<T> {
   /**
    * Maps an `Option<T>` to `Option<U>` by applying a function `f` to a contained value (if `Some`) or returns `None` (if `None`).
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -319,7 +319,7 @@ export class Option<T> {
    *
    * If you are passing the result of a function call, it is recommended to use `map_or_else`, which is lazily evaluated.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -342,7 +342,7 @@ export class Option<T> {
   /**
    * Computes a default function result (if none), or applies a different function to the contained value (if any).
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -372,7 +372,7 @@ export class Option<T> {
    *
    * Arguments passed to or are eagerly evaluated if you are passing the result of a function call, it is recommended to use `or_else`, which is lazily evaluated.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -406,7 +406,7 @@ export class Option<T> {
   /**
    * Returns the option if it contains a value, otherwise calls `f` and returns the result.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -471,7 +471,7 @@ export class Option<T> {
    *
    * Instead, prefer to use try/catch, promise or pattern matching and handle the `None` case explicitly, or call `unwrap_or` or `unwrap_or_else`.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -496,7 +496,7 @@ export class Option<T> {
    *
    * Arguments passed to `unwrap_or` are eagerly evaluated if you are passing the result of a function call, it is recommended to use `unwrap_or_else`, which is lazily evaluated.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -521,7 +521,7 @@ export class Option<T> {
    *
    * Useful for expensive default computations.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -545,7 +545,7 @@ export class Option<T> {
   /**
    * Returns `Some` if exactly one of itself, `optb` is `Some`, otherwise returns `None`.
    *
-   * @since 0.2.0-alpha
+   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -582,7 +582,7 @@ export class Option<T> {
 /**
  * Some value of type T.
  *
- * @since 0.2.0-alpha
+ * @since 0.1.0-alpha
  *
  * @example
  *
@@ -595,7 +595,7 @@ export function Some<T>(value: T): Option<T> {
 /**
  * No value.
  *
- * @since 0.2.0-alpha
+ * @since 0.1.0-alpha
  *
  * @example
  *
