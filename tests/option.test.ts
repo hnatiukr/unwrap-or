@@ -86,6 +86,19 @@ test("Option :: filter", () => {
   assert_eq!(x.filter(is_even), Some(4));
 });
 
+test("Option :: flatten", () => {
+  let x: Option<Option<number>>;
+
+  x = Some(Some(6));
+  assert_eq!(x.flatten(), Some(6));
+
+  x = Some(None);
+  assert_eq!(x.flatten(), None);
+
+  x = None;
+  assert_eq!(x.flatten(), None);
+});
+
 test("Option :: inspect", () => {
   function get<T>(arr: T[], idx: number): Option<T> {
     const item = arr.at(idx);

@@ -1,6 +1,6 @@
 /**
  * @module Option
- * @version 0.2.0-alpha
+ * @version 0.3.0-alpha
  * @author Roman Hnatiuk <hnatiukr@pm.me>
  * @see https://github.com/hnatiukr/unwrap-or
  * @license MIT
@@ -169,6 +169,34 @@ export class Option<T> {
     }
 
     return new Option<T>(nid);
+  }
+
+  /**
+   * Converts from `Option<Option<T>>` to `Option<T>`.
+   *
+   * Flattening only removes one level of nesting at a time.
+   *
+   * @since 0.3.0-alpha
+   *
+   * @example
+   *
+   * let x: Option<Option<number>>;
+   *
+   * x = Some(Some(6));
+   * assert_eq!(x.flatten(), Some(6));
+   *
+   *   x = Some(None);
+   * assert_eq!(x.flatten(), None);
+   *
+   * x = None;
+   * assert_eq!(x.flatten(), None);
+   */
+  public flatten<U>(this: Option<Option<U>>): Option<U> {
+    if (this.is_some()) {
+      return this._extract_value();
+    }
+
+    return new Option<U>(nid);
   }
 
   /**
