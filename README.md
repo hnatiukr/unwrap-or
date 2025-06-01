@@ -69,6 +69,7 @@ deno add npm:unwrap-or
   - [.and_then](#and_then)
   - [.expect](#expect)
   - [.filter](#filter)
+  - [.flatten](#flatten)
   - [.inspect](#inspect)
   - [.is_none](#is_none)
   - [.is_none_or](#is_none_or)
@@ -213,6 +214,29 @@ function is_even(n: number): boolean {
 assert_eq!(None.filter(is_even), None);
 assert_eq!(Some(3).filter(is_even), None);
 assert_eq!(Some(4).filter(is_even), Some(4));
+```
+
+### flatten
+
+```rust
+pub fn flatten<U>(this: Option<Option<U>>): Option<U>
+```
+
+Converts from `Option<Option<T>>` to `Option<T>`.
+
+Flattening only removes one level of nesting at a time.
+
+```ts
+let x: Option<Option<number>>;
+
+x = Some(Some(6));
+assert_eq!(x.flatten(), Some(6));
+
+x = Some(None);
+assert_eq!(x.flatten(), None);
+
+x = None;
+assert_eq!(x.flatten(), None);
 ```
 
 ### inspect

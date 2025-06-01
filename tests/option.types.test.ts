@@ -1,6 +1,6 @@
 import { test, expectTypeOf } from "vitest";
 
-import { Some, None, type Option } from "../src/option";
+import { Some, None, Option } from "../src/option";
 
 test("Option :: and", () => {
   let x: Option<number>;
@@ -63,6 +63,19 @@ test("Option :: filter", () => {
   y = None;
   expectTypeOf(x.filter(is_even)).toEqualTypeOf<Option<number>>;
   expectTypeOf(y.filter(is_even)).toEqualTypeOf<Option<number>>;
+});
+
+test("Option :: flatten", () => {
+  let x: Option<Option<number>>;
+
+  x = Some(Some(6));
+  expectTypeOf(x.flatten()).toEqualTypeOf<Option<number>>;
+
+  x = Some(None);
+  expectTypeOf(x.flatten()).toEqualTypeOf<Option<number>>;
+
+  x = None;
+  expectTypeOf(x.flatten()).toEqualTypeOf<Option<number>>;
 });
 
 test("Option :: inspect", () => {
