@@ -1,6 +1,6 @@
 /**
  * @module Option
- * @version 0.3.0-alpha
+ * @version 0.4.0-alpha
  * @author Roman Hnatiuk <hnatiukr@pm.me>
  * @see https://github.com/hnatiukr/unwrap-or
  * @license MIT
@@ -135,7 +135,7 @@ export class Option<T> {
    * assert_eq!(x.expect("should rerurn string value"), "value")
    *
    * x = None
-   * assertThrows(() => x.expect("should rerurn string value"), Error)
+   * assert_err!(() => x.expect("should rerurn string value"), Error)
    */
   public expect(msg: string): T {
     if (this.is_some()) {
@@ -509,7 +509,7 @@ export class Option<T> {
    * assert_eq!(x.unwrap(), "air")
    *
    * x = None
-   * assertThrows(() => x.unwrap(), TypeError)
+   * assert_err!(() => x.unwrap(), TypeError)
    */
   public unwrap(): T {
     if (this.is_some()) {
