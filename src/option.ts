@@ -23,7 +23,19 @@ const nid = Symbol.for("@@option/none");
 /**
  * Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
  *
+ * @since 0.1.0-alpha
+ *
  * @interface Option
+ *
+ * @example
+ *
+ * let x: Option<number>
+ *
+ * x = Some(2)
+ * assert_eq!(x, Some(2))
+ *
+ * x = None
+ * assert_eq!(x, None)
  */
 export class Option<T> {
   protected _extract_value(): T {
@@ -121,21 +133,27 @@ export class Option<T> {
   }
 
   /**
-   * Returns the contained `Some` value. Throws an error if the value is a `None` with a custom message provided by `msg`.
+   * Returns the contained `Some` value.
    *
    * Recommend that expect messages are used to describe the reason you expect the `Option` should be `Some`.
+   *
+   * @throws Throws an error if the value is a `None` with a custom message provided by `msg`.
    *
    * @since 0.1.0-alpha
    *
    * @example
    *
-   * let x: Option<string>
+   * let x: Option<string>;
    *
-   * x = Some("value")
-   * assert_eq!(x.expect("should rerurn string value"), "value")
+   * x = Some("value");
+   * assert_eq!(x.expect("should return string value"), "value");
    *
-   * x = None
-   * assert_err!(() => x.expect("should rerurn string value"), Error)
+   * x = None;
+   * assert_err!(
+   *   () => x.expect("should return string value"),
+   *   Error,
+   *   "should return string value",
+   * );
    */
   public expect(msg: string): T {
     if (this.is_some()) {
@@ -503,13 +521,17 @@ export class Option<T> {
    *
    * @example
    *
-   * let x: Option<string>
+   * let x: Option<string>;
    *
-   * x = Some("air")
-   * assert_eq!(x.unwrap(), "air")
+   * x = Some("air");
+   * assert_eq!(x.unwrap(), "air");
    *
-   * x = None
-   * assert_err!(() => x.unwrap(), TypeError)
+   * x = None;
+   * assert_err!(
+   *   () => x.unwrap(),
+   *   TypeError,
+   *   "Called `Option.unwrap()` on a `None` value",
+   * );
    */
   public unwrap(): T {
     if (this.is_some()) {
