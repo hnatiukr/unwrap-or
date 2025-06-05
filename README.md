@@ -189,10 +189,14 @@ Recommend that expect messages are used to describe the reason you expect the `O
 let x: Option<string>;
 
 x = Some("value");
-assert_eq!(x.expect("should rerurn string value"), "value");
+assert_eq!(x.expect("should return string value"), "value");
 
 x = None;
-assert_err!(() => x.expect("should rerurn string value"), Error);
+assert_err!(
+  () => x.expect("should return string value"),
+  Error,
+  "should return string value",
+);
 ```
 
 ### filter
@@ -525,7 +529,11 @@ x = Some("air");
 assert_eq!(x.unwrap(), "air");
 
 x = None;
-assert_err!(() => x.unwrap(), TypeError);
+assert_err!(
+  () => x.unwrap(),
+  TypeError,
+  "Called `Option.unwrap()` on a `None` value",
+);
 ```
 
 ### unwrap_or
@@ -605,6 +613,12 @@ assert_eq!(x.xor(y), y);
 ```
 
 ## Result
+
+`Result<T, E>` is the type used for returning and propagating errors. It includes variant `Ok(T)`, representing success and containing a value, and `Err(E)`, representing error and containing an error value.
+
+```ts
+import { type Result, Ok, Err } from "unwrap-or/result";
+```
 
 coming soon...
 
