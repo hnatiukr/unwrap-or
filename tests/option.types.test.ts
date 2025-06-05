@@ -48,7 +48,7 @@ test("Option :: expect", () => {
   let x: Option<number>;
 
   x = Some(42);
-  expectTypeOf(x.expect("should rerurn number value")).toEqualTypeOf<number>;
+  expectTypeOf(x.expect("should return number value")).toEqualTypeOf<number>;
 });
 
 test("Option :: filter", () => {

@@ -63,10 +63,14 @@ test("Option :: expect", () => {
   let x: Option<string>;
 
   x = Some("value");
-  assert_eq!(x.expect("should rerurn string value"), "value");
+  assert_eq!(x.expect("should return string value"), "value");
 
   x = None;
-  assert_err!(() => x.expect("should rerurn string value"), Error);
+  assert_err!(
+    () => x.expect("should return string value"),
+    Error,
+    "should return string value",
+  );
 });
 
 test("Option :: filter", () => {
@@ -309,7 +313,11 @@ test("Option :: unwrap", () => {
   assert_eq!(x.unwrap(), "air");
 
   x = None;
-  assert_err!(() => x.unwrap(), TypeError);
+  assert_err!(
+    () => x.unwrap(),
+    TypeError,
+    "Called `Option.unwrap()` on a `None` value",
+  );
 });
 
 test("Option :: unwrap_or", () => {
