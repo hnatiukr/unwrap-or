@@ -503,31 +503,45 @@ export class Option<T> {
     return f();
   }
 
+  /**
+   * Returns a string representing this object. This method is meant to be overridden by derived JS objects for custom type coercion logic.
+   *
+   * @since 0.1.0-alpha
+   *
+   * @example
+   *
+   * let x: Option<unknown>
+   *
+   * x = Some(true)
+   * assert_eq!(x.toString(), "Some(true)")
+   *
+   * x = Some(42)
+   * assert_eq!(x.toString(), "Some(42)")
+   *
+   * x = Some("hello")
+   * assert_eq!(x.toString(), "Some(hello)")
+   *
+   * x = Some([1, 2])
+   * assert_eq!(x.toString(), "Some(1,2)")
+   *
+   * x = Some({})
+   * assert_eq!(x.toString(), "Some([object Object])")
+   *
+   * x = Some(() => 2 * 4)
+   * assert_eq!(x.toString(), "Some(() => 2 * 4)")
+   *
+   * x = None
+   * assert_eq!(x.toString(), "None")
+   */
   public toString(): string {
-    if (this.is_some()) {
-      const value = this._extract_value();
-
-      let str = "";
-
-      if (Array.isArray(value)) {
-        const elements = value
-          .map((item) =>
-            typeof item === "string" ? `"${item}"` : String(item),
-          )
-          .join(", ");
-        str = `[${elements}]`;
-      } else if (typeof value === "string") {
-        str = `"${value}"`;
-      } else {
-        str = String(value);
-      }
-
-      return `Some(${str})`;
-    }
-
-    return "None";
+    return this.is_some() ? `Some(${this._extract_value()})` : "None";
   }
 
+  /**
+   * Overrides Node.js object inspection.
+   *
+   * @see toString
+   */
   public [Symbol.for("nodejs.util.inspect.custom")](): string {
     return this.toString();
   }

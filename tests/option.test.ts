@@ -297,13 +297,16 @@ test("Option :: toString", () => {
   assert_eq!(x.toString(), "Some(42)");
 
   x = Some("hello");
-  assert_eq!(x.toString(), 'Some("hello")');
+  assert_eq!(x.toString(), "Some(hello)");
 
   x = Some([1, 2]);
-  assert_eq!(x.toString(), "Some([1, 2])");
+  assert_eq!(x.toString(), "Some(1,2)");
 
   x = Some({});
   assert_eq!(x.toString(), "Some([object Object])");
+
+  x = Some(() => 2 * 4);
+  assert_eq!(x.toString(), "Some(() => 2 * 4)");
 
   x = None;
   assert_eq!(x.toString(), "None");
