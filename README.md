@@ -625,7 +625,7 @@ import { type Result, Ok, Err } from "unwrap-or/result";
 
 coming soon...
 
-## See also
+## Inspirations
 
 - [fnts](https://github.com/drizzer14/fnts) - minimal functional programming utilities for TypeScript & JavaScript inspired by the `fantasy-land` specification and `Haskell` programming language.
 
