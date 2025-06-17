@@ -11,19 +11,19 @@ test("Option :: and", () => {
 
   x = Some(2);
   y = None;
-  assert_eq!(x.and(y), y);
+  assert_eq!(x.and(y), None);
 
   x = None;
   y = Some("foo");
-  assert_eq!(x.and(y), x);
+  assert_eq!(x.and(y), None);
 
   x = Some(2);
   y = Some("foo");
-  assert_eq!(x.and(y), y);
+  assert_eq!(x.and(y), Some("foo"));
 
   x = None;
   y = None;
-  assert_eq!(x.and(y), x);
+  assert_eq!(x.and(y), None);
 });
 
 test("Option :: and_then", () => {
@@ -34,28 +34,28 @@ test("Option :: and_then", () => {
   y = None;
   assert_eq!(
     x.and_then(() => y),
-    y,
+    None,
   );
 
   x = None;
   y = Some("then value");
   assert_eq!(
     x.and_then(() => y),
-    x,
+    None,
   );
 
   x = Some("some value");
   y = Some("then value");
   assert_eq!(
     x.and_then(() => y),
-    y,
+    Some("then value"),
   );
 
   x = None;
   y = None;
   assert_eq!(
     x.and_then(() => y),
-    x,
+    None,
   );
 });
 
@@ -111,11 +111,14 @@ test("Option :: inspect", () => {
 
   const list = [1, 2, 3, 4, 5];
 
-  const x = get(list, 1)
-    .inspect((_v) => console.log)
-    .expect("list should be long enough");
+  let has_inspected = false;
 
-  assert_eq!(x, 2);
+  let x = get(list, 2).inspect((_v) => {
+    has_inspected = true;
+  });
+
+  assert_eq!(x, Some(3));
+  assert_eq!(has_inspected, true);
 });
 
 test("Option :: is_none", () => {
@@ -243,19 +246,19 @@ test("Option :: or", () => {
 
   x = Some(2);
   y = None;
-  assert_eq!(x.or(y), x);
+  assert_eq!(x.or(y), Some(2));
 
   x = None;
   y = Some(100);
-  assert_eq!(x.or(y), y);
+  assert_eq!(x.or(y), Some(100));
 
   x = Some(2);
   y = Some(100);
-  assert_eq!(x.or(y), x);
+  assert_eq!(x.or(y), Some(2));
 
   x = None;
   y = None;
-  assert_eq!(x.or(y), x);
+  assert_eq!(x.or(y), None);
 });
 
 test("Option :: or_else", () => {
@@ -266,21 +269,21 @@ test("Option :: or_else", () => {
   y = Some("vikings");
   assert_eq!(
     x.or_else(() => y),
-    x,
+    Some("barbarians"),
   );
 
   x = None;
   y = Some("vikings");
   assert_eq!(
     x.or_else(() => y),
-    y,
+    Some("vikings"),
   );
 
   x = None;
   y = None;
   assert_eq!(
     x.or_else(() => y),
-    x,
+    None,
   );
 });
 
@@ -353,11 +356,11 @@ test("Option :: xor", () => {
 
   x = Some(2);
   y = None;
-  assert_eq!(x.xor(y), x);
+  assert_eq!(x.xor(y), Some(2));
 
   x = None;
   y = Some(100);
-  assert_eq!(x.xor(y), y);
+  assert_eq!(x.xor(y), Some(100));
 
   x = Some(2);
   y = Some(100);
@@ -365,5 +368,5 @@ test("Option :: xor", () => {
 
   x = None;
   y = None;
-  assert_eq!(x.xor(y), y);
+  assert_eq!(x.xor(y), None);
 });
