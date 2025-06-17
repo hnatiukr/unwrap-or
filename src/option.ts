@@ -72,19 +72,19 @@ export class Option<T> {
    *
    * x = Some(2)
    * y = None
-   * assert_eq!(x.and(y), y)
+   * assert_eq!(x.and(y), None)
    *
    * x = None
    * y = Some("foo")
-   * assert_eq!(x.and(y), x)
+   * assert_eq!(x.and(y), None)
    *
    * x = Some(2)
    * y = Some("foo")
-   * assert_eq!(x.and(y), y)
+   * assert_eq!(x.and(y), Some("foo"))
    *
    * x = None
    * y = None
-   * assert_eq!(x.and(y), x)
+   * assert_eq!(x.and(y), None)
    */
   public and<U>(optb: Option<U>): Option<T | U> {
     if (this.is_some()) {
@@ -110,19 +110,31 @@ export class Option<T> {
    *
    * x = Some("some value")
    * y = None
-   * assert_eq!(x.and_then(() => y), y)
+   * assert_eq!(
+   *   x.and_then(() => y),
+   *   None,
+   * )
    *
    * x = None
    * y = Some("then value")
-   * assert_eq!(x.and_then(() => y), x)
+   * assert_eq!(
+   *   x.and_then(() => y),
+   *   None,
+   * )
    *
    * x = Some("some value")
    * y = Some("then value")
-   * assert_eq!(x.and_then(() => y), y)
+   * assert_eq!(
+   *   x.and_then(() => y),
+   *   Some("then value"),
+   * )
    *
    * x = None
    * y = None
-   * assert_eq!(x.and_then(() => y), x)
+   * assert_eq!(
+   *   x.and_then(() => y),
+   *   None,
+   * )
    */
   public and_then<U>(f: (value: T) => Option<U>): Option<T | U> {
     if (this.is_some()) {
@@ -227,17 +239,20 @@ export class Option<T> {
    * @example
    *
    * function get<T>(arr: T[], idx: number): Option<T> {
-   *   const item = arr.at(idx)
-   *   return item !== undefined ? Some(item) : None
+   *   const item = arr.at(idx);
+   *   return item !== undefined ? Some(item) : None;
    * }
    *
-   * const list = [1, 2, 3, 4, 5]
+   * const list = [1, 2, 3, 4, 5];
    *
-   * const x = get(list, 1)
-   *   .inspect((v) => console.log("got: " + v))
-   *   .expect("list should be long enough")
+   * let has_inspected = false;
    *
-   * assert_eq!(x, 2)
+   * let x = get(list, 2).inspect((_v) => {
+   *   has_inspected = true;
+   * });
+   *
+   * assert_eq!(x, Some(3));
+   * assert_eq!(has_inspected, true);
    */
   public inspect(f: (value: T) => void): Option<T> {
     if (this.is_some()) {
@@ -427,19 +442,19 @@ export class Option<T> {
    *
    * x = Some(2)
    * y = None
-   * assert_eq!(x.or(y), x)
+   * assert_eq!(x.or(y), Some(2))
    *
    * x = None
    * y = Some(100)
-   * assert_eq!(x.or(y), y)
+   * assert_eq!(x.or(y), Some(100))
    *
    * x = Some(2)
    * y = Some(100)
-   * assert_eq!(x.or(y), x)
+   * assert_eq!(x.or(y), Some(2))
    *
    * x = None
    * y = None
-   * assert_eq!(x.or(y), x)
+   * assert_eq!(x.or(y), None)
    */
   public or(optb: Option<T>): Option<T> {
     if (this.is_some()) {
@@ -461,15 +476,24 @@ export class Option<T> {
    *
    * x = Some("barbarians")
    * y = Some("vikings")
-   * assert_eq!(x.or_else(() => y), x)
+   * assert_eq!(
+   *   x.or_else(() => y),
+   *   Some("barbarians"),
+   * )
    *
    * x = None
    * y = Some("vikings")
-   * assert_eq!(x.or_else(() => y), y)
+   * assert_eq!(
+   *   x.or_else(() => y),
+   *   Some("vikings"),
+   * )
    *
    * x = None
    * y = None
-   * assert_eq!(x.or_else(() => y), x)
+   * assert_eq!(
+   *   x.or_else(() => y),
+   *   None,
+   * )
    */
   public or_else(f: () => Option<T>): Option<T> {
     if (this.is_some()) {
@@ -604,11 +628,11 @@ export class Option<T> {
    *
    * x = Some(2)
    * y = None
-   * assert_eq!(x.xor(y), x)
+   * assert_eq!(x.xor(y), Some(2))
    *
    * x = None
    * y = Some(100)
-   * assert_eq!(x.xor(y), y)
+   * assert_eq!(x.xor(y), Some(100))
    *
    * x = Some(2)
    * y = Some(100)
@@ -616,7 +640,7 @@ export class Option<T> {
    *
    * x = None
    * y = None
-   * assert_eq!(x.xor(y), y)
+   * assert_eq!(x.xor(y), None)
    */
   public xor(optb: Option<T>): Option<T> {
     if (this.is_some()) {
