@@ -40,7 +40,7 @@ const nid = Symbol.for("@@option/none");
  * assert_eq!(x, None)
  */
 export class Option<T> {
-  protected _extract_value(): T {
+  protected _extract(): T {
     if (this.is_none()) {
       throw new TypeError("Prevent taking value from `None`.");
     }
@@ -143,7 +143,7 @@ export class Option<T> {
    */
   public and_then<U>(f: (value: T) => Option<U>): Option<T | U> {
     if (this.is_some()) {
-      return f(this._extract_value());
+      return f(this._extract());
     }
 
     return new Option<T>(nid);
@@ -176,7 +176,7 @@ export class Option<T> {
    */
   public expect(msg: string): T {
     if (this.is_some()) {
-      return this._extract_value();
+      return this._extract();
     }
 
     throw new Error(msg);
@@ -202,8 +202,8 @@ export class Option<T> {
    * assert_eq!(Some(4).filter(is_even), Some(4))
    */
   public filter(predicate: (value: T) => boolean): Option<T> {
-    if (this.is_some() && predicate(this._extract_value())) {
-      return new Option<T>(sid, this._extract_value());
+    if (this.is_some() && predicate(this._extract())) {
+      return new Option<T>(sid, this._extract());
     }
 
     return new Option<T>(nid);
@@ -231,7 +231,7 @@ export class Option<T> {
    */
   public flatten<U>(this: Option<Option<U>>): Option<U> {
     if (this.is_some()) {
-      return this._extract_value();
+      return this._extract();
     }
 
     return new Option<U>(nid);
@@ -264,7 +264,7 @@ export class Option<T> {
    */
   public inspect(f: (value: T) => void): Option<T> {
     if (this.is_some()) {
-      f(this._extract_value());
+      f(this._extract());
     }
 
     return this;
@@ -310,7 +310,7 @@ export class Option<T> {
    */
   public is_none_or(f: (value: T) => boolean): boolean {
     if (this.is_some()) {
-      return f(this._extract_value());
+      return f(this._extract());
     }
 
     return true;
@@ -355,7 +355,7 @@ export class Option<T> {
    */
   public is_some_and(f: (value: T) => boolean): boolean {
     if (this.is_some()) {
-      return f(this._extract_value());
+      return f(this._extract());
     }
 
     return false;
@@ -379,7 +379,7 @@ export class Option<T> {
    */
   public map<U>(f: (value: T) => U): Option<T | U> {
     if (this.is_some()) {
-      return new Option<U>(sid, f(this._extract_value()));
+      return new Option<U>(sid, f(this._extract()));
     }
 
     return new Option<T>(nid);
@@ -406,7 +406,7 @@ export class Option<T> {
    */
   public map_or<U>(default_value: U, f: (value: T) => U): U {
     if (this.is_some()) {
-      return f(this._extract_value());
+      return f(this._extract());
     }
 
     return default_value;
@@ -431,7 +431,7 @@ export class Option<T> {
    */
   public map_or_else<U>(default_f: () => U, f: (value: T) => U): U {
     if (this.is_some()) {
-      return f(this._extract_value());
+      return f(this._extract());
     }
 
     return default_f();
@@ -473,7 +473,7 @@ export class Option<T> {
    */
   public or(optb: Option<T>): Option<T> {
     if (this.is_some()) {
-      return new Option<T>(sid, this._extract_value());
+      return new Option<T>(sid, this._extract());
     }
 
     return optb;
@@ -513,7 +513,7 @@ export class Option<T> {
    */
   public or_else(f: () => Option<T>): Option<T> {
     if (this.is_some()) {
-      return new Option<T>(sid, this._extract_value());
+      return new Option<T>(sid, this._extract());
     }
 
     return f();
@@ -552,7 +552,7 @@ export class Option<T> {
    * assert_eq!(x.toString(), "None")
    */
   public toString(): string {
-    return this.is_some() ? `Some(${this._extract_value()})` : "None";
+    return this.is_some() ? `Some(${this._extract()})` : "None";
   }
 
   /**
@@ -593,7 +593,7 @@ export class Option<T> {
    */
   public unwrap(): T {
     if (this.is_some()) {
-      return this._extract_value();
+      return this._extract();
     }
 
     throw new TypeError("Called `Option.unwrap()` on a `None` value");
@@ -620,7 +620,7 @@ export class Option<T> {
    */
   public unwrap_or(default_value: T): T {
     if (this.is_some()) {
-      return this._extract_value();
+      return this._extract();
     }
 
     return default_value;
@@ -646,7 +646,7 @@ export class Option<T> {
    */
   public unwrap_or_else(f: () => T): T {
     if (this.is_some()) {
-      return this._extract_value();
+      return this._extract();
     }
 
     return f();
@@ -682,7 +682,7 @@ export class Option<T> {
   public xor(optb: Option<T>): Option<T> {
     if (this.is_some()) {
       return optb.is_none()
-        ? new Option<T>(sid, this._extract_value())
+        ? new Option<T>(sid, this._extract())
         : new Option<T>(nid);
     }
 
