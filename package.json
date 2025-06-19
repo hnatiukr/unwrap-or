@@ -3,6 +3,15 @@
   "version": "0.4.1-alpha",
   "license": "MIT",
   "description": "A TypeScript implementation of Rust's Option and Result types.",
+  "author": {
+    "name": "Roman Hnatiuk",
+    "email": "hnatiukr@pm.me",
+    "url": "https://github.com/hnatiukr"
+  },
+  "repository": {
+    "url": "git+https://github.com/hnatiukr/unwrap-or.git"
+  },
+  "homepage": "https://github.com/hnatiukr/unwrap-or/",
   "keywords": [
     "TypeScript",
     "Rust",
@@ -16,16 +25,23 @@
     "ADT",
     "or"
   ],
-  "author": {
-    "name": "Roman Hnatiuk",
-    "email": "hnatiukr@pm.me",
-    "url": "https://github.com/hnatiukr"
-  },
-  "repository": {
-    "url": "git+https://github.com/hnatiukr/unwrap-or.git"
-  },
-  "homepage": "https://github.com/hnatiukr/unwrap-or/",
   "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./option": {
+      "import": "./lib/option.js",
+      "types": "./lib/option.d.ts"
+    },
+    "./result": {
+      "import": "./lib/result.js",
+      "types": "./lib/result.d.ts"
+    }
+  },
   "files": [
     "lib",
     "LICENSE",
