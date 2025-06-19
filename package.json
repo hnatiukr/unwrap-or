@@ -28,20 +28,6 @@
   "type": "module",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./lib/index.js",
-      "types": "./lib/index.d.ts"
-    },
-    "./option": {
-      "import": "./lib/option.js",
-      "types": "./lib/option.d.ts"
-    },
-    "./result": {
-      "import": "./lib/result.js",
-      "types": "./lib/result.d.ts"
-    }
-  },
   "files": [
     "lib",
     "LICENSE",
