@@ -1,6 +1,6 @@
 {
   "name": "unwrap-or",
-  "version": "0.4.0-alpha",
+  "version": "0.4.1-alpha",
   "license": "MIT",
   "description": "A TypeScript implementation of Rust's Option and Result types.",
   "keywords": [
@@ -33,7 +33,7 @@
     "package.json"
   ],
   "engines": {
-    "node": ">=22.14.0"
+    "node": ">=22.16.0"
   },
   "packageManager": "pnpm@10.12.1",
   "devDependencies": {

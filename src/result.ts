@@ -1,6 +1,6 @@
 /**
  * @module Result
- * @version 0.4.0-alpha
+ * @version 0.4.1-alpha
  * @author Roman Hnatiuk <hnatiukr@pm.me>
  * @see https://github.com/hnatiukr/unwrap-or
  * @license MIT
