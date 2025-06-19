@@ -21,7 +21,9 @@ const sid = Symbol.for("@@option/some");
 const nid = Symbol.for("@@option/none");
 
 /**
- * Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
+ * Type `Option` represents an optional value:
+ * every `Option` is either `Some` and contains a value,
+ * or `None`, and does not.
  *
  * @since 0.1.0-alpha
  *
@@ -61,7 +63,9 @@ export class Option<T> {
   /**
    * Returns `None` if the option is `None`, otherwise returns `optb`.
    *
-   * Arguments passed to and are eagerly evaluated if you are passing the result of a function call, it is recommended to use `and_then`, which is lazily evaluated.
+   * Arguments passed to and are eagerly evaluated;
+   * if you are passing the result of a function call,
+   * it is recommended to use `and_then`, which is lazily evaluated.
    *
    * @since 0.1.0-alpha
    *
@@ -95,7 +99,8 @@ export class Option<T> {
   }
 
   /**
-   * Returns `None` if the option is `None`, otherwise calls function `f` with the wrapped value and returns the result.
+   * Returns `None` if the option is `None`,
+   * otherwise calls function `f` with the wrapped value and returns the result.
    *
    * Often used to chain fallible operations that may return `None`.
    *
@@ -147,9 +152,11 @@ export class Option<T> {
   /**
    * Returns the contained `Some` value.
    *
-   * Recommend that expect messages are used to describe the reason you expect the `Option` should be `Some`.
+   * Recommend that expect messages are used to describe
+   * the reason you expect the `Option` should be `Some`.
    *
-   * @throws Throws an error if the value is a `None` with a custom message provided by `msg`.
+   * @throws Throws an error if the value is a `None`
+   * with a custom message provided by `msg`.
    *
    * @since 0.1.0-alpha
    *
@@ -176,7 +183,8 @@ export class Option<T> {
   }
 
   /**
-   * Returns `None` if the option is `None`, otherwise calls predicate with the wrapped value and returns:
+   * Returns `None` if the option is `None`,
+   * otherwise calls predicate with the wrapped value and returns:
    *
    * - `Some(t)` if predicate returns `true` (where `t` is the wrapped value)
    * - `None` if predicate returns `false`
@@ -282,7 +290,8 @@ export class Option<T> {
   }
 
   /**
-   * Returns `true` if the option is a `None` or the value inside of it matches a predicate.
+   * Returns `true` if the option is a `None`
+   * or the value inside of it matches a predicate.
    *
    * @since 0.1.0-alpha
    *
@@ -327,7 +336,7 @@ export class Option<T> {
   }
 
   /**
-   * Checks if the `Option` is `Some` and the value satisfies a predicate
+   * Checks if the `Option` is `Some` and the value satisfies a predicate.
    *
    * @since 0.1.0-alpha
    *
@@ -353,7 +362,8 @@ export class Option<T> {
   }
 
   /**
-   * Maps an `Option<T>` to `Option<U>` by applying a function `f` to a contained value (if `Some`) or returns `None` (if `None`).
+   * Maps an `Option<T>` to `Option<U>` by applying a function `f`
+   * to a contained value (if `Some`) or returns `None` (if `None`).
    *
    * @since 0.1.0-alpha
    *
@@ -376,9 +386,11 @@ export class Option<T> {
   }
 
   /**
-   * Returns the provided default result (if none), or applies a function `f` to the contained value (if any).
+   * Returns the provided default result (if none),
+   * or applies a function `f` to the contained value (if any).
    *
-   * If you are passing the result of a function call, it is recommended to use `map_or_else`, which is lazily evaluated.
+   * If you are passing the result of a function call,
+   * it is recommended to use `map_or_else`, which is lazily evaluated.
    *
    * @since 0.1.0-alpha
    *
@@ -401,7 +413,8 @@ export class Option<T> {
   }
 
   /**
-   * Computes a default function result (if none), or applies a different function to the contained value (if any).
+   * Computes a default function result (if none),
+   * or applies a different function to the contained value (if any).
    *
    * @since 0.1.0-alpha
    *
@@ -431,7 +444,9 @@ export class Option<T> {
   /**
    * Returns the option if it contains a value, otherwise returns `optb`.
    *
-   * Arguments passed to or are eagerly evaluated if you are passing the result of a function call, it is recommended to use `or_else`, which is lazily evaluated.
+   * Arguments passed to or are eagerly evaluated;
+   * if you are passing the result of a function call,
+   * it is recommended to use `or_else`, which is lazily evaluated.
    *
    * @since 0.1.0-alpha
    *
@@ -465,7 +480,8 @@ export class Option<T> {
   }
 
   /**
-   * Returns the option if it contains a value, otherwise calls `f` and returns the result.
+   * Returns the option if it contains a value,
+   * otherwise calls `f` and returns the result.
    *
    * @since 0.1.0-alpha
    *
@@ -504,7 +520,9 @@ export class Option<T> {
   }
 
   /**
-   * Returns a string representing this object. This method is meant to be overridden by derived JS objects for custom type coercion logic.
+   * Returns a string representing this object.
+   * This method is meant to be overridden by derived JS objects
+   * for custom type coercion logic.
    *
    * @since 0.1.0-alpha
    *
@@ -551,9 +569,11 @@ export class Option<T> {
   /**
    * Returns the contained `Some` value. Panics if it is `None`.
    *
-   * Because this function may throw a TypeError, its use is generally discouraged. Errors are meant for unrecoverable errors, and do abort the entire program.
+   * Because this function may throw a TypeError, its use is generally discouraged.
+   * Errors are meant for unrecoverable errors, and do abort the entire program.
    *
-   * Instead, prefer to use try/catch, promise or pattern matching and handle the `None` case explicitly, or call `unwrap_or` or `unwrap_or_else`.
+   * Instead, prefer to use try/catch, promise or pattern matching
+   * and handle the `None` case explicitly, or call `unwrap_or` or `unwrap_or_else`.
    *
    * @since 0.1.0-alpha
    *
@@ -582,7 +602,9 @@ export class Option<T> {
   /**
    * Returns the contained `Some` value or a provided default value.
    *
-   * Arguments passed to `unwrap_or` are eagerly evaluated if you are passing the result of a function call, it is recommended to use `unwrap_or_else`, which is lazily evaluated.
+   * Arguments passed to `unwrap_or` are eagerly evaluated;
+   * if you are passing the result of a function call,
+   * it is recommended to use `unwrap_or_else`, which is lazily evaluated.
    *
    * @since 0.1.0-alpha
    *
@@ -605,7 +627,7 @@ export class Option<T> {
   }
 
   /**
-   * Returns the contained Some value or computes it from a closure.
+   * Returns the contained `Some` value or computes it from a closure.
    *
    * Useful for expensive default computations.
    *
@@ -631,7 +653,8 @@ export class Option<T> {
   }
 
   /**
-   * Returns `Some` if exactly one of itself, `optb` is `Some`, otherwise returns `None`.
+   * Returns `Some` if exactly one of itself, `optb` is `Some`,
+   * otherwise returns `None`.
    *
    * @since 0.1.0-alpha
    *
