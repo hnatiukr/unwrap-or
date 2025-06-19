@@ -588,7 +588,7 @@ export class Option<T> {
    * assert_err!(
    *   () => x.unwrap(),
    *   TypeError,
-   *   "Called `Option.unwrap()` on a `None` value",
+   *   "Called Option.unwrap() on a None value",
    * );
    */
   public unwrap(): T {
@@ -596,7 +596,7 @@ export class Option<T> {
       return this._extract();
     }
 
-    throw new TypeError("Called `Option.unwrap()` on a `None` value");
+    throw new TypeError("Called Option.unwrap() on a None value");
   }
 
   /**
