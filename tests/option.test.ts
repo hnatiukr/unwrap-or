@@ -323,7 +323,7 @@ describe("Option", () => {
     assert_err!(
       () => x.unwrap(),
       TypeError,
-      "Called `Option.unwrap()` on a `None` value",
+      "Called Option.unwrap() on a None value",
     );
   });
 
