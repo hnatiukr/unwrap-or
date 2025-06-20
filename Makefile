@@ -3,6 +3,7 @@
 #
 
 OUT_DIR = lib
+TEMP_DIR = _temp
 PACKAGE_NAME = $$(node -p "require('./package.json').name")
 PACKAGE_VERSION = $$(node -p "require('./package.json').version")
 
@@ -16,12 +17,33 @@ install:
 	@pnpm install
 	@echo "[ok] Installation completed."
 
+.PHONY: prebuild
+prebuild:
+	@echo "\n> Compiling input TypeScript source files into './$(TEMP_DIR)' directory..."
+	@npx tsc -p tsconfig.build.json --outDir $(TEMP_DIR) --declarationDir $(TEMP_DIR)
+	@echo "[ok] Compilation has been complited."
+
+.PHONY: minify-js
+minify-js:
+	@echo "\n> Minifying all .js files from './$(TEMP_DIR)' to './$(OUT_DIR)'..."
+	@find $(TEMP_DIR) -type f -name "*.js" | while read file; do \
+	out="$(OUT_DIR)/$${file#$(TEMP_DIR)/}"; \
+		mkdir -p "$$(dirname "$$out")"; \
+		npx terser "$$file" --compress --mangle --comments false --output "$$out"; \
+	done
+	@echo "[ok] Minification done."
+
+.PHONY: copy-dts
+copy-dts:
+	@echo "\n> Copying declaration files from './$(TEMP_DIR)' to './$(OUT_DIR)'..."
+	@npx copyfiles -u 1 "$(TEMP_DIR)/**/*.d.ts" $(OUT_DIR)
+	@echo "[ok] Declaration files have been copied."
+
 .PHONY: build
 build:
-	@echo "\n> Compiling input TypeScript source files into './$(OUT_DIR)/' directory..."
-	@rm -rf $(OUT_DIR)
-	@npx tsc --build tsconfig.build.json
-	@echo "[ok] Compilation has been complited."
+	@rm -rf $(TEMP_DIR) $(OUT_DIR)
+	@make prebuild minify-js copy-dts
+	@rm -rf $(TEMP_DIR)
 
 .PHONY: fmt
 fmt:
