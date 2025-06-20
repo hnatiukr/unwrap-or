@@ -5,10 +5,8 @@
     "moduleResolution": "node",
 
     "strict": true,
-    "outDir": "lib",
     "rootDir": "src",
-    "declaration": true,
-    "declarationDir": "lib"
+    "declaration": true
   },
 
   "include": ["src"],
