@@ -3,6 +3,7 @@
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
+    "moduleDetection": "force",
     "lib": ["es2015.iterable", "esnext", "dom"],
 
     "noEmit": true,
@@ -16,15 +17,26 @@
     "alwaysStrict": true,
     "skipLibCheck": true,
     "noImplicitAny": true,
-    "noUnusedLocals": false,
+    "inlineSourceMap": true,
+    "isolatedModules": true,
     "strictNullChecks": true,
     "noImplicitReturns": true,
     "noErrorTruncation": true,
-    "noUnusedParameters": false,
+    "noImplicitOverride": true,
     "strictFunctionTypes": true,
-    "strictBindCallApply": true,
+    "useDefineForClassFields": true,
+    "useUnknownInCatchVariables": true,
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "allowJs": false,
+    "noUnusedLocals": false,
+    "allowUnusedLabels": false,
+    "noUnusedParameters": false,
     "allowUnreachableCode": false,
-    "forceConsistentCasingInFileNames": true
+    "experimentalDecorators": false,
+    "noUncheckedIndexedAccess": false,
+    "noPropertyAccessFromIndexSignature": false
   },
 
   "include": ["src", "tests"],
