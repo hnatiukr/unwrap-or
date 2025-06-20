@@ -29,35 +29,27 @@ fmt:
 	@npx prettier --write --log-level error --list-different .
 	@echo "[ok] Formatting has been completed."
 
-.PHONY: check-fmt
-check-fmt:
+.PHONY: fmt-check
+fmt-check:
 	@echo "\n> Checking formatting..."
 	@npx prettier --check --log-level error .
 	@echo "[ok] Checking formatting has been completed."
 
-.PHONY: check-types
-check-types:
+.PHONY: type-check
+type-check:
 	@echo "\n> Checking types..."
 	@npx tsc
 	@echo "[ok] Checking types has been completed."
 
 .PHONY: checks
 checks:
-	@make check-fmt check-types
+	@make fmt-check type-check
 
 .PHONY: test
 test:
 	@echo "\n> Running tests..."
 	@npx vitest run
 	@echo "[ok] Testing has been completed."
-
-.PHONY: copy-npm
-copy-npm:
-	@echo "\n> Copying package files into output '$(OUT_DIR)/' dir..."
-	@cp package.json $(OUT_DIR)
-	@cp README.md $(OUT_DIR)
-	@cp LICENSE $(OUT_DIR)
-	@echo "[ok] Files have been copied."
 
 .PHONY: dry-publication
 dry-publication:
