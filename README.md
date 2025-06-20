@@ -37,31 +37,6 @@ Use it to:
 
 The name `unwrap-or` is a playful reference to both the `unwrap_or` method found in the `Option`/`Result` types, and a hint at the package's contents - _"-OR"_ standing for **O**ption and **R**esult types. It also cleverly references the logical `OR` operation, reflecting how these monadic types encapsulate one of two possible states - either `Some` or `None` for `Option`; either `Ok` or `Err` for `Result`.
 
-## Installation
-
-Via npm:
-
-```sh
-# npm
-npm install unwrap-or
-```
-
-You can also use your favorite package manager:
-
-```sh
-# pnpm
-pnpm add unwrap-or
-
-# bun
-bun add unwrap-or
-
-# yarn
-yarn add unwrap-or
-
-# deno
-deno add npm:unwrap-or
-```
-
 ## Inspirations
 
 - [fnts](https://github.com/drizzer14/fnts) - minimal functional programming utilities for TypeScript & JavaScript inspired by the `fantasy-land` specification and `Haskell` programming language.
