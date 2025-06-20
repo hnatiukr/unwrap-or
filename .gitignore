@@ -1,5 +1,11 @@
 lib
+_temp
 node_modules
 
-.DS_store
+pnpm-*.yaml
+*-lock*.json
+*.lock
+
 *.tsbuildinfo
+
+.DS_store
