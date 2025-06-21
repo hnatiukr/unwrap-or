@@ -1,30 +1,29 @@
 /**
  * @module Result
- * @author Roman Hnatiuk <hnatiukr@pm.me>
- * @see https://github.com/hnatiukr/unwrap-or
- * @license MIT
  */
 
 /**
- * Unique id for Ok
+ * @internal
  *
- * @private
+ * Unique id for Ok
  */
 const oid = Symbol.for("@@result/ok");
 
 /**
- * Unique id for Err
+ * @internal
  *
- * @private
+ * Unique id for Err
  */
 const eid = Symbol.for("@@result/err");
 
 /**
+ * @since 0.4.0-alpha
+ *
+ * @hideconstructor
+ *
  * Type `Result` is a type that represents either success `Ok(T)`
  * and containing a value, or `Err(E)`, representing error
  * and containing an error value.
- *
- * @interface Result
  *
  * @example
  *
@@ -37,6 +36,10 @@ const eid = Symbol.for("@@result/err");
  * assert_eq!(x, Err('empty'))
  */
 export class Result<T, E> {
+  /**
+   * @internal
+   * @protected
+   */
   protected _extract(): T {
     if (this.is_err()) {
       throw new TypeError("Prevent taking value from `Err(E)`.");
@@ -45,6 +48,10 @@ export class Result<T, E> {
     return (this as any)[oid] as T;
   }
 
+  /**
+   * @internal
+   * @protected
+   */
   protected _extract_err(): E {
     if (this.is_ok()) {
       throw new TypeError("Prevent taking err from `Ok(T)`.");
@@ -53,6 +60,10 @@ export class Result<T, E> {
     return (this as any)[eid] as E;
   }
 
+  /**
+   * @internal
+   * @protected
+   */
   public constructor(_id: typeof oid, value: T);
   public constructor(_id: typeof eid, err: E);
   public constructor(_id: typeof oid | typeof eid, value?: T | E) {
@@ -60,13 +71,13 @@ export class Result<T, E> {
   }
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Returns `res` if the result is `Ok`, otherwise returns the `Err` value.
    *
    * Arguments passed to and are eagerly evaluated;
    * if you are passing the result of a function call,
    * it is recommended to use `and_then`, which is lazily evaluated.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -98,13 +109,13 @@ export class Result<T, E> {
   }
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Calls `op` if the result is `Ok`, otherwise returns the `Err` value.
    *
    * This function can be used for control flow based on `Result` values.
    *
    * Often used to chain fallible operations that may return `Err`.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -150,6 +161,8 @@ export class Result<T, E> {
   // TODO: public err() {}
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Returns the contained `Ok` value.
    *
    * Because this method may throw, its use is generally discouraged.
@@ -161,8 +174,6 @@ export class Result<T, E> {
    *
    * @throws Panics if the value is an `Err`,
    * with a panic message including the passed message, and the value of the `Err`.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -189,12 +200,12 @@ export class Result<T, E> {
   }
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Returns the contained `Err` value.
    *
    * @throws Panics if the value is an `Ok`, with a panic message
    * including the passed message, and the content of the Ok.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -226,11 +237,11 @@ export class Result<T, E> {
   // TODO: public flatten() {}
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Calls a function with a reference to the contained value if `Ok`.
    *
    * Returns the original result.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -259,11 +270,11 @@ export class Result<T, E> {
   }
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Calls a function with a reference to the contained value if `Err`.
    *
    * Returns the original result.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -293,9 +304,9 @@ export class Result<T, E> {
   }
 
   /**
-   * Returns `true` if the result is `Err`.
-   *
    * @since 0.4.0-alpha
+   *
+   * Returns `true` if the result is `Err`.
    *
    * @example
    *
@@ -312,9 +323,9 @@ export class Result<T, E> {
   }
 
   /**
-   * Returns `true` if the result is `Err` and the value inside of it matches a predicate.
-   *
    * @since 0.4.0-alpha
+   *
+   * Returns `true` if the result is `Err` and the value inside of it matches a predicate.
    *
    * @example
    *
@@ -347,9 +358,9 @@ export class Result<T, E> {
   }
 
   /**
-   * Returns `true` if the result is `Ok`.
-   *
    * @since 0.4.0-alpha
+   *
+   * Returns `true` if the result is `Ok`.
    *
    * @example
    *
@@ -366,9 +377,9 @@ export class Result<T, E> {
   }
 
   /**
-   * Returns `true` if the result is `Ok` and the value inside of it matches a predicate.
-   *
    * @since 0.4.0-alpha
+   *
+   * Returns `true` if the result is `Ok` and the value inside of it matches a predicate.
    *
    * @example
    *
@@ -401,12 +412,12 @@ export class Result<T, E> {
   }
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Maps a `Result<T, E>` to `Result<U, E>` by applying a function
    * to a contained `Ok` value, leaving an `Err` value untouched.
    *
    * This function can be used to compose the results of two functions.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -433,14 +444,14 @@ export class Result<T, E> {
   }
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Returns the provided default (if `Err`),
    * or applies a function to the contained value (if `Ok`).
    *
    * Arguments passed to `map_or` are eagerly evaluated;
    * if you are passing the result of a function call,
    * it is recommended to use `map_or_else`, which is lazily evaluated.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -467,10 +478,10 @@ export class Result<T, E> {
   }
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Maps a `Result<T, E>` to `U` by applying fallback function `default_f`
    * to a contained `Err` value, or function `f` to a contained `Ok` value.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -506,13 +517,13 @@ export class Result<T, E> {
   // TODO: public ok() {}
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Returns `res` if the result is `Err`, otherwise returns the `Ok` value.
    *
    * Arguments passed to or are eagerly evaluated;
    * if you are passing the result of a function call,
    * it is recommended to use `or_else`, which is lazily evaluated.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -544,11 +555,11 @@ export class Result<T, E> {
   }
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Calls `f` if the result is `Err`, otherwise returns the `Ok` value.
    *
    * This function can be used for control flow based on result values.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -585,11 +596,13 @@ export class Result<T, E> {
   }
 
   /**
+   * @since 0.4.0-alpha
+   *
+   * @ignore
+   *
    * Returns a string representing this object.
    * This method is meant to be overridden by derived JS objects
    * for custom type coercion logic.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -641,6 +654,8 @@ export class Result<T, E> {
    * Overrides Node.js object inspection.
    *
    * @see toString
+   *
+   * @ignore
    */
   public [Symbol.for("nodejs.util.inspect.custom")](): string {
     return this.toString();
@@ -649,6 +664,8 @@ export class Result<T, E> {
   // TODO: public transpose() {}
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Returns the contained `Ok` value.
    *
    * Because this function may throw, its use is generally discouraged.
@@ -656,8 +673,6 @@ export class Result<T, E> {
    * or call `unwrap_or`, `unwrap_or_else`, or `unwrap_or_default`.
    *
    * @throws Panics if the value is an `Err`, with a message provided by the `Err`’s value.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -682,11 +697,11 @@ export class Result<T, E> {
   }
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Returns the contained `Err` value.
    *
    * @throws Panics if the value is an `Ok`, with a custom panic message provided by the `Ok`’s value.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -711,13 +726,13 @@ export class Result<T, E> {
   }
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Returns the contained `Ok` value or a provided default.
    *
    * Arguments passed to `unwrap_or` are eagerly evaluated;
    * if you are passing the result of a function call,
    * it is recommended to use `unwrap_or_else`, which is lazily evaluated.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -738,11 +753,11 @@ export class Result<T, E> {
   }
 
   /**
+   * @since 0.4.0-alpha
+   *
    * Returns the contained `Ok` value or computes it from a closure.
    *
    * Useful for expensive default computations.
-   *
-   * @since 0.4.0-alpha
    *
    * @example
    *
@@ -769,10 +784,28 @@ export class Result<T, E> {
   }
 }
 
+/**
+ * @since 0.4.0-alpha
+ *
+ * Contains the success value.
+ *
+ * @example
+ *
+ * let x: Result<number, string> = Ok(42)
+ */
 export function Ok<T>(value: T): Result<T, any> {
   return new Result<T, any>(oid, value);
 }
 
+/**
+ * @since 0.4.0-alpha
+ *
+ * Contains the error value.
+ *
+ * @example
+ *
+ * let x: Result<number, string> = Err("Not found")
+ */
 export function Err<E>(err: E): Result<any, E> {
   return new Result<any, E>(eid, err);
 }

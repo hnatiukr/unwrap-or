@@ -2,7 +2,9 @@
     <img src="logo.svg" height=60>
 </p>
 
-<h1 align="center">Unwrap OR</h1>
+<h1 align="center">
+Unwrap OR
+</h1>
 
 <p align="center">
 A TypeScript implementation of Rust's Option and Result types.
@@ -36,6 +38,69 @@ Use it to:
 - handle errors gracefully
 
 The name `unwrap-or` is a playful reference to both the `unwrap_or` method found in the `Option`/`Result` types, and a hint at the package's contents - _"-OR"_ standing for **O**ption and **R**esult types. It also cleverly references the logical `OR` operation, reflecting how these monadic types encapsulate one of two possible states - either `Some` or `None` for `Option`; either `Ok` or `Err` for `Result`.
+
+## Installation
+
+Via npm:
+
+```shell
+npm install unwrap-or
+```
+
+You can also use your favorite package manager:
+
+```shell
+# pnpm
+pnpm add unwrap-or
+
+# bun
+bun add unwrap-or
+
+# yarn
+yarn add unwrap-or
+
+# deno
+deno add npm:unwrap-or
+```
+
+## Overview
+
+The full API documentation will be added later, but you can already explore the source code in the meantime.
+
+### Option
+
+Optional values.
+
+Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
+
+```ts
+import { type Option, Some, None } from "unwrap-or/option";
+
+function divide(numerator: number, denominator: number): Option<number> {
+  return denominator === 0 ? Some(numerator / denominator) : None;
+}
+
+let option_num = divide(2.0, 3.0);
+```
+
+### Result
+
+Error handling with the `Result` type.
+
+Type `Result` is used for returning and propagating errors: every `Result` is either `Ok` - representing success and containing a value, or `Err` - representing error and containing an error value.
+
+```ts
+import { type Result, Ok, Err } from "unwrap-or/result";
+
+let result_data: Result<string, unknown>;
+
+try {
+  const data = await fs.readFile("/Users/joe/test.txt", { encoding: "utf8" });
+  result_data = Ok(data);
+} catch (err) {
+  result_data = Err(err);
+}
+```
 
 ## Inspirations
 

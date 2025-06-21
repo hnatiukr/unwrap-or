@@ -1,32 +1,29 @@
 /**
  * @module Option
- * @author Roman Hnatiuk <hnatiukr@pm.me>
- * @see https://github.com/hnatiukr/unwrap-or
- * @license MIT
  */
 
 /**
- * Unique id for Some
+ * @internal
  *
- * @private
+ * Unique id for Some
  */
 const sid = Symbol.for("@@option/some");
 
 /**
- * Unique id for None
+ * @internal
  *
- * @private
+ * Unique id for None
  */
 const nid = Symbol.for("@@option/none");
 
 /**
+ * @since 0.1.0-alpha
+ *
+ * @hideconstructor
+ *
  * Type `Option` represents an optional value:
  * every `Option` is either `Some` and contains a value,
  * or `None`, and does not.
- *
- * @since 0.1.0-alpha
- *
- * @interface Option
  *
  * @example
  *
@@ -39,6 +36,10 @@ const nid = Symbol.for("@@option/none");
  * assert_eq!(x, None)
  */
 export class Option<T> {
+  /**
+   * @internal
+   * @protected
+   */
   protected _extract(): T {
     if (this.is_none()) {
       throw new TypeError("Prevent taking value from `None`.");
@@ -60,13 +61,13 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Returns `None` if the option is `None`, otherwise returns `optb`.
    *
    * Arguments passed to and are eagerly evaluated;
    * if you are passing the result of a function call,
    * it is recommended to use `and_then`, which is lazily evaluated.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -98,14 +99,14 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Returns `None` if the option is `None`,
    * otherwise calls function `f` with the wrapped value and returns the result.
    *
    * Often used to chain fallible operations that may return `None`.
    *
    * Some languages call this operation `flatmap`.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -149,6 +150,8 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Returns the contained `Some` value.
    *
    * Recommend that expect messages are used to describe
@@ -156,8 +159,6 @@ export class Option<T> {
    *
    * @throws Throws an error if the value is a `None`
    * with a custom message provided by `msg`.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -182,13 +183,13 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Returns `None` if the option is `None`,
    * otherwise calls predicate with the wrapped value and returns:
    *
    * - `Some(t)` if predicate returns `true` (where `t` is the wrapped value)
    * - `None` if predicate returns `false`
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -209,11 +210,11 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.3.0-alpha
+   *
    * Converts from `Option<Option<T>>` to `Option<T>`.
    *
    * Flattening only removes one level of nesting at a time.
-   *
-   * @since 0.3.0-alpha
    *
    * @example
    *
@@ -237,11 +238,11 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Calls a function with a reference to the contained value if `Some`.
    *
    * Returns the original option.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -270,9 +271,9 @@ export class Option<T> {
   }
 
   /**
-   * Returns `true` if the option is a `None` value.
-   *
    * @since 0.1.0-alpha
+   *
+   * Returns `true` if the option is a `None` value.
    *
    * @example
    *
@@ -289,10 +290,10 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Returns `true` if the option is a `None`
    * or the value inside of it matches a predicate.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -316,9 +317,9 @@ export class Option<T> {
   }
 
   /**
-   * Returns `true` if the option is a `Some` value.
-   *
    * @since 0.1.0-alpha
+   *
+   * Returns `true` if the option is a `Some` value.
    *
    * @example
    *
@@ -335,9 +336,9 @@ export class Option<T> {
   }
 
   /**
-   * Checks if the `Option` is `Some` and the value satisfies a predicate.
-   *
    * @since 0.1.0-alpha
+   *
+   * Checks if the `Option` is `Some` and the value satisfies a predicate.
    *
    * @example
    *
@@ -361,10 +362,10 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Maps an `Option<T>` to `Option<U>` by applying a function `f`
    * to a contained value (if `Some`) or returns `None` (if `None`).
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -385,13 +386,13 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Returns the provided default result (if none),
    * or applies a function `f` to the contained value (if any).
    *
    * If you are passing the result of a function call,
    * it is recommended to use `map_or_else`, which is lazily evaluated.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -412,10 +413,10 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Computes a default function result (if none),
    * or applies a different function to the contained value (if any).
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -441,13 +442,13 @@ export class Option<T> {
   // TODO: ok_or_else<E, F>(err: F): Result<T, E>
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Returns the option if it contains a value, otherwise returns `optb`.
    *
    * Arguments passed to or are eagerly evaluated;
    * if you are passing the result of a function call,
    * it is recommended to use `or_else`, which is lazily evaluated.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -479,10 +480,10 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Returns the option if it contains a value,
    * otherwise calls `f` and returns the result.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -519,11 +520,13 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
+   * @ignore
+   *
    * Returns a string representing this object.
    * This method is meant to be overridden by derived JS objects
    * for custom type coercion logic.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -558,6 +561,8 @@ export class Option<T> {
    * Overrides Node.js object inspection.
    *
    * @see toString
+   *
+   * @ignore
    */
   public [Symbol.for("nodejs.util.inspect.custom")](): string {
     return this.toString();
@@ -566,6 +571,8 @@ export class Option<T> {
   // TODO: transpose(): Result<Option<T>, E>
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Returns the contained `Some` value. Panics if it is `None`.
    *
    * Because this function may throw a TypeError, its use is generally discouraged.
@@ -573,8 +580,6 @@ export class Option<T> {
    *
    * Instead, prefer to use try/catch, promise or pattern matching
    * and handle the `None` case explicitly, or call `unwrap_or` or `unwrap_or_else`.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -599,13 +604,13 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Returns the contained `Some` value or a provided default value.
    *
    * Arguments passed to `unwrap_or` are eagerly evaluated;
    * if you are passing the result of a function call,
    * it is recommended to use `unwrap_or_else`, which is lazily evaluated.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -626,11 +631,11 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Returns the contained `Some` value or computes it from a closure.
    *
    * Useful for expensive default computations.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -652,10 +657,10 @@ export class Option<T> {
   }
 
   /**
+   * @since 0.1.0-alpha
+   *
    * Returns `Some` if exactly one of itself, `optb` is `Some`,
    * otherwise returns `None`.
-   *
-   * @since 0.1.0-alpha
    *
    * @example
    *
@@ -690,22 +695,22 @@ export class Option<T> {
 }
 
 /**
- * Some value of type T.
- *
  * @since 0.1.0-alpha
+ *
+ * Some value of type T.
  *
  * @example
  *
- * let x: Option<number> = Some(42)
+ * let x: Option<number> = Some(42)rea
  */
 export function Some<T>(value: T): Option<T> {
   return new Option<T>(sid, value);
 }
 
 /**
- * No value.
- *
  * @since 0.1.0-alpha
+ *
+ * No value.
  *
  * @example
  *
