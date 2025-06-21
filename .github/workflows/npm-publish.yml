@@ -27,6 +27,12 @@ jobs:
       - name: Install dependencies
         run: make
 
+      - name: Run checks
+        run: make checks
+
+      - name: Run tests
+        run: make test
+
       - name: Run build
         run: make build
 
