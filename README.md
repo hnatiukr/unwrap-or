@@ -17,8 +17,8 @@ A TypeScript implementation of Rust's Option and Result types.
 </p>
 
 <p align="center">
-  <a href="https://github.com/hnatiukr/unwrap-or/actions/workflows/workflow.yml">
-      <img src="https://img.shields.io/github/actions/workflow/status/hnatiukr/unwrap-or/workflow.yml?color=orange&style=for-the-badge" alt="Workflow CI">
+  <a href="https://github.com/hnatiukr/unwrap-or/actions/workflows/ci.yml">
+      <img src="https://img.shields.io/github/actions/workflow/status/hnatiukr/unwrap-or/ci.yml?color=orange&style=for-the-badge" alt="Workflow CI">
   </a>
    <a href="https://www.npmjs.com/package/unwrap-or">
        <img src="https://img.shields.io/github/v/release/hnatiukr/unwrap-or?color=orange&style=for-the-badge" alt="Release version">
