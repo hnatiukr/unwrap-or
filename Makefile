@@ -48,13 +48,13 @@ build:
 .PHONY: fmt
 fmt:
 	@echo "\n> Formatting..."
-	@npx prettier --write --log-level error --list-different .
+	@npx prettier --write --log-level error --list-different "src/**/*.ts" "tests/**/*.ts" "README.md"
 	@echo "[ok] Formatting has been completed."
 
 .PHONY: fmt-check
 fmt-check:
 	@echo "\n> Checking formatting..."
-	@npx prettier --check --log-level error .
+	@npx prettier --check --log-level error "src/**/*.ts" "tests/**/*.ts" "README.md"
 	@echo "[ok] Checking formatting has been completed."
 
 .PHONY: type-check
