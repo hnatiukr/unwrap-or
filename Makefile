@@ -75,7 +75,6 @@ test:
 
 .PHONY: dry-publication
 dry-publication:
-	@make checks build
 	@echo "\n> Publishing $(PACKAGE_NAME)@$(PACKAGE_VERSION) in DRY mode..."
 	@npm publish --dry-run --tag v.$(PACKAGE_VERSION)
 	@echo "[ok] DRY publication has been completed."
