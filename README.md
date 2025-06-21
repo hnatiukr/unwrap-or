@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="logo.svg" height=60>
+    <img src="https://raw.githubusercontent.com/hnatiukr/unwrap-or/main/logo.svg" height=60>
 </p>
 
 <h1 align="center">
@@ -104,7 +104,7 @@ try {
 
 ## Inspirations
 
-- [fnts](https://github.com/drizzer14/fnts) - minimal functional programming utilities for TypeScript & JavaScript inspired by the `fantasy-land` specification and `Haskell` programming language.
+- [fnts](https://github.com/drizzer14/fnts) - minimal functional programming utilities for TypeScript & JavaScript inspired by the programming language Haskell.
 
 - [ts-expression](https://github.com/hnatiukr/ts-expression) - pair constructor, binary representation, a minimal implementation of `Lisp`'s symbolic expressions (`s-expressions`) for TypeScript.
 
