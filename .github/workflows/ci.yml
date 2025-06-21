@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master, develop]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: make
+
+      - name: Run fmt check
+        run: make fmt-check
+
+      - name: Run type check
+        run: make type-check
+
+      - name: Run tests
+        run: make test
+
+      - name: Run build
+        run: make build
+
+      - name: Run dry publication
+        run: make dry-publication
