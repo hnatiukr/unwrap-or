@@ -27,8 +27,11 @@ jobs:
       - name: Install dependencies
         run: make
 
-      - name: Run checks
-        run: make checks
+      - name: Run fmt check
+        run: make fmt-check
+
+      - name: Run type check
+        run: make type-check
 
       - name: Run tests
         run: make test
