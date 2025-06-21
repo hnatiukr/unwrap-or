@@ -19,13 +19,13 @@ install:
 
 .PHONY: prebuild
 prebuild:
-	@echo "\n> Compiling input TypeScript source files into './$(TEMP_DIR)' directory..."
+	@echo "\n> Compiling input TypeScript source files into '$(TEMP_DIR)' directory..."
 	@npx tsc -p tsconfig.build.json --outDir $(TEMP_DIR) --declarationDir $(TEMP_DIR)
 	@echo "[ok] Compilation has been complited."
 
 .PHONY: minify-js
 minify-js:
-	@echo "\n> Minifying all .js files from './$(TEMP_DIR)' to './$(OUT_DIR)'..."
+	@echo "\n> Minifying all .js files from '$(TEMP_DIR)' to '$(OUT_DIR)'..."
 	@find $(TEMP_DIR) -type f -name "*.js" | while read file; do \
 	out="$(OUT_DIR)/$${file#$(TEMP_DIR)/}"; \
 		mkdir -p "$$(dirname "$$out")"; \
@@ -35,7 +35,7 @@ minify-js:
 
 .PHONY: copy-dts
 copy-dts:
-	@echo "\n> Copying declaration files from './$(TEMP_DIR)' to './$(OUT_DIR)'..."
+	@echo "\n> Copying declaration files from '$(TEMP_DIR)' to '$(OUT_DIR)'..."
 	@npx copyfiles -u 1 "$(TEMP_DIR)/**/*.d.ts" $(OUT_DIR)
 	@echo "[ok] Declaration files have been copied."
 
