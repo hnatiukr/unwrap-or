@@ -27,14 +27,31 @@
   ],
   "type": "module",
   "sideEffects": false,
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "files": [
     "lib",
     "LICENSE",
     "README.md",
     "package.json"
   ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "require": "./lib/index.js"
+    },
+    "./option": {
+      "types": "./lib/option.d.ts",
+      "import": "./lib/option.js",
+      "require": "./lib/option.js"
+    },
+    "./result": {
+      "types": "./lib/result.d.ts",
+      "import": "./lib/result.js",
+      "require": "./lib/result.js"
+    }
+  },
   "engines": {
     "node": ">=22.16.0"
   },
