@@ -73,6 +73,10 @@ test:
 	@npx vitest run
 	@echo "[ok] Testing has been completed."
 
+.PHONY: ci
+ci:
+	@make checks test build
+
 .PHONY: dry-publication
 dry-publication:
 	@echo "\n> Publishing $(PACKAGE_NAME)@$(PACKAGE_VERSION) in DRY mode..."
