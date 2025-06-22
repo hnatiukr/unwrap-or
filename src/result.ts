@@ -105,7 +105,7 @@ export class Result<T, E> {
       return res;
     }
 
-    return new Result(eid, this._extract_err());
+    return new Result<T, E>(eid, this._extract_err());
   }
 
   /**
