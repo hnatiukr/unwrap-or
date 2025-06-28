@@ -41,3 +41,6 @@ jobs:
 
       - name: Run dry publication
         run: make dry-publication
+
+      - name: Run docs build
+        run: make docs-build
