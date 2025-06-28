@@ -8,6 +8,10 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -49,8 +53,10 @@ jobs:
 
       - name: Configure Git for documentation deployment
         run: |
-          git config --global user.email "hnatiukr@pm.me"
-          git config --global user.name "Roman Hnatiuk"
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
 
       - name: Deploy documentation website
         run: make docs-deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
