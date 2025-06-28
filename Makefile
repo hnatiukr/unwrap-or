@@ -25,7 +25,8 @@ install-docs:
 
 .PHONY: install
 install:
-	@make install-src install-docs
+	@make install-src
+	@make install-docs
 
 .PHONY: prebuild
 prebuild:
