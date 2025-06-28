@@ -15,6 +15,7 @@ PACKAGE_VERSION = $$(node -p "require('./package.json').version")
 install:
 	@echo "\n> Installing dependecies..."
 	@pnpm install --frozen-lockfile
+	@cd docs && pnpm install --frozen-lockfile
 	@echo "[ok] Installation completed."
 
 .PHONY: prebuild
