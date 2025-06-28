@@ -108,4 +108,4 @@ docs-serve:
 
 .PHONY: docs-deploy
 docs-deploy:
-	@cd docs && gh-pages -d build
+	@cd docs && pnpm gh-pages -d build
