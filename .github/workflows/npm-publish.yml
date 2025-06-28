@@ -36,8 +36,11 @@ jobs:
       - name: Run tests
         run: make test
 
-      - name: Run build
+      - name: Run build lib
         run: make build
+
+      - name: Run build docs
+        run: make build-docs
 
       - name: Publish to NPM
         run: pnpm publish --no-git-checks
