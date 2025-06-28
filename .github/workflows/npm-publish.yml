@@ -40,7 +40,7 @@ jobs:
         run: make build
 
       - name: Run build docs
-        run: make build-docs
+        run: make docs-build
 
       - name: Publish to NPM
         run: pnpm publish --no-git-checks
