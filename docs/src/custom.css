@@ -1,0 +1,52 @@
+@import url(https://fonts.bunny.net/css?family=source-code-pro:400);
+@import url(https://fonts.bunny.net/css?family=fira-sans:400,500,600,700);
+
+:root {
+  --c-dark-color-primary: #fb6500;
+  --c-dark-color-base: #cacaca;
+
+  --c-light-color-primary: #fb6500;
+  --c-light-color-base: #393939;
+  --c-light-background: #f5f5f5;
+
+  --f-base: "Fira Sans", sans-serif;
+  --f-monospace: "Source Code Pro", monospace;
+
+  /* override */
+
+  --ifm-color-primary: var(--c-light-color-primary);
+  --ifm-color-base: var(--c-light-color-base);
+  --ifm-spacing-horizontal: 3rem;
+  --ifm-font-family-base: var(--f-base);
+  --ifm-font-family-monospace: var(--f-monospace);
+}
+
+[data-theme="dark"] {
+  --ifm-color-primary: var(--c-dark-color-primary);
+  --ifm-font-color-base: var(--c-dark-color-base);
+  --ifm-menu-color: var(--c-dark-color-base);
+}
+
+html,
+body {
+  overscroll-behavior: none;
+}
+
+.menu__link {
+  font-size: 14px;
+  line-height: 21px;
+}
+
+[data-theme="light"] .theme-layout-navbar,
+[data-theme="light"] .theme-doc-sidebar-container {
+  background-color: var(--c-light-background);
+}
+
+code {
+  border: none;
+  vertical-align: unset;
+}
+
+.padding-top--md {
+  padding-top: 2rem !important;
+}
