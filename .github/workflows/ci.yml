@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, master, develop]
+    branches: [main]
   pull_request:
-    branches: [main, master, develop]
+    branches: [main]
 
 jobs:
   test:
@@ -41,3 +41,6 @@ jobs:
 
       - name: Run dry publication
         run: make dry-publication
+
+      - name: Run docs build
+        run: make docs-build

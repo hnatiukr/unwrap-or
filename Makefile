@@ -8,13 +8,14 @@ PACKAGE_NAME = $$(node -p "require('./package.json').name")
 PACKAGE_VERSION = $$(node -p "require('./package.json').version")
 
 #
-# targets
+# lib targets
 #
 
 .PHONY: install
 install:
 	@echo "\n> Installing dependecies..."
 	@pnpm install --frozen-lockfile
+	@cd docs && pnpm install --frozen-lockfile
 	@echo "[ok] Installation completed."
 
 .PHONY: prebuild
@@ -89,3 +90,23 @@ publication:
 	@echo "\n> Publishing $(PACKAGE_NAME)@$(PACKAGE_VERSION) in DRY mode..."
 	@npm publish --tag v.$(PACKAGE_VERSION)
 	@echo "[ok] DRY publication has been completed."
+
+#
+# docs targets
+#
+
+.PHONY: docs-dev
+docs-dev:
+	@cd docs && pnpm docusaurus start
+
+.PHONY: docs-build
+docs-build:
+	@cd docs && pnpm docusaurus build
+
+.PHONY: docs-serve
+docs-serve:
+	@cd docs && pnpm docusaurus serve
+
+.PHONY: docs-deploy
+docs-deploy:
+	@cd docs && pnpm gh-pages -d build

@@ -65,42 +65,7 @@ deno add npm:unwrap-or
 
 ## Overview
 
-The full API documentation will be added later, but you can already explore the source code in the meantime.
-
-### Option
-
-Optional values.
-
-Type `Option` represents an optional value: every `Option` is either `Some` and contains a value, or `None`, and does not.
-
-```ts
-import { type Option, Some, None } from "unwrap-or/option";
-
-function divide(numerator: number, denominator: number): Option<number> {
-  return denominator === 0 ? Some(numerator / denominator) : None;
-}
-
-let option_num = divide(2.0, 3.0);
-```
-
-### Result
-
-Error handling with the `Result` type.
-
-Type `Result` is used for returning and propagating errors: every `Result` is either `Ok` - representing success and containing a value, or `Err` - representing error and containing an error value.
-
-```ts
-import { type Result, Ok, Err } from "unwrap-or/result";
-
-let result_data: Result<string, unknown>;
-
-try {
-  const data = await fs.readFile("/Users/joe/test.txt", { encoding: "utf8" });
-  result_data = Ok(data);
-} catch (err) {
-  result_data = Err(err);
-}
-```
+See the [documentation](https://hnatiukr.github.io/unwrap-or) for **unwrap-or** usage and API details.
 
 ## Inspirations
 
