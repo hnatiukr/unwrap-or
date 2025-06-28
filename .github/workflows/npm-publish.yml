@@ -47,5 +47,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Configure Git for documentation deployment
+        run: |
+          git config --global user.email "hnatiukr@pm.me"
+          git config --global user.name "Roman Hnatiuk"
+
       - name: Deploy documentation website
         run: make docs-deploy
