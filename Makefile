@@ -11,12 +11,22 @@ PACKAGE_VERSION = $$(node -p "require('./package.json').version")
 # lib targets
 #
 
-.PHONY: install
-install:
-	@echo "\n> Installing dependecies..."
+.PHONY: install-src
+install-src:
+	@echo "\n> Installing lib dependecies..."
 	@pnpm install --frozen-lockfile
+	@echo "[ok] Installation completed."
+
+.PHONY: install-docs
+install-docs:
+	@echo "\n> Installing docs dependecies..."
 	@cd docs && pnpm install --frozen-lockfile
 	@echo "[ok] Installation completed."
+
+.PHONY: install
+install:
+	@make install-src
+	@make install-docs
 
 .PHONY: prebuild
 prebuild:
@@ -106,7 +116,3 @@ docs-build:
 .PHONY: docs-serve
 docs-serve:
 	@cd docs && pnpm docusaurus serve
-
-.PHONY: docs-deploy
-docs-deploy:
-	@cd docs && pnpm gh-pages -d build
