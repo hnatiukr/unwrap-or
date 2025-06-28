@@ -107,5 +107,5 @@ docs-serve:
 	@cd docs && pnpm docusaurus serve
 
 .PHONY: docs-deploy
-docs-serve:
+docs-deploy:
 	@cd docs && gh-pages -d build
