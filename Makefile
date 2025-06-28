@@ -12,13 +12,13 @@ PACKAGE_VERSION = $$(node -p "require('./package.json').version")
 #
 
 .PHONY: install-src
-install:
+install-src:
 	@echo "\n> Installing lib dependecies..."
 	@pnpm install --frozen-lockfile
 	@echo "[ok] Installation completed."
 
 .PHONY: install-docs
-install:
+install-docs:
 	@echo "\n> Installing docs dependecies..."
 	@cd docs && pnpm install --frozen-lockfile
 	@echo "[ok] Installation completed."
