@@ -2,8 +2,8 @@ name: Deploy docs to GitHub pages
 
 on:
   push:
-    tags:
-      - "v*"
+    branches:
+      - main
 
 jobs:
   build:
