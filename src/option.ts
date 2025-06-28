@@ -701,7 +701,7 @@ export class Option<T> {
  *
  * @example
  *
- * let x: Option<number> = Some(42)rea
+ * let x: Option<number> = Some(42)
  */
 export function Some<T>(value: T): Option<T> {
   return new Option<T>(sid, value);

@@ -9,9 +9,10 @@
     "url": "https://github.com/hnatiukr"
   },
   "repository": {
-    "url": "git+https://github.com/hnatiukr/unwrap-or.git"
+    "url": "https://github.com/hnatiukr/unwrap-or",
+    "type": "git"
   },
-  "homepage": "https://github.com/hnatiukr/unwrap-or/",
+  "homepage": "https://hnatiukr.github.io/unwrap-or",
   "keywords": [
     "TypeScript",
     "Rust",
