@@ -185,17 +185,13 @@ describe("Option", () => {
   });
 
   test("ok_or", () => {
-    let x: Option<number> | Result<number, string>
+    let x: Option<number> | Result<number, string>;
 
     x = Some(42);
-    expectTypeOf(
-      x.ok_or("Not found"),
-    ).toEqualTypeOf<Result<number, string>>;
+    expectTypeOf(x.ok_or("Not found")).toEqualTypeOf<Result<number, string>>;
 
     x = None;
-    expectTypeOf(
-      x.ok_or("Not found"),
-    ).toEqualTypeOf<Result<number, string>>;
+    expectTypeOf(x.ok_or("Not found")).toEqualTypeOf<Result<number, string>>;
   });
 
   test("or", () => {
