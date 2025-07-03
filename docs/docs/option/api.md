@@ -456,6 +456,33 @@ x = None
 assert_eq!(x.map_or_else(() => 2  k, (v) => v.length), 42)
 ```
 
+### ok_or
+
+<small>@since 0.2.0-beta</small>
+
+```ts
+public ok_or<E>(err: E): Result<T, E>
+```
+
+Transforms the `Option<T>` into a `Result<T, E>`,
+mapping `Some(value)` to `Ok(value)` and `None` to `Err(err)`.
+
+Arguments passed to `ok_or` are eagerly evaluated;
+if you are passing the result of a function call,
+it is recommended to use` ok_or_else`, which is lazily evaluated.
+
+#### Examples
+
+```ts
+let x: Option<number> | Result<number, string>;
+
+x = Some(42);
+assert_eq!(x.ok_or("Not found"), Ok(42));
+
+x = None;
+assert_eq!(x.ok_or("Not found"), Err("Not found"));
+```
+
 ### or
 
 <small>@since 0.1.0-alpha</small>

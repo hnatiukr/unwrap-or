@@ -2,6 +2,8 @@
  * @module Option
  */
 
+import { type Result, Ok, Err } from "./result";
+
 /**
  * @internal
  *
@@ -437,7 +439,43 @@ export class Option<T> {
     return default_f();
   }
 
-  // TODO: ok_or<E>(err: E): Result<T, E>
+  /**
+   * @since 0.2.0-beta
+   *
+   * Transforms the `Option<T>` into a `Result<T, E>`,
+   * mapping `Some(value)` to `Ok(value)` and `None` to `Err(err)`.
+   *
+   * Arguments passed to `ok_or` are eagerly evaluated;
+   * if you are passing the result of a function call,
+   * it is recommended to use` ok_or_else`, which is lazily evaluated.
+   *
+   * @example
+   *
+   * let x: Option<number> | Result<number, string>
+   *
+   * x = Some(42)
+   * assert_eq!(
+   *   x.ok_or("Not found"),
+   *   Ok(42)
+   * )
+   *
+   * x = None
+   *     assert_eq!(
+   *   x.ok_or("Not found"),
+   *   Err("Not found")
+   * )
+   */
+  public ok_or<E>(err: E): Result<T, E> {
+    let result: Result<T, E>;
+
+    if (this.is_some()) {
+      result = Ok(this._extract());
+    } else {
+      result = Err(err);
+    }
+
+    return result;
+  }
 
   // TODO: ok_or_else<E, F>(err: F): Result<T, E>
 
