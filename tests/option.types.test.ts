@@ -1,6 +1,7 @@
 import { describe, test, expectTypeOf } from "vitest";
 
-import { Some, None, Option } from "../src/option";
+import { Some, None, type Option } from "../src/option";
+import { Ok, Err, type Result } from "../src/result";
 
 describe("Option", () => {
   test("and", () => {
@@ -181,6 +182,16 @@ describe("Option", () => {
         (v) => v.length,
       ),
     ).toEqualTypeOf<number>;
+  });
+
+  test("ok_or", () => {
+    let x: Option<number> | Result<number, string>;
+
+    x = Some(42);
+    expectTypeOf(x.ok_or("Not found")).toEqualTypeOf<Result<number, string>>;
+
+    x = None;
+    expectTypeOf(x.ok_or("Not found")).toEqualTypeOf<Result<number, string>>;
   });
 
   test("or", () => {

@@ -1,6 +1,7 @@
 import { describe, test, assert } from "vitest";
 
 import { Some, None, type Option } from "../src/option";
+import { Ok, Err, type Result } from "../src/result";
 
 const assert_eq = assert.deepEqual;
 const assert_err = assert.throw;
@@ -239,6 +240,16 @@ describe("Option", () => {
       ),
       42,
     );
+  });
+
+  test("ok_or", () => {
+    let x: Option<number> | Result<number, string>;
+
+    x = Some(42);
+    assert_eq!(x.ok_or("Not found"), Ok(42));
+
+    x = None;
+    assert_eq!(x.ok_or("Not found"), Err("Not found"));
   });
 
   test("or", () => {
