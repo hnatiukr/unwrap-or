@@ -243,13 +243,16 @@ describe("Option", () => {
   });
 
   test("ok_or", () => {
-    let x: Option<number> | Result<number, string>;
+    let x: Option<number>;
+    let y: Result<number, string>;
 
     x = Some(42);
-    assert_eq!(x.ok_or("Not found"), Ok(42));
+    y = x.ok_or("Not found");
+    assert_eq!(y, Ok(42));
 
     x = None;
-    assert_eq!(x.ok_or("Not found"), Err("Not found"));
+    y = x.ok_or("Not found");
+    assert_eq!(y, Err("Not found"));
   });
 
   test("or", () => {
