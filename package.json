@@ -34,42 +34,23 @@
     "README.md",
     "package.json"
   ],
-  "main": "lib/index.js",
+  "main": "lib/index.ts",
   "types": "lib/index.d.ts",
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
-      "import": "./lib/index.js",
-      "require": "./lib/index.js"
+      "import": "./lib/index.ts",
+      "require": "./lib/index.ts"
     },
     "./option": {
-      "types": "./lib/option.d.ts",
-      "import": "./lib/option.js",
-      "require": "./lib/option.js"
+      "types": "./lib/option/index.d.ts",
+      "import": "./lib/option/index.ts",
+      "require": "./lib/option/index.ts"
     },
     "./result": {
-      "types": "./lib/result.d.ts",
-      "import": "./lib/result.js",
-      "require": "./lib/result.js"
-    }
-  },
-  "engines": {
-    "node": ">=22.16.0"
-  },
-  "packageManager": "pnpm@10.12.1",
-  "devDependencies": {
-    "copyfiles": "2.4.1",
-    "prettier": "3.5.3",
-    "terser": "5.43.1",
-    "typescript": "5.8.3",
-    "vitest": "3.1.1"
-  },
-  "peerDependencies": {
-    "typescript": ">=5.0"
-  },
-  "peerDependenciesMeta": {
-    "typescript": {
-      "optional": true
+      "types": "./lib/result/index.d.ts",
+      "import": "./lib/result/index.ts",
+      "require": "./lib/result/index.ts"
     }
   }
 }
