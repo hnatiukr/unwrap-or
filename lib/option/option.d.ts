@@ -2,26 +2,10 @@
  * @module Option
  */
 
-import { type Result, Ok, Err } from "./result";
-
-/**
- * @internal
- *
- * Unique id for Some
- */
-const sid = Symbol.for("@@option/some");
-
-/**
- * @internal
- *
- * Unique id for None
- */
-const nid = Symbol.for("@@option/none");
+import type { Result } from "../result/index.ts";
 
 /**
  * @since 0.1.0-alpha
- *
- * @hideconstructor
  *
  * Type `Option` represents an optional value:
  * every `Option` is either `Some` and contains a value,
@@ -37,31 +21,7 @@ const nid = Symbol.for("@@option/none");
  * x = None
  * assert_eq!(x, None)
  */
-export class Option<T> {
-  /**
-   * @internal
-   * @protected
-   */
-  protected _extract(): T {
-    if (this.is_none()) {
-      throw new TypeError("Prevent taking value from `None`.");
-    }
-
-    return (this as any)[sid] as T;
-  }
-
-  public constructor(_id: typeof nid);
-  public constructor(_id: typeof sid, value: T);
-  public constructor(_id: typeof sid | typeof nid, value?: T) {
-    if (_id === sid) {
-      (this as any)[_id] = value;
-    } else if (_id === nid) {
-      (this as any)[_id] = undefined;
-    } else {
-      throw new TypeError("Unknown constructor id");
-    }
-  }
-
+export interface Option<T> {
   /**
    * @since 0.1.0-alpha
    *
@@ -92,13 +52,7 @@ export class Option<T> {
    * y = None
    * assert_eq!(x.and(y), None)
    */
-  public and<U>(optb: Option<U>): Option<T | U> {
-    if (this.is_some()) {
-      return optb;
-    }
-
-    return new Option<T>(nid);
-  }
+  and<U>(optb: Option<U>): Option<T | U>;
 
   /**
    * @since 0.1.0-alpha
@@ -143,13 +97,7 @@ export class Option<T> {
    *   None,
    * )
    */
-  public and_then<U>(f: (value: T) => Option<U>): Option<T | U> {
-    if (this.is_some()) {
-      return f(this._extract());
-    }
-
-    return new Option<T>(nid);
-  }
+  and_then<U>(f: (value: T) => Option<U>): Option<T | U>;
 
   /**
    * @since 0.1.0-alpha
@@ -176,13 +124,7 @@ export class Option<T> {
    *   "should return string value",
    * );
    */
-  public expect(msg: string): T {
-    if (this.is_some()) {
-      return this._extract();
-    }
-
-    throw new Error(msg);
-  }
+  expect(msg: string): T;
 
   /**
    * @since 0.1.0-alpha
@@ -203,13 +145,7 @@ export class Option<T> {
    * assert_eq!(Some(3).filter(is_even), None)
    * assert_eq!(Some(4).filter(is_even), Some(4))
    */
-  public filter(predicate: (value: T) => boolean): Option<T> {
-    if (this.is_some() && predicate(this._extract())) {
-      return new Option<T>(sid, this._extract());
-    }
-
-    return new Option<T>(nid);
-  }
+  filter(predicate: (value: T) => boolean): Option<T>;
 
   /**
    * @since 0.3.0-alpha
@@ -231,13 +167,7 @@ export class Option<T> {
    * x = None;
    * assert_eq!(x.flatten(), None);
    */
-  public flatten<U>(this: Option<Option<U>>): Option<U> {
-    if (this.is_some()) {
-      return this._extract();
-    }
-
-    return new Option<U>(nid);
-  }
+  flatten<U>(this: Option<Option<U>>): Option<U>;
 
   /**
    * @since 0.1.0-alpha
@@ -264,13 +194,7 @@ export class Option<T> {
    * assert_eq!(x, Some(3));
    * assert_eq!(has_inspected, true);
    */
-  public inspect(f: (value: T) => void): Option<T> {
-    if (this.is_some()) {
-      f(this._extract());
-    }
-
-    return this;
-  }
+  inspect(f: (value: T) => void): Option<T>;
 
   /**
    * @since 0.1.0-alpha
@@ -287,9 +211,7 @@ export class Option<T> {
    * x = None
    * assert_eq!(x.is_none(), true)
    */
-  public is_none(): boolean {
-    return nid in this;
-  }
+  is_none(): boolean;
 
   /**
    * @since 0.1.0-alpha
@@ -310,13 +232,7 @@ export class Option<T> {
    * x = None
    * assert_eq!(x.is_none_or((v) => v > 1), true)
    */
-  public is_none_or(f: (value: T) => boolean): boolean {
-    if (this.is_some()) {
-      return f(this._extract());
-    }
-
-    return true;
-  }
+  is_none_or(f: (value: T) => boolean): boolean;
 
   /**
    * @since 0.1.0-alpha
@@ -333,9 +249,7 @@ export class Option<T> {
    * x = None
    * assert_eq!(x.is_some(), false)
    */
-  public is_some(): boolean {
-    return sid in this;
-  }
+  is_some(): boolean;
 
   /**
    * @since 0.1.0-alpha
@@ -355,13 +269,7 @@ export class Option<T> {
    * x = None
    * assert_eq!(x.is_some_and((v) => v > 1), false)
    */
-  public is_some_and(f: (value: T) => boolean): boolean {
-    if (this.is_some()) {
-      return f(this._extract());
-    }
-
-    return false;
-  }
+  is_some_and(f: (value: T) => boolean): boolean;
 
   /**
    * @since 0.1.0-alpha
@@ -379,13 +287,7 @@ export class Option<T> {
    * x = None
    * assert_eq!(x.map((s) => s.length), None)
    */
-  public map<U>(f: (value: T) => U): Option<T | U> {
-    if (this.is_some()) {
-      return new Option<U>(sid, f(this._extract()));
-    }
-
-    return new Option<T>(nid);
-  }
+  map<U>(f: (value: T) => U): Option<T | U>;
 
   /**
    * @since 0.1.0-alpha
@@ -406,13 +308,7 @@ export class Option<T> {
    * x = None
    * assert_eq!(x.map_or(42, (v) => v.length), 42)
    */
-  public map_or<U>(default_value: U, f: (value: T) => U): U {
-    if (this.is_some()) {
-      return f(this._extract());
-    }
-
-    return default_value;
-  }
+  map_or<U>(default_value: U, f: (value: T) => U): U;
 
   /**
    * @since 0.1.0-alpha
@@ -431,13 +327,7 @@ export class Option<T> {
    * x = None
    * assert_eq!(x.map_or_else(() => 2 * k, (v) => v.length), 42)
    */
-  public map_or_else<U>(default_f: () => U, f: (value: T) => U): U {
-    if (this.is_some()) {
-      return f(this._extract());
-    }
-
-    return default_f();
-  }
+  map_or_else<U>(default_f: () => U, f: (value: T) => U): U;
 
   /**
    * @since 0.2.0-beta
@@ -462,17 +352,7 @@ export class Option<T> {
    * y = x.ok_or("Not found")
    * assert_eq!(y, Err("Not found"))
    */
-  public ok_or<E>(err: E): Result<T, E> {
-    let result: Result<T, E>;
-
-    if (this.is_some()) {
-      result = Ok(this._extract());
-    } else {
-      result = Err(err);
-    }
-
-    return result;
-  }
+  ok_or<E>(err: E): Result<T, E>;
 
   // TODO: ok_or_else<E, F>(err: F): Result<T, E>
 
@@ -506,13 +386,7 @@ export class Option<T> {
    * y = None
    * assert_eq!(x.or(y), None)
    */
-  public or(optb: Option<T>): Option<T> {
-    if (this.is_some()) {
-      return new Option<T>(sid, this._extract());
-    }
-
-    return optb;
-  }
+  or(optb: Option<T>): Option<T>;
 
   /**
    * @since 0.1.0-alpha
@@ -546,13 +420,7 @@ export class Option<T> {
    *   None,
    * )
    */
-  public or_else(f: () => Option<T>): Option<T> {
-    if (this.is_some()) {
-      return new Option<T>(sid, this._extract());
-    }
-
-    return f();
-  }
+  or_else(f: () => Option<T>): Option<T>;
 
   /**
    * @since 0.1.0-alpha
@@ -588,20 +456,7 @@ export class Option<T> {
    * x = None
    * assert_eq!(x.toString(), "None")
    */
-  public toString(): string {
-    return this.is_some() ? `Some(${this._extract()})` : "None";
-  }
-
-  /**
-   * Overrides Node.js object inspection.
-   *
-   * @see toString
-   *
-   * @ignore
-   */
-  public [Symbol.for("nodejs.util.inspect.custom")](): string {
-    return this.toString();
-  }
+  toString(): string;
 
   // TODO: transpose(): Result<Option<T>, E>
 
@@ -630,13 +485,7 @@ export class Option<T> {
    *   "Called Option.unwrap() on a None value",
    * );
    */
-  public unwrap(): T {
-    if (this.is_some()) {
-      return this._extract();
-    }
-
-    throw new TypeError("Called Option.unwrap() on a None value");
-  }
+  unwrap(): T;
 
   /**
    * @since 0.1.0-alpha
@@ -657,13 +506,7 @@ export class Option<T> {
    * x = None
    * assert_eq!(x.unwrap_or(1), 1)
    */
-  public unwrap_or(default_value: T): T {
-    if (this.is_some()) {
-      return this._extract();
-    }
-
-    return default_value;
-  }
+  unwrap_or(default_value: T): T;
 
   /**
    * @since 0.1.0-alpha
@@ -683,13 +526,7 @@ export class Option<T> {
    * x = None
    * assert_eq!(x.unwrap_or_else(() => 2 * k), 20)
    */
-  public unwrap_or_else(f: () => T): T {
-    if (this.is_some()) {
-      return this._extract();
-    }
-
-    return f();
-  }
+  unwrap_or_else(f: () => T): T;
 
   /**
    * @since 0.1.0-alpha
@@ -718,37 +555,5 @@ export class Option<T> {
    * y = None
    * assert_eq!(x.xor(y), None)
    */
-  public xor(optb: Option<T>): Option<T> {
-    if (this.is_some()) {
-      return optb.is_none()
-        ? new Option<T>(sid, this._extract())
-        : new Option<T>(nid);
-    }
-
-    return optb.is_some() ? optb : new Option<T>(nid);
-  }
+  xor(optb: Option<T>): Option<T>;
 }
-
-/**
- * @since 0.1.0-alpha
- *
- * Some value of type T.
- *
- * @example
- *
- * let x: Option<number> = Some(42)
- */
-export function Some<T>(value: T): Option<T> {
-  return new Option<T>(sid, value);
-}
-
-/**
- * @since 0.1.0-alpha
- *
- * No value.
- *
- * @example
- *
- * let x: Option<number> = None
- */
-export const None: Option<any> = new Option<any>(nid);
