@@ -9,6 +9,20 @@ Option<T> {
 }
 ```
 
+## Import
+
+You may import directly from the package root:
+
+```ts
+import { None, type Option, Some } from "unwrap-or";
+```
+
+or from the specific module path for more precise bundling:
+
+```ts
+import { None, type Option, Some } from "unwrap-or/option";
+```
+
 ## Overview
 
 Type `Option` represents an optional value: every `Option` is either `Some(T)`
@@ -30,8 +44,6 @@ Options are commonly paired with matching to query the presence of a value and
 take action, always accounting for the `None` case.
 
 ```ts
-import { None, type Option, Some } from "unwrap-or";
-
 function divide(numerator: number, denominator: number): Option<number> {
   return denominator === 0 ? Some(numerator / denominator) : None;
 }

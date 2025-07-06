@@ -9,6 +9,20 @@ Result<T, E> {
 }
 ```
 
+## Import
+
+You may import directly from the package root:
+
+```ts
+import { Err, Ok, type Result } from "unwrap-or";
+```
+
+or from the specific module path for more precise bundling:
+
+```ts
+import { Err, Ok, type Result } from "unwrap-or/result";
+```
+
 ## Overview
 
 Type `Result` is used for returning and propagating errors. There are variants,
