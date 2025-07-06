@@ -3,23 +3,7 @@
  */
 
 /**
- * @internal
- *
- * Unique id for Ok
- */
-const oid = Symbol.for("@@result/ok");
-
-/**
- * @internal
- *
- * Unique id for Err
- */
-const eid = Symbol.for("@@result/err");
-
-/**
  * @since 0.4.0-alpha
- *
- * @hideconstructor
  *
  * Type `Result` is a type that represents either success `Ok(T)`
  * and containing a value, or `Err(E)`, representing error
@@ -35,41 +19,7 @@ const eid = Symbol.for("@@result/err");
  * x = Err('empty')
  * assert_eq!(x, Err('empty'))
  */
-export class Result<T, E> {
-  /**
-   * @internal
-   * @protected
-   */
-  protected _extract(): T {
-    if (this.is_err()) {
-      throw new TypeError("Prevent taking value from `Err(E)`.");
-    }
-
-    return (this as any)[oid] as T;
-  }
-
-  /**
-   * @internal
-   * @protected
-   */
-  protected _extract_err(): E {
-    if (this.is_ok()) {
-      throw new TypeError("Prevent taking err from `Ok(T)`.");
-    }
-
-    return (this as any)[eid] as E;
-  }
-
-  /**
-   * @internal
-   * @protected
-   */
-  public constructor(_id: typeof oid, value: T);
-  public constructor(_id: typeof eid, err: E);
-  public constructor(_id: typeof oid | typeof eid, value?: T | E) {
-    (this as any)[_id] = value;
-  }
-
+export interface Result<T, E> {
   /**
    * @since 0.4.0-alpha
    *
@@ -100,13 +50,7 @@ export class Result<T, E> {
    * y = Ok("different result type")
    * assert_eq!(x.and(y), Ok("different result type"))
    */
-  public and<U>(res: Result<U, E>): Result<T | U, E> {
-    if (this.is_ok()) {
-      return res;
-    }
-
-    return new Result<T, E>(eid, this._extract_err());
-  }
+  and<U>(res: Result<U, E>): Result<T | U, E>;
 
   /**
    * @since 0.4.0-alpha
@@ -150,13 +94,7 @@ export class Result<T, E> {
    *   Ok("different result type"),
    * )
    */
-  public and_then<U>(op: (value: T) => Result<U, E>): Result<T | U, E> {
-    if (this.is_ok()) {
-      return op(this._extract());
-    }
-
-    return new Result<T, E>(eid, this._extract_err());
-  }
+  and_then<U>(op: (value: T) => Result<U, E>): Result<T | U, E>;
 
   // TODO: public err() {}
 
@@ -188,16 +126,7 @@ export class Result<T, E> {
    *   'should return 42: "unknown value"',
    * )
    */
-  public expect(msg: string): T {
-    if (this.is_ok()) {
-      return this._extract();
-    }
-
-    const err = this._extract_err();
-    const str_err = JSON.stringify(err);
-
-    throw new Error(`${msg}: ${str_err}`);
-  }
+  expect(msg: string): T;
 
   /**
    * @since 0.4.0-alpha
@@ -223,16 +152,7 @@ export class Result<T, E> {
    *   "unknown error value",
    * )
    */
-  public expect_err(msg: string): E {
-    if (this.is_err()) {
-      return this._extract_err();
-    }
-
-    const value = this._extract();
-    const str_value = JSON.stringify(value);
-
-    throw new Error(`${msg}: ${str_value}`);
-  }
+  expect_err(msg: string): E;
 
   // TODO: public flatten() {}
 
@@ -261,13 +181,7 @@ export class Result<T, E> {
    * assert_eq!(x, Ok(3))
    * assert_eq!(has_inspected, true)
    */
-  public inspect(f: (value: T) => void): Result<T, E> {
-    if (this.is_ok()) {
-      f(this._extract());
-    }
-
-    return this;
-  }
+  inspect(f: (value: T) => void): Result<T, E>;
 
   /**
    * @since 0.4.0-alpha
@@ -295,13 +209,7 @@ export class Result<T, E> {
    * assert_eq!(x, Err("Not found"))
    * assert_eq!(has_inspected, true)
    */
-  public inspect_err(f: (err: E) => void): Result<T, E> {
-    if (this.is_err()) {
-      f(this._extract_err());
-    }
-
-    return this;
-  }
+  inspect_err(f: (err: E) => void): Result<T, E>;
 
   /**
    * @since 0.4.0-alpha
@@ -318,9 +226,7 @@ export class Result<T, E> {
    * x = Err("Not found")
    * assert_eq!(x.is_err(), true)
    */
-  public is_err(): boolean {
-    return eid in this;
-  }
+  is_err(): boolean;
 
   /**
    * @since 0.4.0-alpha
@@ -349,13 +255,7 @@ export class Result<T, E> {
    *  false,
    * )
    */
-  public is_err_and(f: (err: E) => boolean): boolean {
-    if (this.is_err()) {
-      return f(this._extract_err());
-    }
-
-    return false;
-  }
+  is_err_and(f: (err: E) => boolean): boolean;
 
   /**
    * @since 0.4.0-alpha
@@ -372,9 +272,7 @@ export class Result<T, E> {
    * x = Err("Not found")
    * assert_eq!(x.is_ok(), false)
    */
-  public is_ok(): boolean {
-    return oid in this;
-  }
+  is_ok(): boolean;
 
   /**
    * @since 0.4.0-alpha
@@ -403,13 +301,7 @@ export class Result<T, E> {
    *   false,
    * )
    */
-  public is_ok_and(f: (value: T) => boolean): boolean {
-    if (this.is_ok()) {
-      return f(this._extract());
-    }
-
-    return false;
-  }
+  is_ok_and(f: (value: T) => boolean): boolean;
 
   /**
    * @since 0.4.0-alpha
@@ -435,13 +327,7 @@ export class Result<T, E> {
    *   Err({ statusCode: 404 }),
    * )
    */
-  public map<U>(f: (value: T) => U): Result<T | U, E> {
-    if (this.is_ok()) {
-      return new Result<U, E>(oid, f(this._extract()));
-    }
-
-    return new Result<T, E>(eid, this._extract_err());
-  }
+  map<U>(f: (value: T) => U): Result<T | U, E>;
 
   /**
    * @since 0.4.0-alpha
@@ -469,13 +355,7 @@ export class Result<T, E> {
    *   42,
    * )
    */
-  public map_or<U>(default_value: U, f: (value: T) => U): U {
-    if (this.is_ok()) {
-      return f(this._extract());
-    }
-
-    return default_value;
-  }
+  map_or<U>(default_value: U, f: (value: T) => U): U;
 
   /**
    * @since 0.4.0-alpha
@@ -506,13 +386,7 @@ export class Result<T, E> {
    *   42,
    * )
    */
-  public map_or_else<U>(default_f: () => U, f: (value: T) => U): U {
-    if (this.is_ok()) {
-      return f(this._extract());
-    }
-
-    return default_f();
-  }
+  map_or_else<U>(default_f: () => U, f: (value: T) => U): U;
 
   // TODO: public ok() {}
 
@@ -546,13 +420,7 @@ export class Result<T, E> {
    * y = Err("Not found")
    * assert_eq!(x.or(y), Err("Not found"))
    */
-  public or(res: Result<T, E>): Result<T, E> {
-    if (this.is_ok()) {
-      return new Result<T, E>(oid, this._extract());
-    }
-
-    return res;
-  }
+  or(res: Result<T, E>): Result<T, E>;
 
   /**
    * @since 0.4.0-alpha
@@ -587,13 +455,7 @@ export class Result<T, E> {
    *   Err({ statusCode: 404 }),
    * )
    */
-  public or_else(f: () => Result<T, E>): Result<T, E> {
-    if (this.is_ok()) {
-      return new Result<T, E>(oid, this._extract());
-    }
-
-    return f();
-  }
+  or_else(f: () => Result<T, E>): Result<T, E>;
 
   /**
    * @since 0.4.0-alpha
@@ -644,22 +506,7 @@ export class Result<T, E> {
    * x = Err(() => 2 * 4)
    * assert_eq!(x.toString(), "Err(() => 2 * 4)")
    */
-  public toString(): string {
-    const value = this.is_ok() ? this._extract() : this._extract_err();
-
-    return this.is_ok() ? `Ok(${value})` : `Err(${value})`;
-  }
-
-  /**
-   * Overrides Node.js object inspection.
-   *
-   * @see toString
-   *
-   * @ignore
-   */
-  public [Symbol.for("nodejs.util.inspect.custom")](): string {
-    return this.toString();
-  }
+  toString(): string;
 
   // TODO: public transpose() {}
 
@@ -688,13 +535,7 @@ export class Result<T, E> {
    *   "Called Result.unwrap() on an Err(E) value",
    * )
    */
-  public unwrap(): T {
-    if (this.is_ok()) {
-      return this._extract();
-    }
-
-    throw new TypeError("Called Result.unwrap() on an Err value");
-  }
+  unwrap(): T;
 
   /**
    * @since 0.4.0-alpha
@@ -717,13 +558,7 @@ export class Result<T, E> {
    * x = Err("Not found")
    * assert_eq!(x.unwrap_err(), "Not found")
    */
-  public unwrap_err(): E {
-    if (this.is_err()) {
-      return this._extract_err();
-    }
-
-    throw new TypeError("Called Result.unwrap_err() on an Ok value");
-  }
+  unwrap_err(): E;
 
   /**
    * @since 0.4.0-alpha
@@ -744,13 +579,7 @@ export class Result<T, E> {
    * x = Err("Not found");
    * assert_eq!(x.unwrap_or(0), 0);
    */
-  public unwrap_or(default_value: T): T {
-    if (this.is_ok()) {
-      return this._extract();
-    }
-
-    return default_value;
-  }
+  unwrap_or(default_value: T): T;
 
   /**
    * @since 0.4.0-alpha
@@ -775,37 +604,5 @@ export class Result<T, E> {
    *   3,
    * );
    */
-  public unwrap_or_else(f: (err: E) => T): T {
-    if (this.is_ok()) {
-      return this._extract();
-    }
-
-    return f(this._extract_err());
-  }
-}
-
-/**
- * @since 0.4.0-alpha
- *
- * Contains the success value.
- *
- * @example
- *
- * let x: Result<number, string> = Ok(42)
- */
-export function Ok<T>(value: T): Result<T, any> {
-  return new Result<T, any>(oid, value);
-}
-
-/**
- * @since 0.4.0-alpha
- *
- * Contains the error value.
- *
- * @example
- *
- * let x: Result<number, string> = Err("Not found")
- */
-export function Err<E>(err: E): Result<any, E> {
-  return new Result<any, E>(eid, err);
+  unwrap_or_else(f: (err: E) => T): T;
 }
