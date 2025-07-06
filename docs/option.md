@@ -14,13 +14,13 @@ Option<T> {
 You may import directly from the package root:
 
 ```ts
-import { type Option, Some, None } from "unwrap-or";
+import { None, type Option, Some } from "unwrap-or";
 ```
 
 or from the specific module path for more precise bundling:
 
 ```ts
-import { type Option, Some, None } from "unwrap-or/option";
+import { None, type Option, Some } from "unwrap-or/option";
 ```
 
 ## Overview
@@ -278,7 +278,11 @@ x = Some("value");
 assert_eq!(x.expect("should return string value"), "value");
 
 x = None;
-assert_err!(() => x.expect("should return string value"), Error, "should return string value");
+assert_err!(
+  () => x.expect("should return string value"),
+  Error,
+  "should return string value",
+);
 ```
 
 ### filter
@@ -698,7 +702,11 @@ x = Some("air");
 assert_eq!(x.unwrap(), "air");
 
 x = None;
-assert_err!(() => x.unwrap(), TypeError, "Called Option.unwrap() on a None value");
+assert_err!(
+  () => x.unwrap(),
+  TypeError,
+  "Called Option.unwrap() on a None value",
+);
 ```
 
 ### unwrap_or
