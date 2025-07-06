@@ -76,10 +76,10 @@ yarn add unwrap-or
 
 ## Overview
 
-See the documentation for **unwrap-or** usage and API details:
+See the documentation for **unwrap-or** usage, module specifications and API/methods details:
 
-- [Module Option](./docs/option)
-- [Module Result](./docs/result)
+- [Option](https://github.com/hnatiukr/unwrap-or/blob/main/docs/option.md)
+- [Result](https://github.com/hnatiukr/unwrap-or/blob/main/docs/result.md)
 
 ## Inspirations
 
