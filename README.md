@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://raw.githubusercontent.com/hnatiukr/unwrap-or/main/logo.svg">g
+    <img src="https://raw.githubusercontent.com/hnatiukr/unwrap-or/main/logo.svg" width="120" height="100">
 </p>
 
 <h1 align="center">
