@@ -9,6 +9,20 @@ Result<T, E> {
 }
 ```
 
+## Import
+
+You may import directly from the package root:
+
+```ts
+import { type Result, Ok, Err } from "unwrap-or";
+```
+
+or from the specific module path for more precise bundling:
+
+```ts
+import { type Result, Ok, Err } from "unwrap-or/result";
+```
+
 ## Overview
 
 Type `Result` is used for returning and propagating errors. There are variants,
@@ -271,10 +285,7 @@ x = Ok(42);
 assert_eq!(x.expect("should return 42"), 42);
 
 x = Err("unknown value");
-assert_err!(
-  () => x.expect("should return 42"),
-  'should return 42: "unknown value"',
-);
+assert_err!(() => x.expect("should return 42"), 'should return 42: "unknown value"');
 ```
 
 ### expect_err
@@ -302,10 +313,7 @@ assert_err!(
 );
 
 x = Err("unknown error value");
-assert_eq!(
-  x.expect_err("should return unknown error value"),
-  "unknown error value",
-);
+assert_eq!(x.expect_err("should return unknown error value"), "unknown error value");
 ```
 
 <!-- // TODO: public flatten() {} -->
@@ -694,11 +702,7 @@ x = Ok(42);
 assert_eq!(x.unwrap(), 42);
 
 x = Err("Not found");
-assert_err!(
-  () => x.unwrap(),
-  TypeError,
-  "Called Result.unwrap() on an Err(E) value",
-);
+assert_err!(() => x.unwrap(), TypeError, "Called Result.unwrap() on an Err(E) value");
 ```
 
 ### unwrap_err
@@ -720,11 +724,7 @@ Panics if the value is an `Ok`, with a custom panic message provided by the
 let x: Result<number, string>;
 
 x = Ok(42);
-assert_err!(
-  () => x.unwrap_err(),
-  TypeError,
-  "Called Result.unwrap_err() on an Ok value",
-);
+assert_err!(() => x.unwrap_err(), TypeError, "Called Result.unwrap_err() on an Ok value");
 
 x = Err("Not found");
 assert_eq!(x.unwrap_err(), "Not found");

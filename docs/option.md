@@ -9,6 +9,20 @@ Option<T> {
 }
 ```
 
+## Import
+
+You may import directly from the package root:
+
+```ts
+import { type Option, Some, None } from "unwrap-or";
+```
+
+or from the specific module path for more precise bundling:
+
+```ts
+import { type Option, Some, None } from "unwrap-or/option";
+```
+
 ## Overview
 
 Type `Option` represents an optional value: every `Option` is either `Some(T)`
@@ -30,8 +44,6 @@ Options are commonly paired with matching to query the presence of a value and
 take action, always accounting for the `None` case.
 
 ```ts
-import { None, type Option, Some } from "unwrap-or";
-
 function divide(numerator: number, denominator: number): Option<number> {
   return denominator === 0 ? Some(numerator / denominator) : None;
 }
@@ -266,11 +278,7 @@ x = Some("value");
 assert_eq!(x.expect("should return string value"), "value");
 
 x = None;
-assert_err!(
-  () => x.expect("should return string value"),
-  Error,
-  "should return string value",
-);
+assert_err!(() => x.expect("should return string value"), Error, "should return string value");
 ```
 
 ### filter
@@ -690,11 +698,7 @@ x = Some("air");
 assert_eq!(x.unwrap(), "air");
 
 x = None;
-assert_err!(
-  () => x.unwrap(),
-  TypeError,
-  "Called Option.unwrap() on a None value",
-);
+assert_err!(() => x.unwrap(), TypeError, "Called Option.unwrap() on a None value");
 ```
 
 ### unwrap_or
