@@ -43,12 +43,10 @@ Use it to:
 - chain transformations on values that might not exist
 - handle errors gracefully
 
-The name `unwrap-or` is a playful reference to both the `unwrap_or` method found
-in the `Option`/`Result` types, and a hint at the package's contents - _"-OR"_
-standing for **O**ption and **R**esult types. It also cleverly references the
-logical `OR` operation, reflecting how these monadic types encapsulate one of
-two possible states - either `Some` or `None` for `Option`; either `Ok` or `Err`
-for `Result`.
+The name `unwrap-or` is a reference to the `unwrap_or` method in the
+`Option`/`Result` types and a combination of the first letters _"-OR"_ of two
+monads for **O**ption and **R**esult types. It also relfects the logical `OR`
+operation reflecting two possible states.
 
 ## Installation
 
