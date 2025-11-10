@@ -1,21 +1,174 @@
+// Copyright 2025 Roman Hnatiuk. All rights reserved. MIT license.
+
 /**
+ * # Module Result
+ *
+ * Error handling.
+ *
+ * ```rs
+ * Result<T, E> {
+ *    Ok(T),
+ *    Err(E),
+ * }
+ * ```
+ *
+ * ## Overview
+ *
+ * Type `Result` is used for returning and propagating errors. There are variants,
+ * `Ok(T)`, representing success and containing a value, and `Err(E)`, representing
+ * error and containing an error value.
+ *
+ * Commonly, `Result` is most prominently used for I/O.
+ *
+ * ### Results must be used
+ *
+ * A common problem with using return values to indicate errors is that it is easy
+ * to ignore the return value, thus failing to handle the error. `Result`
+ * especially useful with functions that may encounter errors but don’t otherwise
+ * return a useful value.
+ *
+ * ### Querying the variant
+ *
+ * The `is_ok` and `is_err` methods return `true` if the `Result` is `Ok` or `Err`,
+ * respectively.
+ *
+ * The `is_ok_and` and `is_err_and` methods apply the provided function to the
+ * contents of the `Result` to produce a boolean value. If the `Result` does not
+ * have the expected variant then `false` is returned instead without executing the
+ * function.
+ *
+ * ### Extracting contained values
+ *
+ * These methods extract the contained value in a `Result<T, E>` when it is the
+ * `Ok` variant.
+ *
+ * If the `Result` is `Err`:
+ *
+ * - `expect` panics with a provided custom message
+ * - `unwrap` panics with a generic message
+ * - `unwrap_or` returns the provided default value
+ * - `unwrap_or_else` returns the result of evaluating the provided function
+ *
+ * If the `Result` is `Ok`:
+ *
+ * - `expect_err` panics with a provided custom message
+ * - `unwrap_err` panics with a generic message
+ *
+ * ### Transforming contained values
+ *
+ * These methods transform `Result` to `Option`:
+ *
+ * - `err` transforms `Result<T, E>` into `Option<E>`, mapping `Err(e)` to
+ *   `Some(e)` and `Ok(v)` to `None`
+ * - `ok` transforms `Result<T, E>` into `Option<T>`, mapping `Ok(v)` to `Some(v)`
+ *   and `Err(e)` to `None`
+ * - `transpose` transposes a `Result` of an `Option` into an `Option` of a
+ *   `Result`
+ *
+ * These methods transform the contained value of the `Ok` variant:
+ *
+ * - `map` transforms `Result<T, E>` into `Result<U, E>` by applying the provided
+ *   function to the contained value of `Ok` and leaving `Err` values unchanged
+ * - `inspect` takes ownership of the `Result`, applies the provided function to
+ *   the contained value by reference, and then returns the `Result`
+ *
+ * These methods transform the contained value of the `Err` variant:
+ *
+ * - `map_err` transforms `Result<T, E>` into `Result<T, F>` by applying the
+ *   provided function to the contained value of `Err` and leaving `Ok` values
+ *   unchanged
+ * - `inspect_err` takes ownership of the `Result`, applies the provided function
+ *   to the contained value of `Err` by reference, and then returns the `Result`
+ *
+ * These methods transform a `Result<T, E>` into a value of a possibly different
+ * type `U`:
+ *
+ * - `map_or` applies the provided function to the contained value of `Ok`, or
+ *   returns the provided default value if the `Result` is `Err`
+ * - `map_or_else` applies the provided function to the contained value of `Ok`, or
+ *   applies the provided default fallback function to the contained value of `Err`
+ *
+ * ### Boolean operators
+ *
+ * These methods treat the `Result` as a boolean value, where `Ok` acts like `true`
+ * and `Err` acts like `false`. There are two categories of these methods: ones
+ * that take a `Result` as input, and ones that take a function as input (to be
+ * lazily evaluated).
+ *
+ * The `and` and `or` methods take another `Result` as input, and produce a
+ * `Result` as output. The `and` method can produce a `Result<U, E>` value having a
+ * different inner type `U` than `Result<T, E>`. The `or` method can produce a
+ * `Result<T, F>` value having a different error type `F` than `Result<T, E>`.
+ *
+ * | method | input     | output   |
+ * | ------ | --------- | -------- |
+ * | `and`  | (ignored) | `Err(e)` |
+ * | `and`  | `Err(d)`  | `Err(d)` |
+ * | `and`  | `Ok(y)`   | `Ok(y)`  |
+ * | `or`   | `Err(d)`  | `Err(d)` |
+ * | `or`   | `Ok(y)`   | `Ok(y)`  |
+ * | `or`   | (ignored) | `Ok(x)`  |
+ *
+ * The `and_then` and `or_else` methods take a function as input, and only evaluate
+ * the function when they need to produce a new value. The `and_then` method can
+ * produce a `Result<U, E>` value having a different inner type `U` than
+ * `Result<T, E>`. The `or_else` method can produce a `Result<T, F>` value having a
+ * different error type `F` than `Result<T, E>`.
+ *
+ * | method     | self     | function input | function result | output   |
+ * | ---------- | -------- | -------------- | --------------- | -------- |
+ * | `and_then` | `Err(e)` | (not provided) | (not evaluated) | `Err(e)` |
+ * | `and_then` | `Ok(x)`  | `x`            | `Err(d)`        | `Err(d)` |
+ * | `and_then` | `Ok(x)`  | `x`            | `Ok(y)`         | `Ok(y)`  |
+ * | `or_else`  | `Err(e)` | `e`            | `Err(d)`        | `Err(d)` |
+ * | `or_else`  | `Err(e)` | `e`            | `Ok(y)`         | `Ok(y)`  |
+ * | `or_else`  | `Ok(x)`  | (not provided) | (not evaluated) | `Ok(x)`  |
+ *
+ * ## Variants
+ *
+ * ### Ok
+ *
+ * ```ts
+ * Ok(T);
+ * ```
+ *
+ * Contains the success value.
+ *
+ * #### Examples
+ *
+ * ```ts
+ * let x: Result<number, string> = Ok(42);
+ * ```
+ *
+ * ### Err
+ *
+ * ```ts
+ * Err(E);
+ * ```
+ *
+ * Contains the error value.
+ *
+ * #### Examples
+ *
+ * ```ts
+ * let x: Result<number, string> = Err("Not found");
+ * ```
+ *
+ * ## Import
+ *
+ * ```ts
+ * import { Err, Ok, type Result } from "unwrap-or/result";
+ * ```
+ *
  * @module Result
- *
- * Type `Result` is a type that represents either success `Ok(T)`
- * and containing a value, or `Err(E)`, representing error
- * and containing an error value.
- *
- * @see {@link  https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/result/result.md | Result documentation}
  */
 
 /**
- * @since 0.4.0-alpha
- *
  * Type `Result` is a type that represents either success `Ok(T)`
  * and containing a value, or `Err(E)`, representing error
  * and containing an error value.
  *
- * @example
+ * ### Example
  *
  * ```rs
  * let x: Result<number, string>
@@ -27,19 +180,17 @@
  * assert_eq!(x, Err('empty'))
  * ```
  *
- * @see {@link  https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/result/result.md | Result documentation}
+ * @since 0.4.0-alpha
  */
 export interface Result<T, E> {
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns `res` if the result is `Ok`, otherwise returns the `Err` value.
    *
    * Arguments passed to and are eagerly evaluated;
    * if you are passing the result of a function call,
    * it is recommended to use `and_then`, which is lazily evaluated.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<number, string>
@@ -61,19 +212,19 @@ export interface Result<T, E> {
    * y = Ok("different result type")
    * assert_eq!(x.and(y), Ok("different result type"))
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   and<U>(res: Result<U, E>): Result<T | U, E>;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Calls `op` if the result is `Ok`, otherwise returns the `Err` value.
    *
    * This function can be used for control flow based on `Result` values.
    *
    * Often used to chain fallible operations that may return `Err`.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<number, string>;
@@ -107,14 +258,14 @@ export interface Result<T, E> {
    *   Ok("different result type"),
    * )
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   and_then<U>(op: (value: T) => Result<U, E>): Result<T | U, E>;
 
   // TODO: public err() {}
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns the contained `Ok` value.
    *
    * Because this method may throw, its use is generally discouraged.
@@ -127,7 +278,7 @@ export interface Result<T, E> {
    * @throws Panics if the value is an `Err`,
    * with a panic message including the passed message, and the value of the `Err`.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<number, string>
@@ -141,18 +292,18 @@ export interface Result<T, E> {
    *   'should return 42: "unknown value"',
    * )
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   expect(msg: string): T;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns the contained `Err` value.
    *
    * @throws Panics if the value is an `Ok`, with a panic message
    * including the passed message, and the content of the Ok.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<number, string>
@@ -169,19 +320,19 @@ export interface Result<T, E> {
    *   "unknown error value",
    * )
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   expect_err(msg: string): E;
 
   // TODO: public flatten() {}
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Calls a function with a reference to the contained value if `Ok`.
    *
    * Returns the original result.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * function get<T>(arr: T[], idx: number): Result<T, string> {
@@ -200,17 +351,17 @@ export interface Result<T, E> {
    * assert_eq!(x, Ok(3))
    * assert_eq!(has_inspected, true)
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   inspect(f: (value: T) => void): Result<T, E>;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Calls a function with a reference to the contained value if `Err`.
    *
    * Returns the original result.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * function get<T>(arr: T[], idx: number): Result<T, string> {
@@ -230,15 +381,15 @@ export interface Result<T, E> {
    * assert_eq!(x, Err("Not found"))
    * assert_eq!(has_inspected, true)
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   inspect_err(f: (err: E) => void): Result<T, E>;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns `true` if the result is `Err`.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<number, string>
@@ -249,15 +400,15 @@ export interface Result<T, E> {
    * x = Err("Not found")
    * assert_eq!(x.is_err(), true)
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   is_err(): boolean;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns `true` if the result is `Err` and the value inside of it matches a predicate.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<{ html: string }, { statusCode: number }>
@@ -280,15 +431,15 @@ export interface Result<T, E> {
    *  false,
    * )
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   is_err_and(f: (err: E) => boolean): boolean;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns `true` if the result is `Ok`.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<number, string>
@@ -299,15 +450,15 @@ export interface Result<T, E> {
    * x = Err("Not found")
    * assert_eq!(x.is_ok(), false)
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   is_ok(): boolean;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns `true` if the result is `Ok` and the value inside of it matches a predicate.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<number, string>
@@ -330,18 +481,18 @@ export interface Result<T, E> {
    *   false,
    * )
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   is_ok_and(f: (value: T) => boolean): boolean;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Maps a `Result<T, E>` to `Result<U, E>` by applying a function
    * to a contained `Ok` value, leaving an `Err` value untouched.
    *
    * This function can be used to compose the results of two functions.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<string, { statusCode: number }>
@@ -358,12 +509,12 @@ export interface Result<T, E> {
    *   Err({ statusCode: 404 }),
    * )
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   map<U>(f: (value: T) => U): Result<T | U, E>;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns the provided default (if `Err`),
    * or applies a function to the contained value (if `Ok`).
    *
@@ -371,7 +522,7 @@ export interface Result<T, E> {
    * if you are passing the result of a function call,
    * it is recommended to use `map_or_else`, which is lazily evaluated.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<string, string>
@@ -388,16 +539,16 @@ export interface Result<T, E> {
    *   42,
    * )
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   map_or<U>(default_value: U, f: (value: T) => U): U;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Maps a `Result<T, E>` to `U` by applying fallback function `default_f`
    * to a contained `Err` value, or function `f` to a contained `Ok` value.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * const k = 21
@@ -421,21 +572,21 @@ export interface Result<T, E> {
    *   42,
    * )
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   map_or_else<U>(default_f: () => U, f: (value: T) => U): U;
 
   // TODO: public ok() {}
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns `res` if the result is `Err`, otherwise returns the `Ok` value.
    *
    * Arguments passed to or are eagerly evaluated;
    * if you are passing the result of a function call,
    * it is recommended to use `or_else`, which is lazily evaluated.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<number, string>
@@ -457,17 +608,17 @@ export interface Result<T, E> {
    * y = Err("Not found")
    * assert_eq!(x.or(y), Err("Not found"))
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   or(res: Result<T, E>): Result<T, E>;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Calls `f` if the result is `Err`, otherwise returns the `Ok` value.
    *
    * This function can be used for control flow based on result values.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<string, { statusCode: number }>
@@ -494,19 +645,19 @@ export interface Result<T, E> {
    *   Err({ statusCode: 404 }),
    * )
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   or_else(f: () => Result<T, E>): Result<T, E>;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * @ignore
    *
    * Returns a string representing this object.
    * This method is meant to be overridden by derived JS objects
    * for custom type coercion logic.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<unknown, unknown>
@@ -547,14 +698,14 @@ export interface Result<T, E> {
    * x = Err(() => 2 * 4)
    * assert_eq!(x.toString(), "Err(() => 2 * 4)")
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   toString(): string;
 
   // TODO: public transpose() {}
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns the contained `Ok` value.
    *
    * Because this function may throw, its use is generally discouraged.
@@ -563,7 +714,7 @@ export interface Result<T, E> {
    *
    * @throws Panics if the value is an `Err`, with a message provided by the `Err`’s value.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<number, string>
@@ -578,17 +729,17 @@ export interface Result<T, E> {
    *   "Called Result.unwrap() on an Err(E) value",
    * )
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   unwrap(): T;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns the contained `Err` value.
    *
    * @throws Panics if the value is an `Ok`, with a custom panic message provided by the `Ok`’s value.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<number, string>
@@ -603,19 +754,19 @@ export interface Result<T, E> {
    * x = Err("Not found")
    * assert_eq!(x.unwrap_err(), "Not found")
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   unwrap_err(): E;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns the contained `Ok` value or a provided default.
    *
    * Arguments passed to `unwrap_or` are eagerly evaluated;
    * if you are passing the result of a function call,
    * it is recommended to use `unwrap_or_else`, which is lazily evaluated.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<number, string>;
@@ -626,17 +777,17 @@ export interface Result<T, E> {
    * x = Err("Not found");
    * assert_eq!(x.unwrap_or(0), 0);
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   unwrap_or(default_value: T): T;
 
   /**
-   * @since 0.4.0-alpha
-   *
    * Returns the contained `Ok` value or computes it from a closure.
    *
    * Useful for expensive default computations.
    *
-   * @example
+   * ### Example
    *
    * ```rs
    * let x: Result<number, string>;
@@ -653,6 +804,8 @@ export interface Result<T, E> {
    *   3,
    * );
    * ```
+   *
+   * @since 0.4.0-alpha
    */
   unwrap_or_else(f: (err: E) => T): T;
 }
@@ -910,34 +1063,30 @@ class ResultConstructor<T, E> implements Result<T, E> {
 }
 
 /**
- * @since 0.4.0-alpha
- *
  * Contains the success value.
  *
- * @example
+ * ### Example
  *
  * ```rs
  * let x: Result<number, string> = Ok(42)
  * ```
  *
- * @see {@link  https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/result/result.md | Result documentation}
+ * @since 0.4.0-alpha
  */
 export function Ok<T>(value: T): Result<T, any> {
   return new ResultConstructor<T, any>(oid, value);
 }
 
 /**
- * @since 0.4.0-alpha
- *
  * Contains the error value.
  *
- * @example
+ * ### Example
  *
  * ```rs
  * let x: Result<number, string> = Err("Not found")
  * ```
  *
- * @see {@link  https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/result/result.md | Result documentation}
+ * @since 0.4.0-alphag
  */
 export function Err<E>(err: E): Result<any, E> {
   return new ResultConstructor<any, E>(eid, err);
