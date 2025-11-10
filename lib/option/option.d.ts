@@ -2,7 +2,7 @@
  * @module Option
  */
 
-import type { Result } from "../result/index.ts";
+import type { Result } from "../result/result.d.ts";
 
 /**
  * @since 0.1.0-alpha
