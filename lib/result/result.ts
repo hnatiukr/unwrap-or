@@ -5,7 +5,7 @@
  *
  * Error handling.
  *
- * ```rs
+ * ```ts
  * Result<T, E> {
  *    Ok(T),
  *    Err(E),
@@ -170,7 +170,7 @@
  *
  * ### Example
  *
- * ```rs
+ * ```ts
  * let x: Result<number, string>
  *
  * x = Ok(42)
@@ -192,7 +192,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<number, string>
    * let y: Result<string, string>
    *
@@ -226,7 +226,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<number, string>;
    * let y: Result<string, string>;
    *
@@ -275,12 +275,12 @@ export interface Result<T, E> {
    * Recommend that expect messages are used to describe the reason
    * you expect the `Result` should be `Ok`.
    *
-   * @throws Panics if the value is an `Err`,
+   * Panics if the value is an `Err`,
    * with a panic message including the passed message, and the value of the `Err`.
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<number, string>
    *
    * x = Ok(42)
@@ -300,12 +300,12 @@ export interface Result<T, E> {
   /**
    * Returns the contained `Err` value.
    *
-   * @throws Panics if the value is an `Ok`, with a panic message
+   * Panics if the value is an `Ok`, with a panic message
    * including the passed message, and the content of the Ok.
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<number, string>
    *
    * x = Ok(42)
@@ -334,7 +334,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * function get<T>(arr: T[], idx: number): Result<T, string> {
    *   const item = arr.at(idx)
    *   return item !== undefined ? Ok(item) : Err("Not found")
@@ -363,7 +363,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * function get<T>(arr: T[], idx: number): Result<T, string> {
    *   const item = arr.at(idx)
    *
@@ -391,7 +391,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<number, string>
    *
    * x = Ok(42)
@@ -410,7 +410,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<{ html: string }, { statusCode: number }>
    *
    * x = Err({ statusCode: 500 })
@@ -441,7 +441,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<number, string>
    *
    * x = Ok(42)
@@ -460,7 +460,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<number, string>
    *
    * x = Ok(0)
@@ -494,7 +494,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<string, { statusCode: number }>
    *
    * x = Ok("42")
@@ -524,7 +524,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<string, string>
    *
    * x = Ok("foo")
@@ -550,7 +550,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * const k = 21
    * let x: Result<string, string>
    *
@@ -588,7 +588,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<number, string>
    * let y: Result<number, string>
    *
@@ -620,7 +620,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<string, { statusCode: number }>
    * let y: Result<string, { statusCode: number }>
    *
@@ -659,7 +659,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<unknown, unknown>
    *
    * x = Ok(true)
@@ -712,11 +712,11 @@ export interface Result<T, E> {
    * Prefer to call inside `try/catch` statement, or handle the `Err` case explicitly,
    * or call `unwrap_or`, `unwrap_or_else`, or `unwrap_or_default`.
    *
-   * @throws Panics if the value is an `Err`, with a message provided by the `Err`’s value.
+   * Panics if the value is an `Err`, with a message provided by the `Err`’s value.
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<number, string>
    *
    * x = Ok(42)
@@ -737,11 +737,11 @@ export interface Result<T, E> {
   /**
    * Returns the contained `Err` value.
    *
-   * @throws Panics if the value is an `Ok`, with a custom panic message provided by the `Ok`’s value.
+   * Panics if the value is an `Ok`, with a custom panic message provided by the `Ok`’s value.
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<number, string>
    *
    * x = Ok(42)
@@ -768,7 +768,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<number, string>;
    *
    * x = Ok(42);
@@ -789,7 +789,7 @@ export interface Result<T, E> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Result<number, string>;
    *
    * x = Ok(42);
@@ -1067,7 +1067,7 @@ class ResultConstructor<T, E> implements Result<T, E> {
  *
  * ### Example
  *
- * ```rs
+ * ```ts
  * let x: Result<number, string> = Ok(42)
  * ```
  *
@@ -1082,7 +1082,7 @@ export function Ok<T>(value: T): Result<T, any> {
  *
  * ### Example
  *
- * ```rs
+ * ```ts
  * let x: Result<number, string> = Err("Not found")
  * ```
  *

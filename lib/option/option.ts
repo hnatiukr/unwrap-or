@@ -5,7 +5,7 @@
  *
  * Optional values.
  *
- * ```rs
+ * ```ts
  * Option<T> {
  *     None,
  *     Some(T),
@@ -170,7 +170,7 @@ import { Err, Ok, type Result } from "../result/result.ts";
  *
  * ### Example
  *
- * ```rs
+ * ```ts
  * let x: Option<number>
  *
  * x = Some(2)
@@ -192,7 +192,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<number>
    * let y: Option<string>
    *
@@ -227,7 +227,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<string>
    * let y: Option<string>
    *
@@ -270,12 +270,12 @@ export interface Option<T> {
    * Recommend that expect messages are used to describe
    * the reason you expect the `Option` should be `Some`.
    *
-   * @throws Throws an error if the value is a `None`
+   * Panics if the value is a `None`
    * with a custom message provided by `msg`.
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<string>;
    *
    * x = Some("value");
@@ -302,7 +302,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * function is_even(n: number): boolean {
    *   return n % 2 == 0
    * }
@@ -323,7 +323,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<Option<number>>;
    *
    * x = Some(Some(6));
@@ -347,7 +347,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * function get<T>(arr: T[], idx: number): Option<T> {
    *   const item = arr.at(idx);
    *   return item !== undefined ? Some(item) : None;
@@ -374,7 +374,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<number>
    *
    * x = Some(2)
@@ -394,7 +394,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<number>
    *
    * x = Some(2)
@@ -416,7 +416,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<number>
    *
    * x = Some(2)
@@ -435,7 +435,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<number>
    *
    * x = Some(2)
@@ -458,7 +458,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<string>
    *
    * x = Some("Hello, World!")
@@ -481,7 +481,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<string>
    *
    * x = Some("foo")
@@ -501,7 +501,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * const k = 21
    * let x: Option<string>
    *
@@ -526,7 +526,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<number>
    * let y: Result<number, string>
    *
@@ -554,7 +554,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<number>
    * let y: Option<number>
    *
@@ -585,7 +585,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<string>
    * let y: Option<string>
    *
@@ -624,7 +624,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<unknown>
    *
    * x = Some(true)
@@ -666,7 +666,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<string>;
    *
    * x = Some("air");
@@ -693,7 +693,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<number>
    *
    * x = Some(42)
@@ -714,7 +714,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * const k = 10
    * let x: Option<number>
    *
@@ -735,7 +735,7 @@ export interface Option<T> {
    *
    * ### Example
    *
-   * ```rs
+   * ```ts
    * let x: Option<number>
    * let y: Option<number>
    *
@@ -1010,7 +1010,7 @@ class OptionConstructor<T> implements Option<T> {
  *
  * ### Example
  *
- * ```rs
+ * ```ts
  * let x: Option<number> = Some(42)
  * ```
  *
@@ -1025,7 +1025,7 @@ export function Some<T>(value: T): Option<T> {
  *
  * ### Example
  *
- * ```rs
+ * ```ts
  * let x: Option<number> = None
  * ```
  *
