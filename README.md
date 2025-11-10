@@ -77,8 +77,8 @@ yarn add unwrap-or
 See the documentation for **unwrap-or** usage, module specifications and
 API/methods details:
 
-- [Option](https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/option/option.md)
-- [Result](https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/result/result.md)
+- [Option](https://jsr.io/@lab/unwrap-or/doc/option)
+- [Result](https://jsr.io/@lab/unwrap-or/doc/result)
 
 ## Inspirations
 
