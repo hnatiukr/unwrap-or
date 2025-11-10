@@ -1,6 +1,6 @@
 {
   "name": "@lab/unwrap-or",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "description": "A TypeScript implementation of Rust's Option and Result types.",
   "homepage": "https://codeberg.org/hnatiukr/unwrap-or",
@@ -18,9 +18,8 @@
     "or"
   ],
   "exports": {
-    ".": "./lib/index.ts",
-    "./option": "./lib/option/index.ts",
-    "./result": "./lib/result/index.ts"
+    "./option": "./lib/option/option.ts",
+    "./result": "./lib/result/result.ts"
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@^1.0.13"

@@ -4,6 +4,8 @@
 
 import type { Result } from "./result.d.ts";
 
+export type { Result };
+
 /**
  * @internal
  *
@@ -243,7 +245,11 @@ class ResultConstructor<T, E> implements Result<T, E> {
  *
  * @example
  *
+ * ```rs
  * let x: Result<number, string> = Ok(42)
+ * ```
+ *
+ * @see {@link  https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/result/result.md | Result documentation}
  */
 export function Ok<T>(value: T): Result<T, any> {
   return new ResultConstructor<T, any>(oid, value);
@@ -256,7 +262,11 @@ export function Ok<T>(value: T): Result<T, any> {
  *
  * @example
  *
+ * ```rs
  * let x: Result<number, string> = Err("Not found")
+ * ```
+ *
+ * @see {@link  https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/result/result.md | Result documentation}
  */
 export function Err<E>(err: E): Result<any, E> {
   return new ResultConstructor<any, E>(eid, err);

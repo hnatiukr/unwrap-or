@@ -13,6 +13,7 @@ import type { Result } from "../result/result.d.ts";
  *
  * @example
  *
+ * ```rs
  * let x: Option<number>
  *
  * x = Some(2)
@@ -20,6 +21,9 @@ import type { Result } from "../result/result.d.ts";
  *
  * x = None
  * assert_eq!(x, None)
+ * ```
+ *
+ * @see {@link  https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/option/option.md | Option documentation}
  */
 export interface Option<T> {
   /**
@@ -33,6 +37,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<number>
    * let y: Option<string>
    *
@@ -51,6 +56,7 @@ export interface Option<T> {
    * x = None
    * y = None
    * assert_eq!(x.and(y), None)
+   * ```
    */
   and<U>(optb: Option<U>): Option<T | U>;
 
@@ -66,6 +72,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<string>
    * let y: Option<string>
    *
@@ -96,6 +103,7 @@ export interface Option<T> {
    *   x.and_then(() => y),
    *   None,
    * )
+   * ```
    */
   and_then<U>(f: (value: T) => Option<U>): Option<T | U>;
 
@@ -112,6 +120,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<string>;
    *
    * x = Some("value");
@@ -123,6 +132,7 @@ export interface Option<T> {
    *   Error,
    *   "should return string value",
    * );
+   * ```
    */
   expect(msg: string): T;
 
@@ -137,6 +147,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * function is_even(n: number): boolean {
    *   return n % 2 == 0
    * }
@@ -144,6 +155,7 @@ export interface Option<T> {
    * assert_eq!(None.filter(is_even), None)
    * assert_eq!(Some(3).filter(is_even), None)
    * assert_eq!(Some(4).filter(is_even), Some(4))
+   * ```
    */
   filter(predicate: (value: T) => boolean): Option<T>;
 
@@ -156,6 +168,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<Option<number>>;
    *
    * x = Some(Some(6));
@@ -166,6 +179,7 @@ export interface Option<T> {
    *
    * x = None;
    * assert_eq!(x.flatten(), None);
+   * ```
    */
   flatten<U>(this: Option<Option<U>>): Option<U>;
 
@@ -178,6 +192,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * function get<T>(arr: T[], idx: number): Option<T> {
    *   const item = arr.at(idx);
    *   return item !== undefined ? Some(item) : None;
@@ -193,6 +208,7 @@ export interface Option<T> {
    *
    * assert_eq!(x, Some(3));
    * assert_eq!(has_inspected, true);
+   * ```
    */
   inspect(f: (value: T) => void): Option<T>;
 
@@ -203,6 +219,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<number>
    *
    * x = Some(2)
@@ -210,6 +227,7 @@ export interface Option<T> {
    *
    * x = None
    * assert_eq!(x.is_none(), true)
+   * ```
    */
   is_none(): boolean;
 
@@ -221,6 +239,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<number>
    *
    * x = Some(2)
@@ -231,6 +250,7 @@ export interface Option<T> {
    *
    * x = None
    * assert_eq!(x.is_none_or((v) => v > 1), true)
+   * ```
    */
   is_none_or(f: (value: T) => boolean): boolean;
 
@@ -241,6 +261,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<number>
    *
    * x = Some(2)
@@ -248,6 +269,7 @@ export interface Option<T> {
    *
    * x = None
    * assert_eq!(x.is_some(), false)
+   * ```
    */
   is_some(): boolean;
 
@@ -258,6 +280,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<number>
    *
    * x = Some(2)
@@ -268,6 +291,7 @@ export interface Option<T> {
    *
    * x = None
    * assert_eq!(x.is_some_and((v) => v > 1), false)
+   * ```
    */
   is_some_and(f: (value: T) => boolean): boolean;
 
@@ -279,6 +303,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<string>
    *
    * x = Some("Hello, World!")
@@ -286,6 +311,7 @@ export interface Option<T> {
    *
    * x = None
    * assert_eq!(x.map((s) => s.length), None)
+   * ```
    */
   map<U>(f: (value: T) => U): Option<T | U>;
 
@@ -300,6 +326,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<string>
    *
    * x = Some("foo")
@@ -307,6 +334,7 @@ export interface Option<T> {
    *
    * x = None
    * assert_eq!(x.map_or(42, (v) => v.length), 42)
+   * ```
    */
   map_or<U>(default_value: U, f: (value: T) => U): U;
 
@@ -318,6 +346,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * const k = 21
    * let x: Option<string>
    *
@@ -326,6 +355,7 @@ export interface Option<T> {
    *
    * x = None
    * assert_eq!(x.map_or_else(() => 2 * k, (v) => v.length), 42)
+   * ```
    */
   map_or_else<U>(default_f: () => U, f: (value: T) => U): U;
 
@@ -341,6 +371,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<number>
    * let y: Result<number, string>
    *
@@ -351,6 +382,7 @@ export interface Option<T> {
    * x = None
    * y = x.ok_or("Not found")
    * assert_eq!(y, Err("Not found"))
+   * ```
    */
   ok_or<E>(err: E): Result<T, E>;
 
@@ -367,6 +399,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<number>
    * let y: Option<number>
    *
@@ -385,6 +418,7 @@ export interface Option<T> {
    * x = None
    * y = None
    * assert_eq!(x.or(y), None)
+   * ```
    */
   or(optb: Option<T>): Option<T>;
 
@@ -396,6 +430,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<string>
    * let y: Option<string>
    *
@@ -419,6 +454,7 @@ export interface Option<T> {
    *   x.or_else(() => y),
    *   None,
    * )
+   * ```
    */
   or_else(f: () => Option<T>): Option<T>;
 
@@ -433,6 +469,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<unknown>
    *
    * x = Some(true)
@@ -455,6 +492,7 @@ export interface Option<T> {
    *
    * x = None
    * assert_eq!(x.toString(), "None")
+   * ```
    */
   toString(): string;
 
@@ -473,6 +511,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<string>;
    *
    * x = Some("air");
@@ -484,6 +523,7 @@ export interface Option<T> {
    *   TypeError,
    *   "Called Option.unwrap() on a None value",
    * );
+   * ```
    */
   unwrap(): T;
 
@@ -498,6 +538,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<number>
    *
    * x = Some(42)
@@ -505,6 +546,7 @@ export interface Option<T> {
    *
    * x = None
    * assert_eq!(x.unwrap_or(1), 1)
+   * ```
    */
   unwrap_or(default_value: T): T;
 
@@ -517,6 +559,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * const k = 10
    * let x: Option<number>
    *
@@ -525,6 +568,7 @@ export interface Option<T> {
    *
    * x = None
    * assert_eq!(x.unwrap_or_else(() => 2 * k), 20)
+   * ```
    */
   unwrap_or_else(f: () => T): T;
 
@@ -536,6 +580,7 @@ export interface Option<T> {
    *
    * @example
    *
+   * ```rs
    * let x: Option<number>
    * let y: Option<number>
    *
@@ -554,6 +599,7 @@ export interface Option<T> {
    * x = None
    * y = None
    * assert_eq!(x.xor(y), None)
+   * ```
    */
   xor(optb: Option<T>): Option<T>;
 }
