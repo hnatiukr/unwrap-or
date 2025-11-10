@@ -1,9 +1,7 @@
 import { assertEquals, assertThrows } from "@std/assert";
 
-import { Err, Ok } from "../result/result.ts";
-import type { Result } from "../result/result.d.ts";
-import { None, Some } from "./option.ts";
-import type { Option } from "./option.d.ts";
+import { Err, Ok, type Result } from "../result/result.ts";
+import { None, type Option, Some } from "./option.ts";
 
 const assert_eq = assertEquals;
 const assert_err = assertThrows;

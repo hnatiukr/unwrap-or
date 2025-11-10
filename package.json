@@ -1,6 +1,6 @@
 {
   "name": "unwrap-or",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "description": "A TypeScript implementation of Rust's Option and Result types.",
   "author": {
@@ -28,23 +28,15 @@
   "type": "module",
   "sideEffects": false,
   "files": [
-    "lib/option/**/*",
-    "!lib/option/*.md",
-    "!lib/option/*.test.*",
-    "lib/result/**/*",
-    "!lib/result/*.md",
-    "!lib/result/*.test.*"
+    "lib/option/option.ts",
+    "lib/result/result.ts"
   ],
   "exports": {
     "./option": {
-      "types": "./lib/option/option.d.ts",
-      "import": "./lib/option/option.ts",
-      "require": "./lib/option/option.ts"
+      "import": "./lib/option/option.ts"
     },
     "./result": {
-      "types": "./lib/result/result.d.ts",
-      "import": "./lib/result/result.ts",
-      "require": "./lib/result/result.ts"
+      "import": "./lib/result/result.ts"
     }
   }
 }
