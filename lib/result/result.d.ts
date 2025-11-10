@@ -11,6 +11,7 @@
  *
  * @example
  *
+ * ```rs
  * let x: Result<number, string>
  *
  * x = Ok(42)
@@ -18,6 +19,9 @@
  *
  * x = Err('empty')
  * assert_eq!(x, Err('empty'))
+ * ```
+ *
+ * @see {@link  https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/result/result.md | Result documentation}
  */
 export interface Result<T, E> {
   /**
@@ -31,6 +35,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<number, string>
    * let y: Result<string, string>
    *
@@ -49,6 +54,7 @@ export interface Result<T, E> {
    * x = Ok(2)
    * y = Ok("different result type")
    * assert_eq!(x.and(y), Ok("different result type"))
+   * ```
    */
   and<U>(res: Result<U, E>): Result<T | U, E>;
 
@@ -63,6 +69,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<number, string>;
    * let y: Result<string, string>;
    *
@@ -93,6 +100,7 @@ export interface Result<T, E> {
    *   x.and_then(() => y),
    *   Ok("different result type"),
    * )
+   * ```
    */
   and_then<U>(op: (value: T) => Result<U, E>): Result<T | U, E>;
 
@@ -115,6 +123,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<number, string>
    *
    * x = Ok(42)
@@ -125,6 +134,7 @@ export interface Result<T, E> {
    *   () => x.expect("should return 42"),
    *   'should return 42: "unknown value"',
    * )
+   * ```
    */
   expect(msg: string): T;
 
@@ -138,6 +148,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<number, string>
    *
    * x = Ok(42)
@@ -151,6 +162,7 @@ export interface Result<T, E> {
    *   x.expect_err("should return unknown error value"),
    *   "unknown error value",
    * )
+   * ```
    */
   expect_err(msg: string): E;
 
@@ -165,6 +177,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * function get<T>(arr: T[], idx: number): Result<T, string> {
    *   const item = arr.at(idx)
    *   return item !== undefined ? Ok(item) : Err("Not found")
@@ -180,6 +193,7 @@ export interface Result<T, E> {
    *
    * assert_eq!(x, Ok(3))
    * assert_eq!(has_inspected, true)
+   * ```
    */
   inspect(f: (value: T) => void): Result<T, E>;
 
@@ -192,6 +206,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * function get<T>(arr: T[], idx: number): Result<T, string> {
    *   const item = arr.at(idx)
    *
@@ -208,6 +223,7 @@ export interface Result<T, E> {
    *
    * assert_eq!(x, Err("Not found"))
    * assert_eq!(has_inspected, true)
+   * ```
    */
   inspect_err(f: (err: E) => void): Result<T, E>;
 
@@ -218,6 +234,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<number, string>
    *
    * x = Ok(42)
@@ -225,6 +242,7 @@ export interface Result<T, E> {
    *
    * x = Err("Not found")
    * assert_eq!(x.is_err(), true)
+   * ```
    */
   is_err(): boolean;
 
@@ -235,6 +253,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<{ html: string }, { statusCode: number }>
    *
    * x = Err({ statusCode: 500 })
@@ -254,6 +273,7 @@ export interface Result<T, E> {
    *  x.is_err_and((err) => err.statusCode === 404),
    *  false,
    * )
+   * ```
    */
   is_err_and(f: (err: E) => boolean): boolean;
 
@@ -264,6 +284,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<number, string>
    *
    * x = Ok(42)
@@ -271,6 +292,7 @@ export interface Result<T, E> {
    *
    * x = Err("Not found")
    * assert_eq!(x.is_ok(), false)
+   * ```
    */
   is_ok(): boolean;
 
@@ -281,6 +303,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<number, string>
    *
    * x = Ok(0)
@@ -300,6 +323,7 @@ export interface Result<T, E> {
    *   x.is_ok_and((value) => value > 10),
    *   false,
    * )
+   * ```
    */
   is_ok_and(f: (value: T) => boolean): boolean;
 
@@ -313,6 +337,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<string, { statusCode: number }>
    *
    * x = Ok("42")
@@ -326,6 +351,7 @@ export interface Result<T, E> {
    *   x.map((value) => Number.parseInt(value, 10)),
    *   Err({ statusCode: 404 }),
    * )
+   * ```
    */
   map<U>(f: (value: T) => U): Result<T | U, E>;
 
@@ -341,6 +367,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<string, string>
    *
    * x = Ok("foo")
@@ -354,6 +381,7 @@ export interface Result<T, E> {
    *   x.map_or(42, (v) => v.length),
    *   42,
    * )
+   * ```
    */
   map_or<U>(default_value: U, f: (value: T) => U): U;
 
@@ -365,6 +393,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * const k = 21
    * let x: Result<string, string>
    *
@@ -385,6 +414,7 @@ export interface Result<T, E> {
    *   ),
    *   42,
    * )
+   * ```
    */
   map_or_else<U>(default_f: () => U, f: (value: T) => U): U;
 
@@ -401,6 +431,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<number, string>
    * let y: Result<number, string>
    *
@@ -419,6 +450,7 @@ export interface Result<T, E> {
    * x = Err("Not found")
    * y = Err("Not found")
    * assert_eq!(x.or(y), Err("Not found"))
+   * ```
    */
   or(res: Result<T, E>): Result<T, E>;
 
@@ -431,6 +463,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<string, { statusCode: number }>
    * let y: Result<string, { statusCode: number }>
    *
@@ -454,6 +487,7 @@ export interface Result<T, E> {
    *   x.or_else(() => y),
    *   Err({ statusCode: 404 }),
    * )
+   * ```
    */
   or_else(f: () => Result<T, E>): Result<T, E>;
 
@@ -468,6 +502,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<unknown, unknown>
    *
    * x = Ok(true)
@@ -505,6 +540,7 @@ export interface Result<T, E> {
    *
    * x = Err(() => 2 * 4)
    * assert_eq!(x.toString(), "Err(() => 2 * 4)")
+   * ```
    */
   toString(): string;
 
@@ -523,6 +559,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<number, string>
    *
    * x = Ok(42)
@@ -534,6 +571,7 @@ export interface Result<T, E> {
    *   TypeError,
    *   "Called Result.unwrap() on an Err(E) value",
    * )
+   * ```
    */
   unwrap(): T;
 
@@ -546,6 +584,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<number, string>
    *
    * x = Ok(42)
@@ -557,6 +596,7 @@ export interface Result<T, E> {
    *
    * x = Err("Not found")
    * assert_eq!(x.unwrap_err(), "Not found")
+   * ```
    */
   unwrap_err(): E;
 
@@ -571,6 +611,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<number, string>;
    *
    * x = Ok(42);
@@ -578,6 +619,7 @@ export interface Result<T, E> {
    *
    * x = Err("Not found");
    * assert_eq!(x.unwrap_or(0), 0);
+   * ```
    */
   unwrap_or(default_value: T): T;
 
@@ -590,6 +632,7 @@ export interface Result<T, E> {
    *
    * @example
    *
+   * ```rs
    * let x: Result<number, string>;
    *
    * x = Ok(42);
@@ -603,6 +646,7 @@ export interface Result<T, E> {
    *   x.unwrap_or_else((err) => err.length),
    *   3,
    * );
+   * ```
    */
   unwrap_or_else(f: (err: E) => T): T;
 }

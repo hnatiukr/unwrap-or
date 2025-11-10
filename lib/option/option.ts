@@ -6,6 +6,8 @@ import { Err, Ok } from "../result/result.ts";
 import type { Result } from "../result/result.d.ts";
 import type { Option } from "./option.d.ts";
 
+export type { Option };
+
 /**
  * @internal
  *
@@ -235,7 +237,11 @@ class OptionConstructor<T> implements Option<T> {
  *
  * @example
  *
+ * ```rs
  * let x: Option<number> = Some(42)
+ * ```
+ *
+ * @see {@link  https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/option/option.md | Option documentation}
  */
 export function Some<T>(value: T): Option<T> {
   return new OptionConstructor<T>(sid, value);
@@ -248,6 +254,10 @@ export function Some<T>(value: T): Option<T> {
  *
  * @example
  *
+ * ```rs
  * let x: Option<number> = None
+ * ```
+ *
+ * @see {@link  https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/option/option.md | Option documentation}
  */
 export const None: Option<any> = new OptionConstructor<any>(nid);

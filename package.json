@@ -28,28 +28,23 @@
   "type": "module",
   "sideEffects": false,
   "files": [
-    "lib",
-    "LICENSE",
-    "README.md",
-    "package.json"
+    "lib/option/**/*",
+    "!lib/option/*.md",
+    "!lib/option/*.test.*",
+    "lib/result/**/*",
+    "!lib/result/*.md",
+    "!lib/result/*.test.*"
   ],
-  "main": "lib/index.ts",
-  "types": "lib/index.d.ts",
   "exports": {
-    ".": {
-      "types": "./lib/index.d.ts",
-      "import": "./lib/index.ts",
-      "require": "./lib/index.ts"
-    },
     "./option": {
-      "types": "./lib/option/index.d.ts",
-      "import": "./lib/option/index.ts",
-      "require": "./lib/option/index.ts"
+      "types": "./lib/option/option.d.ts",
+      "import": "./lib/option/option.ts",
+      "require": "./lib/option/option.ts"
     },
     "./result": {
-      "types": "./lib/result/index.d.ts",
-      "import": "./lib/result/index.ts",
-      "require": "./lib/result/index.ts"
+      "types": "./lib/result/result.d.ts",
+      "import": "./lib/result/result.ts",
+      "require": "./lib/result/result.ts"
     }
   }
 }
