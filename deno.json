@@ -3,7 +3,7 @@
   "version": "1.0.2-beta",
   "license": "MIT",
   "description": "A TypeScript implementation of Rust's Option and Result types.",
-  "homepage": "https://github.com/hnatiukr/unwrap-or",
+  "homepage": "https://codeberg.org/hnatiukr/unwrap-or",
   "keywords": [
     "TypeScript",
     "Rust",
