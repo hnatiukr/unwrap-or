@@ -2,8 +2,8 @@
  * @module Option
  */
 
-import { Err, Ok } from "../result/index.ts";
-import type { Result } from "../result/index.ts";
+import { Err, Ok } from "../result/result.ts";
+import type { Result } from "../result/result.d.ts";
 import type { Option } from "./option.d.ts";
 
 /**
