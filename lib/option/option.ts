@@ -8,8 +8,7 @@
  * @see {@link  https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/lib/option/option.md | Option documentation}
  */
 
-import { Err, Ok } from "../result/result.ts";
-import type { Result } from "../result/result.d.ts";
+import { Err, Ok, type Result } from "../result/result.ts";
 
 /**
  * @since 0.1.0-alpha
