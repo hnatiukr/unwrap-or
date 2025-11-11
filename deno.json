@@ -1,6 +1,6 @@
 {
   "name": "@lab/unwrap-or",
-  "version": "1.0.8",
+  "version": "1.1.0",
   "license": "MIT",
   "description": "A TypeScript implementation of Rust's Option and Result types.",
   "homepage": "https://codeberg.org/hnatiukr/unwrap-or",
