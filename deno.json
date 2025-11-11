@@ -23,8 +23,13 @@
     "./result": "./lib/result/result.ts"
   },
   "imports": {
-    "@std/assert": "jsr:@std/assert@^1.0.13"
+    "@std/assert": "jsr:@std/assert@^1.0.13",
+    "lefthook": "npm:lefthook@^2.0.3"
   },
+  "tasks": {
+    "prepare": "lefthook install"
+  },
+  "nodeModulesDir": "auto",
   "lint": {
     "rules": {
       "exclude": ["no-explicit-any"]

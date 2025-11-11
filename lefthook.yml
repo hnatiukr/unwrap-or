@@ -1,0 +1,20 @@
+pre-commit:
+  parallel: true
+  commands:
+    fmt:
+      glob: "*.{ts,md,yml,json}"
+      run: deno fmt --check {staged_files}
+    lint:
+      glob: "*.ts"
+      run: deno lint {staged_files}
+    typecheck:
+      glob: "*.ts"
+      run: deno check {staged_files}
+    test:
+      glob: "*.test.ts"
+      run: deno test -RW {staged_files}
+
+pre-push:
+  commands:
+    full-check:
+      run: deno fmt && deno lint && deno check && deno test
