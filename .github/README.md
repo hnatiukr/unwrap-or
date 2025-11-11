@@ -1,6 +1,8 @@
 > [!WARNING]
 > The `unwrap-or` library has [moved off Github](https://sfconservancy.org/GiveUpGitHub/).
+>
 > The canonical Git repository is located at https://codeberg.org/hnatiukr/unwrap-or.
+>
 > There is a mirror of the repository at https://github.com/hnatiukr/unwrap-or.
 
 <p align="center">
