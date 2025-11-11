@@ -12,20 +12,17 @@ A TypeScript implementation of Rust's Option and Result types.
 
 <p align="center">
   <sub>
-      no deps | tree-shakeable | side-effect free | < 1KB gzipped
+      no deps | tree-shakeable | side-effect free
   </sub>
 </p>
 
 <p align="center">
-  <a href="https://github.com/hnatiukr/unwrap-or/actions/workflows/ci.yml">
-      <img src="https://img.shields.io/github/actions/workflow/status/hnatiukr/unwrap-or/ci.yml?color=orange&style=for-the-badge" alt="Workflow CI">
-  </a>
-   <a href="https://www.npmjs.com/package/unwrap-or">
-       <img src="https://img.shields.io/github/v/release/hnatiukr/unwrap-or?color=orange&style=for-the-badge" alt="Release version">
-   </a>
-  <a href="https://codeberg.org/hnatiukr/unwrap-or/src/branch/main/LICENSE">
-      <img src="https://img.shields.io/github/license/hnatiukr/unwrap-or?color=orange&style=for-the-badge" alt="License MIT">
-  </a>
+    <a href="https://jsr.io/@lab/unwrap-or">
+      <img src="https://jsr.io/badges/@lab/unwrap-or" alt="version" />
+    </a>
+    <a href="https://jsr.io/@lab/unwrap-or">
+      <img src="https://jsr.io/badges/@lab/unwrap-or/score" alt="score" />
+    </a>
 </p>
 
 It is a playground library that closely mirrors **Rust**'s
@@ -50,26 +47,26 @@ operation reflecting two possible states.
 
 ## Installation
 
-Via npm:
+Via deno:
 
 ```shell
-npm install unwrap-or
+deno add jsr:@lab/unwrap-or
 ```
 
 You can also use your favorite package manager:
 
 ```shell
 # pnpm
-pnpm add unwrap-or
+pnpm i jsr:@lab/unwrap-or
 
-# deno
-deno add jsr:@lab/unwrap-or
+# npm
+npx jsr add @lab/unwrap-or
 
 # bun
-bun add unwrap-or
+bunx jsr add @lab/unwrap-or
 
 # yarn
-yarn add unwrap-or
+yarn add jsr:@lab/unwrap-or
 ```
 
 ## Overview
