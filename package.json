@@ -28,14 +28,19 @@
   "type": "module",
   "sideEffects": false,
   "files": [
+    "lib/mod.ts",
     "lib/option/option.ts",
     "lib/result/result.ts"
   ],
+  "main": "lib/mod.ts",
+  "types": "lib/mod.ts",
   "exports": {
     "./option": {
+      "types": "./lib/option/option.ts",
       "import": "./lib/option/option.ts"
     },
     "./result": {
+      "types": "./lib/result/result.ts",
       "import": "./lib/result/result.ts"
     }
   }

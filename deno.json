@@ -18,6 +18,7 @@
     "or"
   ],
   "exports": {
+    ".": "./lib/mod.ts",
     "./option": "./lib/option/option.ts",
     "./result": "./lib/result/result.ts"
   },
